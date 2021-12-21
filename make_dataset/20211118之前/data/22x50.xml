@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train2017</folder>
+	<filename>22x50.png</filename>
+	<path>C:\Users\L\Desktop\BALF_pyQT5_YOLOv5\CenterNet\data\coco\train2017\22x50.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>256</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cancer_cell</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>79</xmin>
+			<ymin>155</ymin>
+			<xmax>139</xmax>
+			<ymax>209</ymax>
+		</bndbox>
+	</object>
+</annotation>

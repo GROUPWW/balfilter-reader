@@ -1,0 +1,26 @@
+<annotation>
+	<folder>part</folder>
+	<filename>49x60.png</filename>
+	<path>C:\Users\L\Desktop\BALF_pyQT5_YOLOv5\CenterNet\tmp\part\49x60.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>256</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cancer_cell</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>118</xmin>
+			<ymin>51</ymin>
+			<xmax>148</xmax>
+			<ymax>89</ymax>
+		</bndbox>
+	</object>
+</annotation>

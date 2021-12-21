@@ -1,0 +1,14 @@
+<annotation verified="yes">
+	<folder>res</folder>
+	<filename>20x43.png</filename>
+	<path>C:\Users\L\Desktop\BALF_pyQT5_YOLOv5\CenterNet\data\coco\tmp\res\20x43.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>256</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+</annotation>

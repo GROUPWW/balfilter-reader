@@ -1,0 +1,14 @@
+__pycache__
+.DS_Store
+.vscode
+.ropeproject
+.pyc
+
+*.zip
+*.rar
+*.jpg
+*.jpeg
+*.png
+*.tif
+*.pt
+*.pth

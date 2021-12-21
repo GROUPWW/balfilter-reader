@@ -1,0 +1,26 @@
+<annotation verified="no">
+  <folder>data</folder>
+  <filename>71x27</filename>
+  <path>C:\Users\L\Desktop\BALF\make_dataset\TrueData\Data20211123\Data\data\71x27.png</path>
+  <source>
+    <database>Unknown</database>
+  </source>
+  <size>
+    <width>256</width>
+    <height>256</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>cancer_cell</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <Difficult>0</Difficult>
+    <bndbox>
+      <xmin>14</xmin>
+      <ymin>82</ymin>
+      <xmax>59</xmax>
+      <ymax>107</ymax>
+    </bndbox>
+  </object>
+</annotation>
