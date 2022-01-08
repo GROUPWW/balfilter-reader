@@ -94,9 +94,11 @@ class Model(nn.Module):
 
     def forward(self, x, augment=False, profile=False):
         if augment:
+            print("该测试或验证使用了TTA")
             img_size = x.shape[-2:]  # height, width
             s = [1, 0.83, 0.67]  # scales
-            f = [None, 3, None]  # flips (2-ud, 3-lr)
+            # f = [None, 3, None]  # flips (2-ud, 3-lr)
+            f = [None, 3, 2]
             y = []  # outputs
             for si, fi in zip(s, f):
                 xi = scale_img(x.flip(fi) if fi else x, si)
@@ -110,6 +112,7 @@ class Model(nn.Module):
                 y.append(yi)
             return torch.cat(y, 1), None  # augmented inference, train
         else:
+            # print("该测试或验证没用TTA")
             return self.forward_once(x, profile)  # single-scale inference, train
 
     def forward_once(self, x, profile=False):

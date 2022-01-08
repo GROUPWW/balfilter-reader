@@ -32,7 +32,9 @@ def test(data,
          dataloader=None,
          save_dir='',
          merge=False,
-         save_txt=False):
+         save_txt=False #,
+         #tta_valAfterTrain_everyEpochs = False
+         ):
     # Initialize/load model and set device
     training = model is not None
     if training:  # called by train.py
@@ -250,7 +252,7 @@ def test(data,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/exp1/weights/best.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='weights/infer.pt', help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='cancer_cell.yaml', help='*.data path')
     parser.add_argument('--batch-size', type=int, default=32, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=256, help='inference size (pixels)')

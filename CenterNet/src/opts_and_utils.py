@@ -16,8 +16,8 @@ class all_opts():
 
         #训练部分专用的配置
         self.lr = 0.00008                           #lr
-        self.batch_size = 1                         #batch_size
-        self.num_epochs = 45                        #epochs
+        self.batch_size = 4                         #batch_size
+        self.num_epochs = 50                        #epochs
 
         #测试部分专用的配置
         self.load_model='./weight/model_18.pth'     #测试用的权重文件的路径

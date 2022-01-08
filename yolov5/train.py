@@ -322,7 +322,9 @@ def train(hyp, opt, device, tb_writer=None):
                                                  model=ema.ema,
                                                  single_cls=opt.single_cls,
                                                  dataloader=testloader,
-                                                 save_dir=log_dir)
+                                                 save_dir=log_dir #  ,
+                                                 # tta_valAfterTrain_everyEpochs = True if hyp['tta_valAfterTrain_everyEpochs']>0 else False
+                )
 
             # Write
             with open(results_file, 'a') as f:
@@ -388,6 +390,7 @@ def train(hyp, opt, device, tb_writer=None):
 
         bestDir = ".".join(str(best).split(".")[:-1]) + "-" + str(round(maxResult2, 4)) + "-" + str(round(maxResult3, 4)) + "-" + str(maxEpoch) + ".pt"
         os.rename(best,bestDir)
+        os.rename(last,".".join(str(last).split(".")[:-1]) + "-" + str(round(results[2], 4)) + "-" + str(round(results[2], 4)) + "-" + str(epoch) + ".pt")
 
         # Finish
         if not opt.evolve:
@@ -406,7 +409,7 @@ if __name__ == '__main__':
     parser.add_argument('--data', type=str, default='cancer_cell.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=220)
-    parser.add_argument('--batch-size', type=int, default=2, help='total batch size for all GPUs')
+    parser.add_argument('--batch-size', type=int, default=4, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[256, 256], help='[train, test] image sizes')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
