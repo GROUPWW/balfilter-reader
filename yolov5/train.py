@@ -390,7 +390,7 @@ def train(hyp, opt, device, tb_writer=None):
 
         bestDir = ".".join(str(best).split(".")[:-1]) + "-" + str(round(maxResult2, 4)) + "-" + str(round(maxResult3, 4)) + "-" + str(maxEpoch) + ".pt"
         os.rename(best,bestDir)
-        os.rename(last,".".join(str(last).split(".")[:-1]) + "-" + str(round(results[2], 4)) + "-" + str(round(results[2], 4)) + "-" + str(epoch) + ".pt")
+        os.rename(last,".".join(str(last).split(".")[:-1]) + "-" + str(round(results[2], 4)) + "-" + str(round(results[3], 4)) + "-" + str(epoch) + ".pt")
 
         # Finish
         if not opt.evolve:
@@ -408,7 +408,7 @@ if __name__ == '__main__':
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
     parser.add_argument('--data', type=str, default='cancer_cell.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')
-    parser.add_argument('--epochs', type=int, default=220)
+    parser.add_argument('--epochs', type=int, default=200)
     parser.add_argument('--batch-size', type=int, default=4, help='total batch size for all GPUs')
     parser.add_argument('--img-size', nargs='+', type=int, default=[256, 256], help='[train, test] image sizes')
     parser.add_argument('--rect', action='store_true', help='rectangular training')

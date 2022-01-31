@@ -7,7 +7,7 @@ from util.img_pro import Merge
 import os
 import shutil
 from ui import ui_main_window
-import json
+# import json
 import config
 from cut_and_detect import cut_and_detect
 

@@ -504,17 +504,20 @@ def compute_loss(p, targets, model):  # predictions, targets, model
             pxy = ps[:, :2].sigmoid() * 2. - 0.5
             pwh = (ps[:, 2:4].sigmoid() * 2) ** 2 * anchors[i]
             pbox = torch.cat((pxy, pwh), 1).to(device)  # predicted box
-            giou = bbox_iou(pbox.T, tbox[i], x1y1x2y2=False, GIoU=True)  # giou(prediction, target)
+            giou = bbox_iou(pbox.T, tbox[i], x1y1x2y2=False, CIoU=True)  # giou(prediction, target)
             lbox += (1.0 - giou).mean()  # giou loss
 
             # Objectness
             tobj[b, a, gj, gi] = (1.0 - model.gr) + model.gr * giou.detach().clamp(0).type(tobj.dtype)  # giou ratio
+
+
 
             # Classification
             if model.nc > 1:  # cls loss (only if multiple classes)
                 t = torch.full_like(ps[:, 5:], cn, device=device)  # targets
                 t[range(n), tcls[i]] = cp
                 lcls += BCEcls(ps[:, 5:], t)  # BCE
+
 
             # Append targets to text file
             # with open('targets.txt', 'a') as file:
@@ -771,7 +774,7 @@ def soft_nms_pytorch(dets, scores, Nt=0.5, method=0, sigma=0.5, thresh=0.001, sn
     return keep, sorted_scores[keep_mask].clone(), sorted_dets[keep_mask, :].clone()
 
 # soft-NMS，装不上mmcv,用cpu这个可以啦！！！！！！！
-def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=None, agnostic=False, multi_label=False,
+def non_max_suppression_soft(prediction, conf_thres=0.25, iou_thres=0.45, classes=None, agnostic=False, multi_label=False,
                         labels=(), max_det=300,merge=False):
     """Runs Non-Maximum Suppression (NMS) on inference results
     Returns:
@@ -884,7 +887,7 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=Non
 
 
 #原版NMS
-def non_max_suppression_row(prediction, conf_thres=0.1, iou_thres=0.6, merge=False, classes=None, agnostic=False):
+def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.6, merge=False, classes=None, agnostic=False):
     """Performs Non-Maximum Suppression (NMS) on inference results
 
     Returns:
