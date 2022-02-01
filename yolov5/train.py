@@ -114,7 +114,11 @@ def train(hyp, opt, device, tb_writer=None):
 
     # Scheduler https://arxiv.org/pdf/1812.01187.pdf
     # https://pytorch.org/docs/stable/_modules/torch/optim/lr_scheduler.html#OneCycleLR
-    lf = lambda x: ((1 + math.cos(x * math.pi / epochs)) / 2) * (1 - hyp['lrf']) + hyp['lrf']  # cosine
+    if epochs != 0:
+        lf = lambda x: ((1 + math.cos(x * math.pi / epochs)) / 2) * (1 - hyp['lrf']) + hyp['lrf']  # cosine
+    else:
+        lf = lambda x: ((1 + math.cos(x * math.pi / 100)) / 2) * (1 - hyp['lrf']) + hyp['lrf'] #随便设一个
+
     scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)
     # plot_lr_scheduler(optimizer, scheduler, epochs)
 
@@ -133,6 +137,7 @@ def train(hyp, opt, device, tb_writer=None):
 
         # Epochs
         start_epoch = ckpt['epoch'] + 1
+        # print(start_epoch)
         if opt.resume:
             assert start_epoch > 0, '%s training to %g epochs is finished, nothing to resume.' % (weights, epochs)
             shutil.copytree(wdir, wdir.parent / f'weights_backup_epoch{start_epoch - 1}')  # save previous weights
@@ -156,8 +161,10 @@ def train(hyp, opt, device, tb_writer=None):
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model).to(device)
         logger.info('Using SyncBatchNorm()')
 
+
     # Exponential moving average
     ema = ModelEMA(model) if rank in [-1, 0] else None
+
 
     # DDP mode
     if cuda and rank != -1:
@@ -214,6 +221,103 @@ def train(hyp, opt, device, tb_writer=None):
     maxResult2 = 0
     maxResult3 = 0
     maxEpoch = 0
+
+    # if epochs == 0:
+    #     model.train()
+    #
+    #     # Update image weights (optional)
+    #     if opt.image_weights:
+    #         # Generate indices
+    #         if rank in [-1, 0]:
+    #             cw = model.class_weights.cpu().numpy() * (1 - maps) ** 2  # class weights
+    #             iw = labels_to_image_weights(dataset.labels, nc=nc, class_weights=cw)  # image weights
+    #             dataset.indices = random.choices(range(dataset.n), weights=iw, k=dataset.n)  # rand weighted idx
+    #         # Broadcast if DDP
+    #         if rank != -1:
+    #             indices = (torch.tensor(dataset.indices) if rank == 0 else torch.zeros(dataset.n)).int()
+    #             dist.broadcast(indices, 0)
+    #             if rank != 0:
+    #                 dataset.indices = indices.cpu().numpy()
+    #
+    #     # Update mosaic border
+    #     # b = int(random.uniform(0.25 * imgsz, 0.75 * imgsz + gs) // gs * gs)
+    #     # dataset.mosaic_border = [b - imgsz, -b]  # height, width borders
+    #
+    #     mloss = torch.zeros(4, device=device)  # mean losses
+    #     if rank != -1:
+    #         dataloader.sampler.set_epoch(99999)
+    #     pbar = enumerate(dataloader)
+    #     logger.info(('\n' + '%10s' * 8) % ('Epoch', 'gpu_mem', 'GIoU', 'obj', 'cls', 'total', 'targets', 'img_size'))
+    #     if rank in [-1, 0]:
+    #         pbar = tqdm(pbar, total=nb)  # progress bar
+    #     optimizer.zero_grad()
+    #     for i, (imgs, targets, paths, _) in pbar:  # batch -------------------------------------------------------------
+    #         ni = i + nb * 99999  # number integrated batches (since train start)
+    #         imgs = imgs.to(device, non_blocking=True).float() / 255.0  # uint8 to float32, 0-255 to 0.0-1.0
+    #
+    #         # Warmup
+    #         if ni <= nw:
+    #             xi = [0, nw]  # x interp
+    #             # model.gr = np.interp(ni, xi, [0.0, 1.0])  # giou loss ratio (obj_loss = 1.0 or giou)
+    #             accumulate = max(1, np.interp(ni, xi, [1, nbs / total_batch_size]).round())
+    #             for j, x in enumerate(optimizer.param_groups):
+    #                 # bias lr falls from 0.1 to lr0, all other lrs rise from 0.0 to lr0
+    #                 x['lr'] = np.interp(ni, xi, [hyp['warmup_bias_lr'] if j == 2 else 0.0, x['initial_lr'] * lf(epoch)])
+    #                 if 'momentum' in x:
+    #                     x['momentum'] = np.interp(ni, xi, [hyp['warmup_momentum'], hyp['momentum']])
+    #
+    #         # Multi-scale
+    #         if opt.multi_scale:
+    #             sz = random.randrange(imgsz * 0.5, imgsz * 1.5 + gs) // gs * gs  # size
+    #             sf = sz / max(imgs.shape[2:])  # scale factor
+    #             if sf != 1:
+    #                 ns = [math.ceil(x * sf / gs) * gs for x in imgs.shape[2:]]  # new shape (stretched to gs-multiple)
+    #                 imgs = F.interpolate(imgs, size=ns, mode='bilinear', align_corners=False)
+    #
+    #         # Forward
+    #         with amp.autocast(enabled=cuda):
+    #             pred = model(imgs)  # forward
+    #             loss, loss_items = compute_loss(pred, targets.to(device), model)  # loss scaled by batch_size
+    #             if rank != -1:
+    #                 loss *= opt.world_size  # gradient averaged between devices in DDP mode
+    #
+    #         # Backward
+    #         # scaler.scale(loss).backward()
+    #
+    #         # Optimize
+    #         if ni % accumulate == 0:
+    #             # scaler.step(optimizer)  # optimizer.step
+    #             # scaler.update()
+    #             optimizer.zero_grad()
+    #             if ema:
+    #                 ema.update(model)
+    #
+    #
+    #
+    #         # end batch ------------------------------------------------------------------------------------------------
+    #
+    #     # DDP process 0 or single-GPU
+    #     if rank in [-1, 0]:
+    #         # mAP
+    #         if ema:
+    #             ema.update_attr(model, include=['yaml', 'nc', 'hyp', 'gr', 'names', 'stride'])
+    #         final_epoch = True
+    #         if not opt.notest or final_epoch:  # Calculate mAP
+    #             if final_epoch:  # replot predictions
+    #                 [os.remove(x) for x in glob.glob(str(log_dir / 'test_batch*_pred.jpg')) if os.path.exists(x)]
+    #             results, maps, times = test.test(opt.data,
+    #                                              batch_size=total_batch_size,
+    #                                              imgsz=imgsz_test,
+    #                                              model=ema.ema,
+    #                                              single_cls=opt.single_cls,
+    #                                              dataloader=testloader,
+    #                                              save_dir=log_dir #  ,
+    #                                              # tta_valAfterTrain_everyEpochs = True if hyp['tta_valAfterTrain_everyEpochs']>0 else False
+    #             )
+
+
+
+
 
     for epoch in range(start_epoch, epochs):  # epoch ------------------------------------------------------------------
         model.train()
@@ -389,13 +493,38 @@ def train(hyp, opt, device, tb_writer=None):
                     os.system('gsutil cp %s gs://%s/weights' % (f2, opt.bucket)) if opt.bucket else None  # upload
 
         bestDir = ".".join(str(best).split(".")[:-1]) + "-" + str(round(maxResult2, 4)) + "-" + str(round(maxResult3, 4)) + "-" + str(maxEpoch) + ".pt"
-        os.rename(best,bestDir)
-        os.rename(last,".".join(str(last).split(".")[:-1]) + "-" + str(round(results[2], 4)) + "-" + str(round(results[3], 4)) + "-" + str(epoch) + ".pt")
+        if epochs != 0:
+            os.rename(best,bestDir)
 
+            last_last_dir = ".".join(str(last).split(".")[:-1]) + "-" + str(round(results[2], 4)) + "-" + str(round(results[3], 4)) + "-" + str(epoch) + ".pt"
+
+            os.rename(last,last_last_dir)
+
+        os.remove(bestDir)
         # Finish
         if not opt.evolve:
             plot_results(save_dir=log_dir)  # save as results.png
-        logger.info('%g epochs completed in %.3f hours.\n' % (epoch - start_epoch + 1, (time.time() - t0) / 3600))
+        if epochs != 0:
+            logger.info('%g epochs completed in %.3f hours.\n' % (epoch - start_epoch + 1, (time.time() - t0) / 3600))
+
+    test.test(opt.data,
+              last_last_dir,
+              total_batch_size,
+              imgsz=imgsz_test,
+              single_cls=opt.single_cls
+              )
+
+    # test(opt.data,
+    #      opt.weights,
+    #      opt.batch_size,
+    #      opt.img_size,
+    #      opt.conf_thres,
+    #      opt.iou_thres,
+    #      opt.save_json,
+    #      opt.single_cls,
+    #      opt.augment,
+    #      opt.verbose)
+
 
     dist.destroy_process_group() if rank not in [-1, 0] else None
     torch.cuda.empty_cache()
@@ -414,7 +543,7 @@ if __name__ == '__main__':
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
     parser.add_argument('--nosave', action='store_true', help='only save final checkpoint')
-    parser.add_argument('--notest', action='store_true', help='only test final epoch')
+    parser.add_argument('--notest', action='store_false', help='only test final epoch')
     parser.add_argument('--noautoanchor', action='store_true', help='disable autoanchor check')
     parser.add_argument('--evolve', action='store_true', help='evolve hyperparameters')
     parser.add_argument('--bucket', type=str, default='', help='gsutil bucket')

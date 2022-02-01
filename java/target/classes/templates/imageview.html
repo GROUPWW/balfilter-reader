@@ -70,8 +70,8 @@
 
             <ul class="nav navbar-nav">
                 <li><a href="/"><button type="Go" class="btn btn-default">Back to the first image block</button></a></li>
-                <li><a th:href="'/100086/' + ${topSusId -1}"><button type="Go" class="btn btn-default">Previous</button></a> </li>
-                <li><a th:href="'/100086/' + ${topSusId +1}"><button type="Go" class="btn btn-default">Next</button></a> </li>
+                <li><a th:href=" '/'+ ${caseID} +'/' + ${topSusId -1}"><button type="Go" class="btn btn-default">Previous</button></a> </li>
+                <li><a th:href=" '/'+ ${caseID} +'/' + ${topSusId +1}"><button type="Go" class="btn btn-default">Next</button></a> </li>
                 <!--      {% include 'links.html' %}-->
             </ul>
         </nav>

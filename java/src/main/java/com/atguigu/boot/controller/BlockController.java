@@ -15,8 +15,8 @@ import java.util.List;
 public class BlockController {
 
     // 就Desc查一条吧
-    @GetMapping("/100086/{topSusId}")
-    public String getUser(HttpServletRequest request,@PathVariable("topSusId") Integer topSusId){
+    @GetMapping("/{caseID}/{topSusId}")
+    public String getUser(HttpServletRequest request,@PathVariable("topSusId") Integer topSusId,@PathVariable("caseID") String caseID){
         System.out.println("test");
 
 //        // mock数据，取出倒叙数据出来
@@ -37,7 +37,15 @@ public class BlockController {
 //        request.setAttribute("topSusId",topSusId);
 //        request.setAttribute("blockInfo",blockInfos.get(topSusId));
 
-        BlockInfo blockInfo = service
+        request.setAttribute("caseID",caseID);
+        request.setAttribute("topSusId",topSusId);
+
+//        BlockInfo blockInfo = service
+//        request.setAttribute("blockInfo",blockInfos.get(topSusId));
+
+
+
+
 
 
         return "imageview";

@@ -35,6 +35,23 @@ def test(data,
          save_txt=False #,
          #tta_valAfterTrain_everyEpochs = False
          ):
+
+    # print(data,
+    #      weights,
+    #      batch_size,
+    #      imgsz,
+    #      conf_thres,
+    #      iou_thres,  # for NMS
+    #      save_json,
+    #      single_cls,
+    #      augment,
+    #      verbose,
+    #      # model,
+    #      dataloader,
+    #      save_dir,
+    #      merge,
+    #      save_txt)
+
     # Initialize/load model and set device
     training = model is not None
     if training:  # called by train.py
@@ -42,8 +59,10 @@ def test(data,
 
     else:  # called directly
         set_logging()
-        device = select_device(opt.device, batch_size=batch_size)
-        merge, save_txt = opt.merge, opt.save_txt  # use Merge NMS, save *.txt labels
+        #device = select_device(opt.device, batch_size=batch_size)
+        device = select_device("", batch_size=batch_size)
+        # merge, save_txt = opt.merge, opt.save_txt  # use Merge NMS, save *.txt labels
+        merge, save_txt = False,False
         if save_txt:
             out = Path('inference/output')
             if os.path.exists(out):
@@ -80,9 +99,14 @@ def test(data,
     if not training:
         img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
         _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
-        path = data['test'] if opt.task == 'test' else data['val']  # path to val/test images
+        # path = data['test'] if opt.task == 'test' else data['val']  # path to val/test images
+        path = data['val']
+
+        opt = None
         dataloader = create_dataloader(path, imgsz, batch_size, model.stride.max(), opt,
-                                       hyp=None, augment=False, cache=False, pad=0.5, rect=True)[0]
+                                       hyp=None, augment=False, cache=False, pad=0., rect=True)[0] #本来pad是0.5，导致同样的操作test.py里的map低于train.py，正方形不该用letterbox。
+
+    # 训练和验证dataloader应该有参数不一样，导致训练和验证map不一致
 
     seen = 0
     names = model.names if hasattr(model, 'names') else model.module.names
@@ -241,7 +265,7 @@ def test(data,
             map, map50 = cocoEval.stats[:2]  # update results (mAP@0.5:0.95, mAP@0.5)
         except Exception as e:
             print('ERROR: pycocotools unable to run: %s' % e)
-
+    print(round(map50,5))
     # Return results
     model.float()  # for training
     maps = np.zeros(nc) + map
@@ -257,7 +281,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=32, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=256, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
-    parser.add_argument('--iou-thres', type=float, default=0.5, help='IOU threshold for NMS')
+    parser.add_argument('--iou-thres', type=float, default=0.6, help='IOU threshold for NMS')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')
     parser.add_argument('--task', default='val', help="'val', 'test', 'study'")
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')

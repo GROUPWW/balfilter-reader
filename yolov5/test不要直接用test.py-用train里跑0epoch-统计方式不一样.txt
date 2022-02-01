@@ -1,0 +1,1 @@
+python train.py --weights runs/exp56/weights/best-0.9061-0.6361-91.pt --epochs 0
