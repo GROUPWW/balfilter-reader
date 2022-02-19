@@ -21,8 +21,8 @@ from efficientdet.dataset import CocoDataset, Resizer, Normalizer, Augmenter, co
 from efficientdet.loss import FocalLoss
 from utils.sync_batchnorm import patch_replication_callback
 from utils.utils import replace_w_sync_bn, CustomDataParallel, get_last_weights, init_weights, boolean_string
-# from coco_eval import evaluate_coco
-# from pycocotools.coco import COCO
+from coco_eval import evaluate_coco
+from pycocotools.coco import COCO
 
 class Params:
     def __init__(self, project_file):
@@ -35,17 +35,17 @@ class Params:
 def get_args():
     parser = argparse.ArgumentParser('Yet Another EfficientDet Pytorch: SOTA object detection network - Zylo117')
     parser.add_argument('-p', '--project', type=str, default='coco', help='project file that contains parameters')
-    parser.add_argument('-c', '--compound_coef', type=int, default=0, help='coefficients of efficientdet')
-    parser.add_argument('-n', '--num_workers', type=int, default=12, help='num_workers of dataloader')
+    parser.add_argument('-c', '--compound_coef', type=int, default=6, help='coefficients of efficientdet')
+    parser.add_argument('-n', '--num_workers', type=int, default=1, help='num_workers of dataloader')
     parser.add_argument('--batch_size', type=int, default=4, help='The number of images per batch among all devices')
     parser.add_argument('--head_only', type=boolean_string, default=False,
                         help='whether finetunes only the regressor and the classifier, '
                              'useful in early stage convergence or small/easy dataset')
     parser.add_argument('--lr', type=float, default=1e-4)
-    parser.add_argument('--optim', type=str, default='adamw', help='select optimizer for training, '
+    parser.add_argument('--optim', type=str, default='admaw', help='select optimizer for training, '
                                                                    'suggest using \'admaw\' until the'
                                                                    ' very final stage then switch to \'sgd\'')
-    parser.add_argument('--num_epochs', type=int, default=300)
+    parser.add_argument('--num_epochs', type=int, default=150)
     parser.add_argument('--val_interval', type=int, default=1, help='Number of epoches between valing phases')
     parser.add_argument('--save_interval', type=int, default=21000, help='Number of steps between saving')
     parser.add_argument('--es_min_delta', type=float, default=0.0,
@@ -110,8 +110,8 @@ def train(opt):
                   'collate_fn': collater,
                   'num_workers': opt.num_workers}
 
-    input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536, 1536]
-    # input_sizes = [256,256,256,256,256,256,256,256,256]
+    # input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536, 1536]
+    input_sizes = [256,256,256,256,256,256,256,256,256]
     training_set = CocoDataset(root_dir=os.path.join(opt.data_path, params.project_name), set=params.train_set,
                                transform=transforms.Compose([Normalizer(mean=params.mean, std=params.std),
                                                              Augmenter(),
@@ -229,6 +229,9 @@ def train(opt):
                     cls_loss = cls_loss.mean()
                     reg_loss = reg_loss.mean()
 
+                    cls_loss = 5* cls_loss
+
+                    # loss = cls_loss + reg_loss
                     loss = cls_loss + reg_loss
                     if loss == 0 or not torch.isfinite(loss):
                         continue
@@ -283,6 +286,8 @@ def train(opt):
                         cls_loss = cls_loss.mean()
                         reg_loss = reg_loss.mean()
 
+                        cls_loss = 5* cls_loss
+
                         loss = cls_loss + reg_loss
                         if loss == 0 or not torch.isfinite(loss):
                             continue
@@ -306,10 +311,9 @@ def train(opt):
                     best_loss = loss
                     best_epoch = epoch
 
-                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_{epoch}_{step}.pth')
+                    save_checkpoint(model, f'efficientdet-d{opt.compound_coef}.pth')
 
-
-
+                # model.requires_grad_(False)
                 # SET_NAME = "val2017"
                 # VAL_GT = "datasets/coco/annotations/instances_val2017.json"
                 # VAL_IMGS = "datasets/coco/val2017/"
@@ -318,15 +322,26 @@ def train(opt):
                 # coco_gt = COCO(VAL_GT)
                 # image_ids = coco_gt.getImgIds()[:MAX_IMAGES]
                 #
+                # print(VAL_IMGS, SET_NAME, image_ids, coco_gt, model)
                 # evaluate_coco(VAL_IMGS, SET_NAME, image_ids, coco_gt, model)
+                    print(("python coco_eval.py --weights "+ os.path.join(opt.saved_path, f'efficientdet-d{opt.compound_coef}.pth')))
+                    os.system("python coco_eval.py --weights "+ os.path.join(opt.saved_path, f'efficientdet-d{opt.compound_coef}.pth'))
+
+
 
 
                 model.train()
+                # model.requires_grad_(True)
 
                 # Early stopping
                 if epoch - best_epoch > opt.es_patience > 0:
                     print('[Info] Stop training at epoch {}. The lowest loss achieved is {}'.format(epoch, best_loss))
                     break
+
+        save_checkpoint(model, f'efficientdet-d{opt.compound_coef}.pth')
+        os.system("python coco_eval.py --weights " + os.path.join(opt.saved_path, f'efficientdet-d{opt.compound_coef}.pth'))
+
+
     except KeyboardInterrupt:
         save_checkpoint(model, f'efficientdet-d{opt.compound_coef}_{epoch}_{step}.pth')
         writer.close()

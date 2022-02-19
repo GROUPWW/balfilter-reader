@@ -20,7 +20,7 @@ from utils.torch_utils import select_device, time_synchronized
 
 def test(data,
          weights=None,
-         batch_size=16,
+         batch_size=4,
          imgsz=640,
          conf_thres=0.001,
          iou_thres=0.6,  # for NMS
@@ -265,7 +265,8 @@ def test(data,
             map, map50 = cocoEval.stats[:2]  # update results (mAP@0.5:0.95, mAP@0.5)
         except Exception as e:
             print('ERROR: pycocotools unable to run: %s' % e)
-    print(round(map50,5))
+    print(round(map50,4))
+    print(round(map,4))
     # Return results
     model.float()  # for training
     maps = np.zeros(nc) + map

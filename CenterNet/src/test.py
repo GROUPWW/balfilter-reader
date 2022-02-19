@@ -181,14 +181,17 @@ class CtdetDetector(): #可以被重载了
 
         max_det_4 = max(max_det_4, det[4])
 
-        det[0],det[1],det[2],det[3]=4*det[0],4*det[1],4*det[2],4*det[3]
+        det[0],det[1],det[2],det[3]=int(4*det[0]),int(4*det[1]),int(4*det[2]),int(4*det[3])
+
+        # det[0], det[1], det[2], det[3] = max(0,det[0]),max(0,det[1]),max(0,det[2]),max(0,det[3])
+
 
         if det[4] >=0.5:
           color = (0,0,255)
         else:
           color = (255,255,0)
-        cv2.rectangle(image, (det[0], det[1]), (det[2], det[3]),color,2)
-        cv2.putText(image, str(det[4]), (det[0],det[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+        cv2.rectangle(image, (int(det[0]), int(det[1])), (int(det[2]), int(det[3])),color,2)
+        cv2.putText(image, str(det[4]), (int(det[0]),int(det[1])), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
         #print(det[4])
     # cv2.imshow('temp',image)
     # cv2.waitKey()

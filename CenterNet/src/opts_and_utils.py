@@ -20,7 +20,7 @@ class all_opts():
         self.num_epochs = 50                        #epochs
 
         #测试部分专用的配置
-        self.load_model='./weight/model_18.pth'     #测试用的权重文件的路径
+        self.load_model='./weight/striped.pt'     #测试用的权重文件的路径
         self.demo = '..\\inference\\big_pic'       #测试存放图片的位置,可以输入一个文件夹、也可以输入一张图片,这里默认的地址为验证集
 
 

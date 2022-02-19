@@ -26,7 +26,7 @@ from utils.utils import preprocess, invert_affine, postprocess, boolean_string
 
 ap = argparse.ArgumentParser()
 ap.add_argument('-p', '--project', type=str, default='coco', help='project file that contains parameters')
-ap.add_argument('-c', '--compound_coef', type=int, default=0, help='coefficients of efficientdet')
+ap.add_argument('-c', '--compound_coef', type=int, default=6, help='coefficients of efficientdet')
 ap.add_argument('-w', '--weights', type=str, default=None, help='/path/to/weights')
 ap.add_argument('--nms_threshold', type=float, default=0.5, help='nms threshold, don\'t change it if not for testing purposes')
 ap.add_argument('--cuda', type=boolean_string, default=True)
@@ -49,8 +49,8 @@ print(f'running coco-style evaluation on project {project_name}, weights {weight
 params = yaml.safe_load(open(f'projects/{project_name}.yml'))
 obj_list = params['obj_list']
 
-input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536, 1536]
-#input_sizes = [256,256,256,256,256,256,256,256,256]
+# input_sizes = [512, 640, 768, 896, 1024, 1280, 1280, 1536, 1536]
+input_sizes = [256,256,256,256,256,256,256,256,256]
 
 
 def evaluate_coco(img_path, set_name, image_ids, coco, model, threshold=0.05):
@@ -82,7 +82,7 @@ def evaluate_coco(img_path, set_name, image_ids, coco, model, threshold=0.05):
                             anchors, regression, classification,
                             regressBoxes, clipBoxes,
                             threshold, nms_threshold)
-        
+
         if not preds:
             continue
 
@@ -134,6 +134,9 @@ def _eval(coco_gt, image_ids, pred_json_path):
     coco_eval.evaluate()
     coco_eval.accumulate()
     coco_eval.summarize()
+    map, map50 = coco_eval.stats[:2]
+    if map50 >= 0.7:
+        os.rename(weights_path,weights_path.split(".")[0] + "_" + str(round(map50,4)) + ".pth")
 
 
 if __name__ == '__main__':

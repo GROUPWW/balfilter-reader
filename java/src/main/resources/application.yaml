@@ -5,11 +5,33 @@ spring:
         enabled: true
     contentnegotiation:
       favor-parameter: true
-  #  mvc:
-#    static-path-pattern: /res/**
+    static-path-pattern: /static/**
 
-#  resources:
-#    static-locations: [classpath:/haha/]
+  resources:
+    static-locations: classpath:/static , file:C://Users/L/Desktop/BALF/image_output
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/balf?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver #引入pom后这个有效
+
+
+
+
+
+# 配置mybatis规则、使用MyBatisPlus则此项配置无效
+mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  configuration:  # 指定mybatis全局配置文件中的相关配置项
+    map-underscore-to-camel-case: true
+
+#project:
+#  static:
+#    resources:
+#      static-locations: classpath:/, C://Users/L/Desktop/BALF/image_output/
+#      resourceLocations: classpath:/, C://Users/L/Desktop/BALF/image_output/
 #    add-mappings: true
 #    cache:
 #      period: 11000
@@ -18,3 +40,16 @@ spring:
 #  servlet:
 ##    context-path: /world
 #    context-path:
+
+
+
+#spring:
+#  profiles:
+#    include: [data-dev]
+#  static: #静态文件资源
+#    template-page-path: classpath:/templates/page/ #加载模版路径
+#    resources:
+#      #访问静态资源规则，可配置多个以','或'，'隔离
+#      - pathPatterns: /static/**,/chengyi/**
+#        #静态资源文件位置，可配置多个以','或'，'隔离
+#        resourceLocations: classpath:/templates/static/,file:${case.outPath},classpath:/templates/chengyi/,file:${case.chengyi}

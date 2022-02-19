@@ -4,6 +4,7 @@ sys.path.append('./CenterNet/src')
 from PyQt5 import QtCore, QtGui, QtWidgets
 from util.image_with_mouse_control import ImageWithMouseControl
 from util.img_pro import Merge
+
 import os
 import shutil
 from ui import ui_main_window

@@ -96,7 +96,7 @@ class Model(nn.Module):
         if augment:
             print("该测试或验证使用了TTA")
             img_size = x.shape[-2:]  # height, width
-            s = [1, 0.83, 0.67]  # scales
+            s = [1, 0.9, 1.1]  # scales
             # f = [None, 3, None]  # flips (2-ud, 3-lr)
             f = [None, 3, 2]
             y = []  # outputs
