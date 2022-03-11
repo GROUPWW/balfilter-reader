@@ -362,6 +362,8 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.hyp = hyp
         self.image_weights = image_weights
         self.rect = False if image_weights else rect
+
+
         self.mosaic = self.augment and not self.rect  # load 4 images at a time into a mosaic (only during training)
         self.mosaic_border = [-img_size // 2, -img_size // 2]
         self.stride = stride
@@ -520,11 +522,22 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
             index = self.indices[index]
 
         hyp = self.hyp
+
         mosaic = self.mosaic and random.random() < hyp['mosaic']
+
         if mosaic:
             # Load mosaic
             img, labels = load_mosaic(self, index)
             shapes = None
+
+
+            # import cv2
+            # print(labels)
+            # for label in labels:
+            #     print(label)
+            #     cv2.rectangle(img, (int(label[1]),int(label[2])), (int(label[3]),int(label[4])), (0, 0, 255))
+            # cv2.imwrite(str(random.random())+".png",img)
+            # 啊
 
             # MixUp https://arxiv.org/pdf/1710.09412.pdf
             if random.random() < hyp['mixup']:

@@ -5,224 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0feb699c-cb9d-472a-8695-9c8359f5cbe9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/mapper/BlockMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/service/BlockService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/service/impl/BlockServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/BlockMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap-theme.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/static/bootstrap-theme.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/static/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/static/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/static/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/coco_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/coco_eval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Classfication_loss/train/events.out.tfevents.1640062231.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Classfication_loss/val/events.out.tfevents.1640062241.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Loss/train/events.out.tfevents.1640062231.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Loss/val/events.out.tfevents.1640062241.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Regression_loss/train/events.out.tfevents.1640062231.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/Regression_loss/val/events.out.tfevents.1640062241.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/logs/coco/tensorboard/20211221-125018/events.out.tfevents.1640062218.DESKTOP-ES2QGB0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/val2017_bbox_results.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Yet-Another-EfficientDet-Pytorch-master/val2017_bbox_results.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../big_img_in/filter.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../big_img_in/tmp文件/filter0216.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../big_img_in/tmp文件/图片分块20211129.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/Boot05Web01Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/Boot05Web01Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/bean/Person.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/bean/Pet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/BlockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/BlockController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/ParameterTestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/RequestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/ResponseTestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/ViewTestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/converter/GuiguMessageConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/public/timg.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/imageview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/imageview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/success.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/table.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/atguigu/boot/Boot05Web01ApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/Boot05Web01Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/boot/Boot05Web01Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/bean/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/bean/Pet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/BlockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/BlockController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/HelloController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/ParameterTestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/RequestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/ResponseTestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/ViewTestController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/converter/GuiguMessageConverter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/public/timg.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/imageview.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/imageview.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/layout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/success.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/table.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/test.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/atguigu/boot/Boot05Web01ApplicationTests.class" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/interceptor/LoginInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cut_and_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/../cut_and_detect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fast_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fast_detect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7de5e10-8277-4700-b639-43845132a611.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d7de5e10-8277-4700-b639-43845132a611.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/Boot05Web01Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/Boot05Web01Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/bean/BlockInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/bean/BlockInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/controller/BlockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/controller/BlockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/mapper/BlockMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/mapper/BlockMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/service/BlockService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/service/BlockService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/boot/service/impl/BlockServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/service/impl/BlockServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/BlockMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/BlockMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/Boot05Web01Application.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/bean/BlockInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/config/WebConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/controller/BlockController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/mapper/BlockMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/service/BlockService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/boot/service/impl/BlockServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/BlockMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/BlockMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../make_dataset/TrueData/Data20211209-voc-added-neg-jpg/Data-voc-xml/Annotations/0x42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../make_dataset/TrueData/Data20211209-voc-added-neg-jpg/Data-voc-xml/Annotations/0x42.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../make_dataset/TrueData/Data20211215-coco-split/coco/annotations/instances_val2017.json" beforeDir="false" afterPath="$PROJECT_DIR$/../make_dataset/TrueData/Data20211215-coco-split/coco/annotations/instances_val2017.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../util/mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../yolov5/data/hyp.scratch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../yolov5/data/hyp.scratch.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/models/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../yolov5/models/yolo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp38/events.out.tfevents.1640310400.DESKTOP-ES2QGB0.9760.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp38/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp38/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp38/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp51/events.out.tfevents.1642169001.DESKTOP-ES2QGB0.12904.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp51/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp51/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp51/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp52/events.out.tfevents.1642228797.DESKTOP-ES2QGB0.1060.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp52/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp52/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp52/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp53/events.out.tfevents.1642405706.DESKTOP-ES2QGB0.4716.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp53/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp53/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp53/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp54/events.out.tfevents.1642409760.DESKTOP-ES2QGB0.9120.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp54/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp54/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp54/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp55/events.out.tfevents.1642413694.DESKTOP-ES2QGB0.12252.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp55/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp55/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp55/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp56/events.out.tfevents.1642416697.DESKTOP-ES2QGB0.17096.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp56/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp56/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp56/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp58/events.out.tfevents.1642428313.DESKTOP-ES2QGB0.12868.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp58/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp58/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp58/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp59/events.out.tfevents.1642491568.DESKTOP-ES2QGB0.4780.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp59/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp59/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp59/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp60/events.out.tfevents.1642498406.DESKTOP-ES2QGB0.8624.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp60/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp60/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp60/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp61/events.out.tfevents.1642511451.DESKTOP-ES2QGB0.14424.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp61/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp61/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp61/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp62/events.out.tfevents.1642515617.DESKTOP-ES2QGB0.12256.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp62/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp62/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp62/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp63/events.out.tfevents.1642679207.DESKTOP-ES2QGB0.16536.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp63/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp63/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp63/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp64/events.out.tfevents.1642683965.DESKTOP-ES2QGB0.5984.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp64/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp64/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp64/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp65/events.out.tfevents.1642685911.DESKTOP-ES2QGB0.6112.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp65/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp65/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp65/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp66/events.out.tfevents.1643021276.DESKTOP-ES2QGB0.5756.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp66/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp66/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp66/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp67/events.out.tfevents.1643023600.DESKTOP-ES2QGB0.6628.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp67/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp67/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp67/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp68/events.out.tfevents.1643106599.DESKTOP-ES2QGB0.5608.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp68/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp68/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp68/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp69/events.out.tfevents.1643109260.DESKTOP-ES2QGB0.15120.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp69/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp69/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp69/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp70/events.out.tfevents.1643111802.DESKTOP-ES2QGB0.16764.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp70/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp70/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp70/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp71/events.out.tfevents.1643116899.DESKTOP-ES2QGB0.10276.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp71/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp71/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp71/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp72/events.out.tfevents.1643340546.DESKTOP-ES2QGB0.272.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp72/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp72/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp72/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp73/events.out.tfevents.1643346316.DESKTOP-ES2QGB0.7980.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp73/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp73/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp73/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp74/events.out.tfevents.1643348677.DESKTOP-ES2QGB0.8936.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp74/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp74/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp74/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp75/events.out.tfevents.1643452274.DESKTOP-ES2QGB0.13908.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp75/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp75/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp75/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp76/events.out.tfevents.1643479065.DESKTOP-ES2QGB0.13496.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp76/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp76/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp76/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp77/events.out.tfevents.1643619600.DESKTOP-ES2QGB0.17456.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp77/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp77/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp77/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp79/events.out.tfevents.1643628390.DESKTOP-ES2QGB0.7644.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp79/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp79/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp79/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp80/events.out.tfevents.1643631894.DESKTOP-ES2QGB0.7452.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp80/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp80/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/AAAold/exp80/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp10/events.out.tfevents.1643695442.DESKTOP-ES2QGB0.11276.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp10/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp10/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp10/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp6/events.out.tfevents.1643654285.DESKTOP-ES2QGB0.8104.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp6/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp6/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp6/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp7/events.out.tfevents.1643654725.DESKTOP-ES2QGB0.17648.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp7/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp7/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp7/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp8/events.out.tfevents.1643684732.DESKTOP-ES2QGB0.8180.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp8/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp8/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp8/results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp9/events.out.tfevents.1643687179.DESKTOP-ES2QGB0.6128.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp9/hyp.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp9/opt.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp9/results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp0/events.out.tfevents.1645172624.DESKTOP-ES2QGB0.1980.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp0/hyp.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp0/opt.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yolov5/runs/exp0/results.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../yolov5/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../yolov5/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../yolov5/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/../yolov5/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../记录-last也可以统计消除best在val上的随机偏差.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../记录-last也可以统计消除best在val上的随机偏差.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../yolov5/utils/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/../yolov5/utils/datasets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,16 +85,29 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/atguigu/boot" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\L\Desktop\BALF\java\src\main\resources" />
       <recent name="C:\Users\L\Desktop\BALF\java\src\main\java\com\atguigu\boot" />
+      <recent name="C:\Users\L\Desktop\BALF\java\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.Boot05Web01Application (1)">
+    <configuration name="Boot05Web01Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="boot-05-web-01" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.balf.boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.balf.boot.Boot05Web01Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Boot05Web01Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="boot-05-web-01" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.boot.Boot05Web01Application" />
@@ -289,6 +117,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.Boot05Web01Application (1)" />
         <item itemvalue="Spring Boot.Boot05Web01Application" />
       </list>
     </recent_temporary>
@@ -303,7 +132,8 @@
       <updated>1643738989269</updated>
       <workItem from="1643738991688" duration="44673000" />
       <workItem from="1644507283970" duration="6115000" />
-      <workItem from="1645015382394" duration="9723000" />
+      <workItem from="1645015382394" duration="28913000" />
+      <workItem from="1646984809668" duration="2665000" />
     </task>
     <servers />
   </component>

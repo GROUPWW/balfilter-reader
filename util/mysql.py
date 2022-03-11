@@ -38,7 +38,7 @@ def cntRatio(imgName):
     db = pymysql.connect("localhost", "root", "123456", "balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
-    sql = "with t1 as (select count(*) from %s where CONFIDENCE>=0.3),t2 as (select count(*)  from %s where CONFIDENCE>=0.5),t3 as (select count(*)  from %s where CONFIDENCE>=0.7),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from t1, t2,t3,t4"%(databaseName,databaseName,databaseName,databaseName)
+    sql = "with t1 as (select count(*) from %s where CONFIDENCE>=0.8),t2 as (select count(*)  from %s where CONFIDENCE>=0.5),t3 as (select count(*)  from %s where CONFIDENCE>=0.7),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from t1, t2,t3,t4"%(databaseName,databaseName,databaseName,databaseName)
     # print(sql)
     cursor.execute(sql)
     up = cursor.fetchall()
@@ -51,6 +51,7 @@ def cntRatio(imgName):
 
     # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
     result = [round(ele/down[0][0],4) for ele in up[0]]
+    print(imgName,"的总有效图像块数量为",down[0][0])
     return result
     # print(result)
 
@@ -63,17 +64,24 @@ if __name__=="__main__":
         return pow(total, 1 / len(data))
 
     def zhongzhi(data):
-        data.sort()
-        return data[len(data)//2]
+        data_s = sorted(data)
+        return data_s[len(data_s)//2] if len(data_s) % 2 == 1 else (data_s[len(data_s)//2-1] + data_s[len(data_s)//2]) / 2
 
     import os
     import numpy as np
     # l = os.listdir("../big_img_in")
-    l_neg = [ '2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg']
+    l_neg = [ '2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
+             "3_1005256.jpg"]
 
-    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg',
-              '2_1004515.jpg',
-             '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg']
+    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg','2_1004515.jpg',
+             '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
+             "3_1005250.jpg","3_1005251.jpg","3_1005253.jpg"]
+
+
+
+
+
+
 
     neg_list = []
     for ele in l_neg:

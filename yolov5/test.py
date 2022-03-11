@@ -265,8 +265,9 @@ def test(data,
             map, map50 = cocoEval.stats[:2]  # update results (mAP@0.5:0.95, mAP@0.5)
         except Exception as e:
             print('ERROR: pycocotools unable to run: %s' % e)
-    print(round(map50,4))
-    print(round(map,4))
+    # print(round(map50,4))
+    # print(round(map,4))
+
     # Return results
     model.float()  # for training
     maps = np.zeros(nc) + map

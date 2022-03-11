@@ -163,6 +163,8 @@ def cut_and_detect(window,chosen_model='yolov5'):
             img_copy = cv2.cvtColor(np.array(img_copy), cv2.COLOR_RGB2BGR)
             #img_copy=np.array(temp)[:, :, (2, 1, 0)]
 
+            max_det_conf = 0
+
             if not doFilter(img_copy):
                 database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', 0)
 
@@ -200,7 +202,7 @@ def cut_and_detect(window,chosen_model='yolov5'):
 
 
                     # Process detections
-                    max_det_conf = 0
+
                     for det in pred:  # detections per image
 
                         if det is not None and len(det):
@@ -211,11 +213,12 @@ def cut_and_detect(window,chosen_model='yolov5'):
                                 plot_one_box_liuzheng(xyxy, img_copy, label=str(label))
 
                     #print(max_det_conf)
-                    window.pic_name_dic[str(i)+"x"+str(j) + '.jpg'] = str(max_det_conf)
+
                     database.write_in_database(str(i) + "x" + str(j), str(max_det_conf), 'yolov5', 1)
 
                 else:
                     detector.run(img_copy, out, str(i) + "x" + str(j), window)
+            window.pic_name_dic[str(i) + "x" + str(j) + '.jpg'] = str(max_det_conf)
             cv2.imwrite(out + str(i)+"x"+str(j) + ".jpg", img_copy)
 
 
