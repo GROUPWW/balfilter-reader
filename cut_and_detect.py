@@ -100,10 +100,12 @@ class CtdetDetector():
 
 
 def plot_one_box_liuzheng(x, img_copy, label=None):
-    c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
-    cv2.rectangle(img_copy, c1, c2,  (0,0,255), 2)
-    if label:
-        cv2.putText(img_copy, label, (c1[0], c1[1] - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1)
+    if label >= 0.3:
+        label = str(label)
+        c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
+        cv2.rectangle(img_copy, c1, c2,  (0,0,255), 2)
+        if label:
+            cv2.putText(img_copy, label, (c1[0], c1[1] - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1)
 
 
 def cut_and_detect(window,chosen_model='yolov5'):
@@ -120,7 +122,7 @@ def cut_and_detect(window,chosen_model='yolov5'):
 
     if chosen_model=='yolov5':
         yolov5_opt = {'weights': ['./yolov5/weights/infer.pt'], 'img_size': 256,
-                      'conf_thres': 0.3, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
+                      'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
                       'augment': False}
         img_size = yolov5_opt['img_size']
         loader = transforms.Compose([transforms.ToTensor()])
@@ -165,8 +167,9 @@ def cut_and_detect(window,chosen_model='yolov5'):
 
             max_det_conf = 0
 
-            if not doFilter(img_copy):
-                database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', 0)
+            doFilterRes = doFilter(img_copy)
+            if doFilterRes !=1 :
+                database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
 
             else:
 
@@ -210,7 +213,7 @@ def cut_and_detect(window,chosen_model='yolov5'):
                             for *xyxy, conf, cls in reversed(det):
                                 label = round(float(conf),3)
                                 max_det_conf = max(max_det_conf, label)
-                                plot_one_box_liuzheng(xyxy, img_copy, label=str(label))
+                                plot_one_box_liuzheng(xyxy, img_copy, label=label)
 
                     #print(max_det_conf)
 
@@ -258,7 +261,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     if chosen_model=='yolov5':
         yolov5_opt = {'weights': ['./yolov5/weights/infer.pt'], 'img_size': 256,
-                      'conf_thres': 0.3, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
+                      'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
                       'augment': False}
         img_size = yolov5_opt['img_size']
         loader = transforms.Compose([transforms.ToTensor()])
@@ -299,8 +302,10 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
             img_copy = np.array(temp).astype('uint8')
             img_copy = cv2.cvtColor(np.array(img_copy), cv2.COLOR_RGB2BGR)
             #img_copy=np.array(temp)[:, :, (2, 1, 0)]
-            if not doFilter(img_copy):
-                database.write_in_database(str(i) + "x" + str(j), 0, 'yolov5', 0)
+
+            doFilterRes = doFilter(img_copy)
+            if doFilterRes !=1 :
+                database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
 
             else:
 
@@ -346,7 +351,8 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                             for *xyxy, conf, cls in reversed(det):
                                 label = round(float(conf),3)
                                 max_det_conf = max(max_det_conf, label)
-                                plot_one_box_liuzheng(xyxy, img_copy, label=str(label))
+                                print("啊")
+                                plot_one_box_liuzheng(xyxy, img_copy, label=label)
 
 
                     database.write_in_database(str(i)+"x"+str(j), str(max_det_conf), 'yolov5',1)

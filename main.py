@@ -41,6 +41,7 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
         self.photo.setSizePolicy(sizePolicy)
         self.photo.setTabletTracking(False)
         self.photo.setObjectName("photo")
+
         self.horizontalLayout.addWidget(self.photo)
 
     # Qt::TabFocus
@@ -139,8 +140,8 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
         self.progress = QtWidgets.QProgressDialog(self)
         self.progress.setWindowModality(QtCore.Qt.ApplicationModal)
         self.progress.setWindowTitle("Waiting")
-        self.progress.setLabelText("Identifying...")
-        self.progress.setCancelButtonText("Cancel recognition and replace picture")
+        self.progress.setLabelText("Processing...")
+        self.progress.setCancelButtonText("Cancel")
         self.progress.canceled.connect(self.run_cut_and_detect_cancel)
         self.progress.resize(300, 180)
         # Qt::NonModal  非模态：正常模式,能和其它窗口交互
@@ -158,13 +159,13 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
     # 下方两段代码不会产生递归检查，不会递归产生窗口，很棒
     def choose_big_img_path(self):
         if self.big_img_path is None:
-            QtWidgets.QMessageBox.information(self.centralwidget, 'Attention', 'Please select a large field of view microscopic image')
+            QtWidgets.QMessageBox.information(self.centralwidget, 'Attention', 'Please import the large-field image')
             self.action_open_big_img.trigger()
 
 
     def open_big_img(self):
         # 在当前窗口内打开文件对话窗口
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Please select a large field of view microscopic image", os.getcwd())
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Please import the large-field image", os.getcwd())
         suffix = ['jpg', 'jpeg', 'bmp', 'png']
         if any(fileName.endswith(ext) for ext in suffix):
             self.big_img_path = fileName

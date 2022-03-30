@@ -1,11 +1,30 @@
 ﻿<table class="table table-striped">
   <tbody>
-    {% for key in ["Case Number", "Suspiciousness of image block", "Coordinates of image block","Implemented algorithm in machine learning"] %}
+    {% for key in ["Case Number", "Suspiciousness of image block", "Coordinates of image block","Network used"] %}
     <tr>
       <td><b>{{ key|e|capitalize }}</b></td>
       <td>{{ data[key]|e }}</td>
     </tr>
     {% endfor %}
+
+
+    <tr>
+      <td>
+        <b>AI diagnosis of this case</b>
+      </td>
+      <td>Positive</td>
+    </tr>
+
+    <tr>
+      <td>
+        <b>Is it used to expand the dataset?</b>
+        &nbsp;&nbsp;
+        <input type="radio" name="isAccepted" value=1><b>yes</b>
+        <input type="radio" name="isAccepted" value=1><b>no</b>
+      </td>
+      <td><input type="submit" value="submit"></td>
+    </tr>
+
   </tbody>
 </table>
 

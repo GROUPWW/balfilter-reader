@@ -34,13 +34,13 @@ y2 = [0.08,0.37,0.53,0.15,0.04,0.07,0.23,0.63,0.18,1.16,0.10,0.48,1.30,0.25]
 # y2 = [0.04, 0.07, 0.08, 0.1,0.15, 0.18,0.23, 0.25, 0.37, 0.48, 0.53, 0.63, 1.16, 1.3]
 plt.ylabel("Proportion of suspicious image blocks")
 
-plt.scatter(x1, y1,c = "b",label = "neg")
-plt.scatter(x2, y2,c = "r",label = "pos")
+plt.scatter(x1, y1,c = "b",label = "Negative")
+plt.scatter(x2, y2,c = "r",label = "Positive")
 plt.xticks([])
 plt.yticks([0,0.11,0.175,0.24,0.4,0.6,0.8,1.0,1.2,1.4])
-plt.hlines(0.11, -1, 19, colors = "b",linestyles = "dashed",label="neg median")
-plt.hlines(0.24, -1, 19, colors = "r",linestyles = "dashed",label="pos median")
-plt.hlines(0.175, -1, 19, colors = "black",linestyles = "dashed",label="threshold")
+plt.hlines(0.11, -1, 19, colors = "b",linestyles = "dashed",label="Negative Median")
+plt.hlines(0.24, -1, 19, colors = "r",linestyles = "dashed",label="Positive Median")
+plt.hlines(0.175, -1, 19, colors = "black",linestyles = "dashed",label="Threshold")
 plt.legend()
 plt.show()
 

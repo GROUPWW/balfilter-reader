@@ -189,13 +189,13 @@ def doFilter(img_copy):
     # cv2.waitKey
     # 过滤污染、对焦滤膜
     if cntBluePurple(img_copy) > 0.3095 or cntRed(img_copy) > 0.383 or cntBlack(img_copy) > 0.0295 or cntSobel(img_copy) > 0.0084:
-        return False
+        return 0
 
     # 过滤无细胞
     if cntBluePurple(img_copy) < 0.0314 and cntRed(img_copy) < 0.0311:
-        return False
+        return -1
 
-    return True
+    return 1
 
 
 

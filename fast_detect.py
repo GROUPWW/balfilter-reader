@@ -20,11 +20,20 @@ l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg', '2_
 # imgList = os.listdir(listDir)
 
 imgList = l_neg+l_pos
+imgList = ['2_1004521.jpg']
 
 # imgList = glob.glob(r'big_img_in/tmp/black/*.jpg')
 print(imgList)
-
+import time
+timeList = []
 for ele in imgList :
     ele = listDir + ele
     if ele.split(".")[-1] == "jpg":
+        t0 = time.time()
         cut_and_detect_mini(ele)
+        psTime = time.time() - t0
+        print(psTime)
+        timeList.append(psTime)
+import numpy as np
+print(timeList)
+print(np.mean(timeList))

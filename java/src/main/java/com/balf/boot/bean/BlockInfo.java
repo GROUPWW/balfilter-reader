@@ -1,11 +1,13 @@
 package com.balf.boot.bean;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
 
 @Data
+@Transactional
 public class BlockInfo implements Serializable {
 
     private String imgName;

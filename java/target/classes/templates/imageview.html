@@ -1,14 +1,14 @@
 <head>
     <title>BALFDetector</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" th:href="@{/static/bootstrap.min.css}">
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" th:href="@{/static/bootstrap-theme.min.css}">
+    <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
 
-    <script th:src="@{/static/jquery.min.js}"></script>
+    <script src="/static/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script th:src="@{/static/bootstrap.min.js}"></script>
+    <script src="/static/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -123,6 +123,23 @@
                             <td>
                         </form>
 
+                    </tr>
+
+                    <tr th:each="message:${messageList}">
+                        <td th:text="${message[0]}"></td>
+                        <td th:text="${message[1]}+' '+${message[2]}"></td>
+                    </tr>
+
+                    <tr>
+                        <form th:action=" '/result/'+ ${caseID} +'/' + ${topSusId}" method="post" name="formName">
+                            <td>
+                                <b>增加备注：</b>
+                                <input type="text" name="addMessage" style="width:70%"><b></b>
+                            </td>
+                            <td>
+                                <input type="submit">
+                            <td>
+                        </form>
                     </tr>
 
                     </tbody>

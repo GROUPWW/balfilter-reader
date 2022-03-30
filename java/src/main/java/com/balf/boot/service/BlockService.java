@@ -12,4 +12,6 @@ public interface BlockService {
     public BlockInfo getOneBlockByConfidenceDesc(Integer index, String caseID);
 
     public Integer setOneAccepted(String imgName, Integer isAccepted,String caseID);
+
+    public Integer addMessage(BlockInfo blockInfo, String addMessage,String caseID,String userInfo);
 }

@@ -34,6 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         Object loginUser = session.getAttribute("loginUser");
+//        System.out.println(loginUser);
 
         if(loginUser != null){
             //放行
@@ -41,9 +42,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         //拦截住。未登录。跳转到登录页
-        request.setAttribute("msg","请先登录");
+//        request.setAttribute("msg","请先登录");
 //        re.sendRedirect("/");
-        request.getRequestDispatcher("/").forward(request,response);
+//        request.getRequestDispatcher("/").forward(request,response);
+        response.sendRedirect("/");
         return false;
     }
 

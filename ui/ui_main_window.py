@@ -173,7 +173,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Read results"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "BALFilter Reader"))
         self.prev_button.setText(_translate("MainWindow", "Previous"))
         self.next_button.setText(_translate("MainWindow", "Next"))
 
@@ -183,6 +183,6 @@ class Ui_MainWindow(object):
 
         self.menuopen.setTitle(_translate("MainWindow", "file"))
         self.menu.setTitle(_translate("MainWindow", "help"))
-        self.action_open_big_img.setText(_translate("MainWindow", "Please select a large field of view microscopic image"))
+        self.action_open_big_img.setText(_translate("MainWindow", "Please import the large-field image"))
         self.action_change_img_save_path.setText(_translate("MainWindow", "Change image saving path"))
         self.action_help.setText(_translate("MainWindow", "Open the help window"))
