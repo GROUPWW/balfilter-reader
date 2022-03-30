@@ -38,20 +38,13 @@ def cntRatio(imgName):
     db = pymysql.connect("localhost", "root", "123456", "balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
-    sql = "with t_1 as (select count(*) from %s where is_valid=0),t_no as (select count(*) from %s where is_valid=-1),t0 as (select count(*) from %s where CONFIDENCE =0 and is_valid=1),t_small as (select count(*) from %s where CONFIDENCE >0 and CONFIDENCE<0.3),t1 as (select count(*) from %s where CONFIDENCE >=0.3 and CONFIDENCE<0.6),t3 as (select count(*)  from %s where CONFIDENCE>=0.6 and CONFIDENCE<0.9),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from t_1,t_no,t0,t_small,t1,t3,t4"%(databaseName,databaseName,databaseName,databaseName,databaseName,databaseName,databaseName)
+    sql = "with t_1 as (select CONFIDENCE from %s where is_valid=0),t_no as (select CONFIDENCE from %s where is_valid=-1),t0 as (select CONFIDENCE from %s where CONFIDENCE =0 and is_valid=1),t_small as (select CONFIDENCE from %s where CONFIDENCE >0 and CONFIDENCE<0.3),t1 as (select CONFIDENCE from %s where CONFIDENCE >=0.3 and CONFIDENCE<0.6),t3 as (select CONFIDENCE  from %s where CONFIDENCE>=0.6 and CONFIDENCE<0.9),t4 as (select CONFIDENCE  from %s where CONFIDENCE>=0.9) select * from t_1,t_no,t0,t_small,t1,t3,t4"%(databaseName,databaseName,databaseName,databaseName,databaseName,databaseName,databaseName)
     # print(sql)
     cursor.execute(sql)
     up = cursor.fetchall()
     # print(up[0])
-
-    sql = "select count(*) from %s"%(databaseName)
-    cursor.execute(sql)
-    down = cursor.fetchall()
-    # print(down[0][0])
-
-    # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
-    result = [round(ele/down[0][0],4) for ele in up[0]]
-    print(imgName,"的总有效图像块数量为",down[0][0])
+    print(up[0])
+    啊
     return up[0]
     # print(result)
 
