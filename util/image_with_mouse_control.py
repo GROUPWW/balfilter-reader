@@ -17,8 +17,8 @@ class ImageWithMouseControl(QWidget):
         self.scaled_img = self.img
         self.first = True
         self.point = QPoint(0, 0)
-        self.lb1 = QLabel(self)
-        self.lb1.setOpenExternalLinks(True)
+        # self.lb1 = QLabel(self)
+        # self.lb1.setOpenExternalLinks(True)
 
     def adjust_image(self):
         h = self.img.height()
@@ -38,8 +38,8 @@ class ImageWithMouseControl(QWidget):
                 self.scaled_img = self.img.scaledToWidth(minw)
 
         self.point = QPoint(int(w1 / 2 - self.scaled_img.width() / 2), int(h1 / 2 - self.scaled_img.height() / 2))
-        self.lb1.setText('<a href = "http://localhost:8080/result/1008906/0">Show Result on Web</a>')
-        self.lb1.setGeometry(200, 30, 1000, 100)
+        # self.lb1.setText('<a href = "http://localhost:8080/0">Show Result on Web</a>')
+        # self.lb1.setGeometry(200, 30, 1000, 100)
 
     def paintEvent(self, e):
         # 初始化时图片为空

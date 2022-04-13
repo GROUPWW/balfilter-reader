@@ -34,17 +34,17 @@ def out_mysql(case_id_and_model):
 
 
 
-def cntRatio(imgName):
+def cntRatio2(imgName):
     db = pymysql.connect("localhost", "root", "123456", "balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
-    sql = "with t_1 as (select CONFIDENCE from %s where is_valid=0),t_no as (select CONFIDENCE from %s where is_valid=-1),t0 as (select CONFIDENCE from %s where CONFIDENCE =0 and is_valid=1),t_small as (select CONFIDENCE from %s where CONFIDENCE >0 and CONFIDENCE<0.3),t1 as (select CONFIDENCE from %s where CONFIDENCE >=0.3 and CONFIDENCE<0.6),t3 as (select CONFIDENCE  from %s where CONFIDENCE>=0.6 and CONFIDENCE<0.9),t4 as (select CONFIDENCE  from %s where CONFIDENCE>=0.9) select * from t_1,t_no,t0,t_small,t1,t3,t4"%(databaseName,databaseName,databaseName,databaseName,databaseName,databaseName,databaseName)
+    sql = "with t_1 as (select AVG(CONFIDENCE) from %s where is_valid=0),t_no as (select AVG(CONFIDENCE) from %s where is_valid=-1),t0 as (select AVG(CONFIDENCE) from %s where CONFIDENCE =0 and is_valid=1),t_small as (select AVG(CONFIDENCE) from %s where CONFIDENCE >0),t1 as (select AVG(CONFIDENCE) from %s where CONFIDENCE >=0.3),t3 as (select AVG(CONFIDENCE)  from %s where CONFIDENCE>=0.6),t4 as (select AVG(CONFIDENCE)  from %s where CONFIDENCE>=0.9) select * from t_1,t_no,t0,t_small,t1,t3,t4"%(databaseName,databaseName,databaseName,databaseName,databaseName,databaseName,databaseName)
     # print(sql)
     cursor.execute(sql)
     up = cursor.fetchall()
+    # # print(up[0])
     # print(up[0])
-    print(up[0])
-    啊
+
     return up[0]
     # print(result)
 
@@ -79,7 +79,7 @@ if __name__=="__main__":
     neg_list = []
     for ele in l_neg:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio2(ele.split(".")[0])
             neg_list.append(tmpRes)
 
     # print(neg_list)
@@ -101,7 +101,7 @@ if __name__=="__main__":
     pos_list = []
     for ele in l_pos:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio2(ele.split(".")[0])
             pos_list.append(tmpRes)
 
     # print(pos_list)

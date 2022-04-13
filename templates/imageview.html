@@ -34,17 +34,9 @@
 <!--    col-md-6 就是当这个内容在电脑上显示，就占6格，刚好是电脑屏幕的1/2。-->
     <div class="col-md-6">
       <img src="{{ url_for('static', filename=data.find_img+data.nxn+'.jpg') }}" class="img-responsive center-block" alt="">
-    </div>
-
-    <div class="col-md-6">
-      <!--<h2>{{data.name}}</h2>-->
-      {% include 'table.html' %}
-    </div>
-
-  </div>
 
 
-  <div class="row">
+          <div class="row">
     <script type="text/javascript">
         function show3x3(){
             var h = document.getElementById("nxn");
@@ -91,13 +83,33 @@
 <!--      "button"多数情况下，用于通过JS启动脚本-->
     <input type="button" value="Zoom out (0.3x)" onClick="show3x3()">
     <input type="button" value="Zoom out (0.2x)" onClick="show5x5()">
-    <input type="button" value="Hide surrounding image blocks" onClick="hide()">
+    <input type="button" value="Hide adjacent image blocks" onClick="hide()">
 <!--    <img src="001.jpg" id="s" style="display:none">-->
 
     <div style="display:none" id="nxn">
     </div>
     <!--    <img src="{{ url_for('static', filename='images/'+data.nxn+'.jpg') }}" class="img-responsive center-block" alt="">-->
   </div>
+
+    </div>
+
+
+    <div class="col-md-6">
+      <!--<h2>{{data.name}}</h2>-->
+      {% include 'table.html' %}
+
+
+  <img src="{{ url_for('static', filename='res_3_1005251.jpg') }}" class="img-responsive center-block" alt="" style="height: 768px">
+
+    </div>
+
+
+
+
+  </div>
+
+
+
 
 
 </div>

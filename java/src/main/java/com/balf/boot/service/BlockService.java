@@ -14,4 +14,6 @@ public interface BlockService {
     public Integer setOneAccepted(String imgName, Integer isAccepted,String caseID);
 
     public Integer addMessage(BlockInfo blockInfo, String addMessage,String caseID,String userInfo);
+
+    public List cntRatio(String caseID);
 }

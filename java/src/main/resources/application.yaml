@@ -8,7 +8,7 @@ spring:
     static-path-pattern: /static/**
 
   resources:
-    static-locations: classpath:/static , file:C://Users/L/Desktop/BALF/image_output
+    static-locations: classpath:/static , file:C://Users/L/Desktop/BALFilter_Reader/image_output
 
   datasource:
     url: jdbc:mysql://localhost:3306/balf?serverTimezone=UTC

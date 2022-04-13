@@ -98,7 +98,7 @@ if __name__=="__main__":
 
     l = l_pos + l_neg
 
-    # l = ["1008906.jpg"]
+    l = ["3_1005251.jpg"]
 
     import cv2
     neg_list = []
@@ -109,7 +109,9 @@ if __name__=="__main__":
             # tmpRes = 1 - tmpRes
             # tmpRes *= 255
             # tmpRes = tmpRes.astype(np.uint8)
+            # tmpRes = cv2.applyColorMap(tmpRes,cv2.COLORMAP_HOT)
 
+###########################################################################
             tmpRes = np.stack((tmpRes,) * 3, axis=-1)
             for i in range(tmpRes.shape[0]):
                 for j in range(tmpRes.shape[1]):
@@ -125,18 +127,20 @@ if __name__=="__main__":
                             tmpRes[i][j][0] = 0
                             tmpRes[i][j][1] = 0
                             tmpRes[i][j][2] = -600*tmpRes[i][j][1] + 705
+#################################################################################
 
+            #
             # [0-0.75] -> （255，192，192）-(255,0,0)
             # y = ax + b
             # 192 = b
             # y = ax + 192
             # 0 = -256 * 0.75 + 192
-            #[0.75-0.95] ->(255,0,0) - (135,0,0)
+            # [0.75-0.95] ->(255,0,0) - (135,0,0)
             # y = ax + b
             # y = -600x + b
             # 255 = -450 + b
 
-            # tmpRes = cv2.applyColorMap(tmpRes,cv2.COLORMAP_HOT)
+
 
 
 

@@ -4,6 +4,9 @@ import math
 from copy import deepcopy
 from pathlib import Path
 
+import cv2
+import numpy as np
+
 import torch
 import torch.nn as nn
 
@@ -92,6 +95,9 @@ class Model(nn.Module):
         self.info()
         print('')
 
+
+
+
     def forward(self, x, augment=False, profile=False):
         if augment:
             print("该测试或验证使用了TTA")
@@ -103,7 +109,10 @@ class Model(nn.Module):
             for si, fi in zip(s, f):
                 xi = scale_img(x.flip(fi) if fi else x, si)
                 yi = self.forward_once(xi)[0]  # forward
-                # cv2.imwrite('img%g.jpg' % s, 255 * xi[0].numpy().transpose((1, 2, 0))[:, :, ::-1])  # save
+
+
+                cv2.imwrite('img%g.jpg' % si, (255 * xi[0].cpu().numpy().transpose((1, 2, 0))[:, :, ::-1]).astype(np.int))  # save
+
                 yi[..., :4] /= si  # de-scale
                 if fi == 2:
                     yi[..., 1] = img_size[0] - yi[..., 1]  # de-flip ud

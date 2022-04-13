@@ -31,7 +31,7 @@ public class BlockController {
     public String get(HttpServletRequest request,@PathVariable("topSusId") Integer topSusId,@PathVariable("caseID") String caseID){
 
         BlockInfo blockInfo = blockService.getOneBlockByConfidenceDesc(topSusId, caseID);
-        return getBlock(request, blockInfo);
+        return getBlock(request, blockInfo, caseID);
 
 //        ArrayList arrayList = new ArrayList();
 //        ArrayList innerArrayList = new ArrayList();
@@ -54,16 +54,16 @@ public class BlockController {
         }
 
         blockInfo = blockService.getOneBlockByConfidenceDesc(topSusId, caseID); //防止post后还是上一次的状态
-        return getBlock(request, blockInfo);
+        return getBlock(request, blockInfo, caseID);
     }
 
-    private String getBlock(HttpServletRequest request, BlockInfo blockInfo) {
+    private String getBlock(HttpServletRequest request, BlockInfo blockInfo, String caseID) {
         List<ArrayList> oldMessageList = JSON.parseArray(blockInfo.getComment(), ArrayList.class);
         request.setAttribute("messageList",oldMessageList);
         request.setAttribute("blockInfo",blockInfo);
         request.setAttribute("t3x3List",blockService.toNxnList(blockInfo.getImgName(),98,1));
         request.setAttribute("t5x5List",blockService.toNxnList(blockInfo.getImgName(),98,2));
-
+        request.setAttribute("cntRatio",blockService.cntRatio(caseID));
         return "imageview";
     }
 

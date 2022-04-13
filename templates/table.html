@@ -1,23 +1,129 @@
 ﻿<table class="table table-striped">
   <tbody>
-    {% for key in ["Case Number", "Suspiciousness of image block", "Coordinates of image block","Network used"] %}
     <tr>
-      <td><b>{{ key|e|capitalize }}</b></td>
+      <td>
+        <b>Results for the case</b>
+      </td>
+
+    </tr>
+
+    {% for key in ["Case ID"] %}
+    <tr>
+      <td>Case ID</td>
+      <td>{{ data[key]|e }}</td>
+    </tr>
+    {% endfor %}
+
+    <tr>
+      <td>
+        Diagnosis of BALFiter Reader
+      </td>
+      <td>
+        Positive
+      </td>
+
+    </tr>
+
+    <tr>
+      <td>
+        Score of tumor suspiciousness(<sub>ts</sub>)
+      </td>
+
+    </tr>
+
+
+
+    <tr>
+      <td>
+        0.9<=S<sub>ts</sub>
+      </td>
+      <td>
+        {{data["sts"][2]}}
+      </td>
+    </tr>
+
+
+        <tr>
+      <td>
+        0.6<=S<sub>ts</sub>
+      </td>
+      <td>
+        {{data["sts"][1]}}
+      </td>
+    </tr>
+
+
+        <tr>
+      <td>
+        0.3<=S<sub>ts</sub>
+      </td>
+      <td>
+        {{data["sts"][0]}}
+      </td>
+    </tr>
+
+
+<!--        <tr>-->
+<!--      <td>-->
+<!--        0&lt;S<sub>ts</sub>-->
+<!--      </td>-->
+<!--      <td>-->
+<!--        {{data["sts"][1]}}-->
+<!--      </td>-->
+<!--    </tr>-->
+
+
+<!--        <tr>-->
+<!--      <td>-->
+<!--        S<sub>ts</sub>=0-->
+<!--      </td>-->
+<!--      <td>-->
+<!--        {{data["sts"][0]}}-->
+<!--      </td>-->
+<!--    </tr>-->
+
+
+
+
+    <tr></tr>
+
+
+    <tr>
+      <td>
+        <b>Results for currently displayed image block</b>
+      </td>
+
+    </tr>
+
+
+
+
+
+    <tr>
+      <td>
+        Score of tumor suspiciousness(<sub>ts</sub>)
+      </td>
+      <td>
+{{[data["图像块可疑度"]]}}
+      </td>
+    </tr>
+
+
+
+
+
+    {% for key in ["Location"] %}
+    <tr>
+      <td>{{ key|e|capitalize }}</td>
       <td>{{ data[key]|e }}</td>
     </tr>
     {% endfor %}
 
 
-    <tr>
-      <td>
-        <b>AI diagnosis of this case</b>
-      </td>
-      <td>Positive</td>
-    </tr>
 
     <tr>
       <td>
-        <b>Is it used to expand the dataset?</b>
+        Using current image block for dataset expansion?
         &nbsp;&nbsp;
         <input type="radio" name="isAccepted" value=1><b>yes</b>
         <input type="radio" name="isAccepted" value=1><b>no</b>
@@ -25,6 +131,28 @@
       <td><input type="submit" value="submit"></td>
     </tr>
 
+
+
+          <tr>
+      <td>
+        <b></b>
+      </td>
+                  <td>
+        <b></b>
+      </td>
+
+    </tr>
+
+      <tr>
+      <td>
+        <h1>Heatmap</h1>
+      </td>
+
+    </tr>
+
+
   </tbody>
+
+
 </table>
 

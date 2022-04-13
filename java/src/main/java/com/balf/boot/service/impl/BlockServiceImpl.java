@@ -10,9 +10,7 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -52,7 +50,31 @@ public class BlockServiceImpl implements BlockService {
 
 
 
+    public List cntRatio(String caseID){
+        Map map = blockMapper.cnt(caseID);
 
+        Long t0 = (Long) map.get("t0");
+        Long t_small = (Long) map.get("t_small");
+        Long t1 = (Long) map.get("t1");
+        Long t3 = (Long) map.get("t3");
+        Long t4 = (Long) map.get("t4");
+
+        Float sum = Float.valueOf(t0 + t_small + t1 + t3 + t4);
+
+
+        List res = new ArrayList();
+
+        res.add(String.format("%.2f", t0*100/sum)+"%");
+        res.add(String.format("%.2f", t_small*100/sum)+"%");
+        res.add(String.format("%.2f", t1*100/sum)+"%");
+        res.add(String.format("%.2f", t3*100/sum)+"%");
+        res.add(String.format("%.2f", t4*100/sum)+"%");
+
+
+
+        return res;
+
+    }
 
 
     // 这个应该移动到service里

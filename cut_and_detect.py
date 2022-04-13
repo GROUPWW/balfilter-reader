@@ -101,6 +101,7 @@ class CtdetDetector():
 
 def plot_one_box_liuzheng(x, img_copy, label=None):
     if label >= 0.3:
+
         label = str(label)
         c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
         cv2.rectangle(img_copy, c1, c2,  (0,0,255), 2)
@@ -291,6 +292,12 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
     the_shorter_num = int(the_shorter/img_size)
     print('短边长度为： ', the_shorter_num)
 
+    list3 = []
+    list6 = []
+    list9 = []
+
+    import time
+    timeList = []
 
 
     for i in range(0,the_shorter_num):
@@ -310,7 +317,11 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
             else:
 
 
+
                 if chosen_model == 'yolov5':
+
+                    t0 = time.time()
+
                     img = loader(temp)
 
                     # img = img[[2, 1, 0]].unsqueeze(0)
@@ -336,10 +347,8 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                     # Apply NMS
                     pred = non_max_suppression(pred, yolov5_opt['conf_thres'], yolov5_opt['iou_thres'], classes=yolov5_opt['classes'], agnostic=yolov5_opt['agnostic_nms'])
 
-
-
-
-
+                    psTime = time.time() - t0
+                    timeList.append(psTime)
 
 
                     # Process detections
@@ -351,7 +360,14 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                             for *xyxy, conf, cls in reversed(det):
                                 label = round(float(conf),3)
                                 max_det_conf = max(max_det_conf, label)
-                                print("啊")
+                                # print("啊")
+
+                                if label>=0.3:
+                                    list3.append(label)
+                                if label>= 0.6:
+                                    list6.append(label)
+                                if label>= 0.9:
+                                    list9.append(label)
                                 plot_one_box_liuzheng(xyxy, img_copy, label=label)
 
 
@@ -363,9 +379,33 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
             QApplication.processEvents()
 
 
+    timeList = timeList[1:]
+    print("##################################")
+    for ele in timeList:
+        print(ele)
 
+
+    print("###################################")
+
+    print(np.mean(timeList))
+    print(np.std(timeList))
+
+
+    avg = [0,0,0]
+    num = [0,0,0]
+    if len(list3) != 0:
+        avg[0] = np.mean(list3)
+        num[0] = len(list3)
+
+    if len(list6) != 0:
+        avg[1] = np.mean(list6)
+        num[1] = len(list6)
+
+    if len(list9) != 0:
+        avg[2] = np.mean(list9)
+        num[2] = len(list9)
 
     database.db.commit()
     database.db.close()
-    return out
+    return avg,num
 

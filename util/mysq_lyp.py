@@ -34,7 +34,7 @@ def out_mysql(case_id_and_model):
 
 
 
-def cntRatio(imgName):
+def cntRatio1(imgName):
     db = pymysql.connect("localhost", "root", "123456", "balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
@@ -44,14 +44,14 @@ def cntRatio(imgName):
     up = cursor.fetchall()
     # print(up[0])
 
-    sql = "select count(*) from %s"%(databaseName)
-    cursor.execute(sql)
-    down = cursor.fetchall()
-    # print(down[0][0])
-
-    # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
-    result = [round(ele/down[0][0],4) for ele in up[0]]
-    print(imgName,"的总有效图像块数量为",down[0][0])
+    # sql = "select count(*) from %s"%(databaseName)
+    # cursor.execute(sql)
+    # down = cursor.fetchall()
+    # # print(down[0][0])
+    #
+    # # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
+    # result = [round(ele/down[0][0],4) for ele in up[0]]
+    # print(imgName,"的总有效图像块数量为",down[0][0])
     return up[0]
     # print(result)
 
@@ -86,7 +86,7 @@ if __name__=="__main__":
     neg_list = []
     for ele in l_neg:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio1(ele.split(".")[0])
             neg_list.append(tmpRes)
 
     # print(neg_list)
@@ -108,7 +108,7 @@ if __name__=="__main__":
     pos_list = []
     for ele in l_pos:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio1(ele.split(".")[0])
             pos_list.append(tmpRes)
 
     # print(pos_list)

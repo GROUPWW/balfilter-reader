@@ -50,7 +50,7 @@ public class AdminWebConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/**")  //所有请求都被拦截包括静态资源
+                .addPathPatterns("/")  //所有请求都被拦截包括静态资源
                 .excludePathPatterns("/","/login","/register","/**/static/**","/error" //增加注册页面
 //                        ,"/fonts/**","/images/**",
 //                        "/js/**","/aa/**"

@@ -34,25 +34,19 @@ def out_mysql(case_id_and_model):
 
 
 
-def cntRatio(imgName):
+def cntRatio2(imgName):
     db = pymysql.connect("localhost", "root", "123456", "balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
-    sql = "with t2 as (select count(*)  from %s where CONFIDENCE>=0.3),t3 as (select count(*)  from %s where CONFIDENCE>=0.6),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from  t2,t3,t4"%(databaseName,databaseName,databaseName)
+    # sql = "with t_1 as (select STDDEV(CONFIDENCE) from %s where is_valid=0),t_no as (select STDDEV(CONFIDENCE) from %s where is_valid=-1),t0 as (select STDDEV(CONFIDENCE) from %s where CONFIDENCE =0 and is_valid=1),t_small as (select STDDEV(CONFIDENCE) from %s where CONFIDENCE >0 and CONFIDENCE<0.3),t1 as (select STDDEV(CONFIDENCE) from %s where CONFIDENCE >=0.3 and CONFIDENCE<0.6),t3 as (select STDDEV(CONFIDENCE)  from %s where CONFIDENCE>=0.6 and CONFIDENCE<0.9),t4 as (select STDDEV(CONFIDENCE)  from %s where CONFIDENCE>=0.9) select * from t_1,t_no,t0,t_small,t1,t3,t4"%(databaseName,databaseName,databaseName,databaseName,databaseName,databaseName,databaseName)
+    sql = "with t1 as (select STDDEV(CONFIDENCE) from %s where CONFIDENCE >=0.3),t3 as (select STDDEV(CONFIDENCE)  from %s where CONFIDENCE>=0.6),t4 as (select STDDEV(CONFIDENCE)  from %s where CONFIDENCE>=0.9) select * from t1,t3,t4"%(databaseName,databaseName,databaseName)
     # print(sql)
     cursor.execute(sql)
     up = cursor.fetchall()
+    # # print(up[0])
     # print(up[0])
 
-    sql = "select count(*) from %s where is_Valid=1"%(databaseName)
-    cursor.execute(sql)
-    down = cursor.fetchall()
-    # print(down[0][0])
-
-    # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
-    result = [round(ele/down[0][0],4) for ele in up[0]]
-    print(imgName,"的总有效图像块数量为",down[0][0])
-    return result
+    return up[0]
     # print(result)
 
 if __name__=="__main__":
@@ -86,7 +80,7 @@ if __name__=="__main__":
     neg_list = []
     for ele in l_neg:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio2(ele.split(".")[0])
             neg_list.append(tmpRes)
 
     # print(neg_list)
@@ -94,54 +88,34 @@ if __name__=="__main__":
 
     # neg_list.append(np.median(neg_list, 0))
 
-    zhongzhimean = []
-    col_jige_means = []
-    for j in range(len(neg_list[0])):
 
-        col = []
-        for i in range(len(neg_list)):
-            col.append(neg_list[i][j])
-        zhongzhimean.append(zhongzhi(col))
-        col_jige_means.append(geometric_mean(col))
-    neg_list.append(np.mean(neg_list, 0))
-    neg_list.append(zhongzhimean)
-    neg_list.append(col_jige_means)
 
 
     for j in range(len(neg_list[0])):
         for i in range(len(neg_list)):
 
-            print(str(round(neg_list[i][j]*100,2))+"%")
+            # print(str(round(neg_list[i][j]*100,2))+"%")
+            print(neg_list[i][j])
         print("\n")
 
 
     pos_list = []
     for ele in l_pos:
         if ele.split(".")[-1] == "jpg":
-            tmpRes = cntRatio(ele.split(".")[0])
+            tmpRes = cntRatio2(ele.split(".")[0])
             pos_list.append(tmpRes)
 
     # print(pos_list)
     # print(np.mean(pos_list,0))
 
     # pos_list.append(np.median(pos_list, 0))
-    
-    col_jige_means = []
-    zhongzhimean = []
-    for j in range(len(pos_list[0])):
 
-        col = []
-        for i in range(len(pos_list)):
-            col.append(pos_list[i][j])
-        zhongzhimean.append(zhongzhi(col))
-        col_jige_means.append(geometric_mean(col))
-    pos_list.append(np.mean(pos_list, 0))
-    pos_list.append(zhongzhimean)
-    pos_list.append(col_jige_means)
+
 
 
     for j in range(len(pos_list[0])):
         for i in range(len(pos_list)):
 
-            print(str(round(pos_list[i][j]*100,2))+"%")
+            # print(str(round(pos_list[i][j]*100,2))+"%")
+            print(pos_list[i][j])
         print("\n")

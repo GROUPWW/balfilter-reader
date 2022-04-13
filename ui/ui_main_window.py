@@ -132,6 +132,10 @@ class Ui_MainWindow(object):
         self.set_5x5_button.setObjectName("set_5x5_button")
         self.verticalLayout.addWidget(self.set_5x5_button)
 
+        self.set_7x7_button = QtWidgets.QPushButton(self.mid_box)
+        self.set_7x7_button.setObjectName("set_7x7_button")
+        self.verticalLayout.addWidget(self.set_7x7_button)
+
         self.save_img_button = QtWidgets.QPushButton(self.mid_box)
         self.save_img_button.setObjectName("save_img_button")
         self.verticalLayout.addWidget(self.save_img_button)
@@ -179,6 +183,7 @@ class Ui_MainWindow(object):
 
         self.set_3x3_button.setText(_translate("MainWindow", "Zoom out (0.3x)"))
         self.set_5x5_button.setText(_translate("MainWindow", "Zoom out (0.2x)"))
+        self.set_7x7_button.setText(_translate("MainWindow", "Show Results on Web"))
         self.save_img_button.setText(_translate("MainWindow", "Save cell"))
 
         self.menuopen.setTitle(_translate("MainWindow", "file"))
