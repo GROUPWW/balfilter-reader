@@ -3,14 +3,14 @@ import pymysql
 class in_mysql():
     def __init__(self,case_id_and_model):
         self.case_id_and_model = case_id_and_model
-        print(type(case_id_and_model))
+        # print(type(case_id_and_model))
         self.db  = pymysql.connect("localhost", "root", "123456", "balf")
         self.cursor = self.db.cursor()
         self.sql = "DROP TABLE IF EXISTS DATABASE_%s" % (self.case_id_and_model)
         self.cursor.execute(self.sql)
         self.sql = "CREATE TABLE DATABASE_%s (IMG_NAME  CHAR(20) NOT NULL,CONFIDENCE FLOAT,MODEL CHAR(20),IS_VALID INT,IS_ACCEPTED INT,COMMENT  VARCHAR (5000))" % (case_id_and_model)
         self.cursor.execute(self.sql)
-        print('创建数据库',case_id_and_model,'成功')
+        print('Database ',case_id_and_model,' created successfully')
 
 
     def write_in_database(self,nxn_img_name,conf,used_model,isValid):
@@ -111,7 +111,7 @@ if __name__=="__main__":
     for j in range(len(neg_list[0])):
         for i in range(len(neg_list)):
 
-            print(str(round(neg_list[i][j]*100,2))+"%")
+            print(str(round(neg_list[i][j]*100,2)),end=",")
         print("\n")
 
 
@@ -143,5 +143,5 @@ if __name__=="__main__":
     for j in range(len(pos_list[0])):
         for i in range(len(pos_list)):
 
-            print(str(round(pos_list[i][j]*100,2))+"%")
+            print(str(round(pos_list[i][j]*100,2)),end=",")
         print("\n")

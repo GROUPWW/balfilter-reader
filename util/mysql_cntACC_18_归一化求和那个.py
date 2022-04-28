@@ -287,8 +287,8 @@ def compComplex(neg_list,pos_list):
 neg_list_ratio,pos_list_ratio = inputAFunC(cntRatio)
 neg_list_avg,pos_list_avg = inputAFunC(cntAvg)
 
-neg_list = neg_list_avg+neg_list_ratio
-pos_list = pos_list_avg+pos_list_ratio
+neg_list =neg_list_ratio
+pos_list =pos_list_ratio
 
 
 

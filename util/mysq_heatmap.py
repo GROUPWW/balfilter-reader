@@ -98,7 +98,7 @@ if __name__=="__main__":
 
     l = l_pos + l_neg
 
-    l = ["3_1005251.jpg"]
+    # l = ["3_1005251.jpg"]
 
     import cv2
     neg_list = []
@@ -106,27 +106,29 @@ if __name__=="__main__":
         if ele.split(".")[-1] == "jpg":
             tmpRes = cntRatio(ele.split(".")[0])
             print(tmpRes)
-            # tmpRes = 1 - tmpRes
-            # tmpRes *= 255
-            # tmpRes = tmpRes.astype(np.uint8)
-            # tmpRes = cv2.applyColorMap(tmpRes,cv2.COLORMAP_HOT)
 
 ###########################################################################
-            tmpRes = np.stack((tmpRes,) * 3, axis=-1)
-            for i in range(tmpRes.shape[0]):
-                for j in range(tmpRes.shape[1]):
-                        if tmpRes[i][j][0] == 0:
-                            tmpRes[i][j][0] = 255
-                            tmpRes[i][j][1] = 255
-                            tmpRes[i][j][2] = 255
-                        elif 0<tmpRes[i][j][0] <= 0.75:
-                            tmpRes[i][j][0] = -256 * tmpRes[i][j][0] + 192
-                            tmpRes[i][j][1] = -256 * tmpRes[i][j][1] + 192
-                            tmpRes[i][j][2] = 255
-                        else:
-                            tmpRes[i][j][0] = 0
-                            tmpRes[i][j][1] = 0
-                            tmpRes[i][j][2] = -600*tmpRes[i][j][1] + 705
+            tmpRes = 1 - tmpRes
+            tmpRes *= 255
+            tmpRes = tmpRes.astype(np.uint8)
+            tmpRes = cv2.applyColorMap(tmpRes,cv2.COLORMAP_HOT)
+###########################################################################
+###########################################################################
+            # tmpRes = np.stack((tmpRes,) * 3, axis=-1)
+            # for i in range(tmpRes.shape[0]):
+            #     for j in range(tmpRes.shape[1]):
+            #             if tmpRes[i][j][0] == 0:
+            #                 tmpRes[i][j][0] = 255
+            #                 tmpRes[i][j][1] = 255
+            #                 tmpRes[i][j][2] = 255
+            #             elif 0<tmpRes[i][j][0] <= 0.75:
+            #                 tmpRes[i][j][0] = -256 * tmpRes[i][j][0] + 192
+            #                 tmpRes[i][j][1] = -256 * tmpRes[i][j][1] + 192
+            #                 tmpRes[i][j][2] = 255
+            #             else:
+            #                 tmpRes[i][j][0] = 0
+            #                 tmpRes[i][j][1] = 0
+            #                 tmpRes[i][j][2] = -600*tmpRes[i][j][1] + 705
 #################################################################################
 
             #

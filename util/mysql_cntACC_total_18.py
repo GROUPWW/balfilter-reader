@@ -1,6 +1,25 @@
 import pymysql
 
+def cntRatio(imgName):
+    db = pymysql.connect("localhost", "root", "123456", "balf")
+    cursor = db.cursor()
+    databaseName = "database_" + imgName
+    sql = "with t2 as (select count(*)  from %s where CONFIDENCE>=0.3),t3 as (select count(*)  from %s where CONFIDENCE>=0.6),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from  t2,t3,t4"%(databaseName,databaseName,databaseName)
+    # print(sql)
+    cursor.execute(sql)
+    up = cursor.fetchall()
+    # print(up[0])
 
+    sql = "select count(*) from %s where is_Valid=1"%(databaseName)
+    cursor.execute(sql)
+    down = cursor.fetchall()
+    # print(down[0][0])
+
+    # result = [str(round(ele/down[0][0]*100,2))+"%" for ele in up[0]]
+    result = [(ele/down[0][0]) for ele in up[0]]
+    # print(imgName,"的总有效图像块数量为",down[0][0])
+    return result
+    # print(result)
 
 
 def cntAvg(imgName):
@@ -105,7 +124,7 @@ if __name__=="__main__":
     #          '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
     #          "3_1005250.jpg","3_1005251.jpg","3_1005253.jpg"]
 
-    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg','2_1004522.jpg',
+    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg','2_1004522.jpg','2_1004515.jpg',
              '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
              "3_1005250.jpg","3_1005251.jpg","3_1005253.jpg"]
 
@@ -303,16 +322,19 @@ if __name__=="__main__":
 
 
 
-    neg_list_num,pos_list_num = inputAFunC(cntNum)
-    neg_list_avg,pos_list_avg = inputAFunC(cntAvg)
+    # neg_list_num,pos_list_num = inputAFunC(cntNum)
+    # neg_list_avg,pos_list_avg = inputAFunC(cntAvg)
+    #
+    # # print(neg_list_ratio,pos_list_ratio,sep="\n")
+    #
+    # neg_list = neg_list_num*neg_list_avg
+    # pos_list = pos_list_num*pos_list_avg
+    # # print(neg_list,pos_list,sep="\n")
+    # compComplexAll(neg_list_num, pos_list_num, neg_list_avg, pos_list_avg, neg_list, pos_list)
 
-    # print(neg_list_ratio,pos_list_ratio,sep="\n")
 
-    neg_list = neg_list_num*neg_list_avg
-    pos_list = pos_list_num*pos_list_avg
-    # print(neg_list,pos_list,sep="\n")
+    neg_list,pos_list = inputAFunC(cntRatio)
+    compComplex(neg_list, pos_list)
 
 
 
-
-    compComplexAll(neg_list_num, pos_list_num, neg_list_avg, pos_list_avg, neg_list, pos_list)

@@ -31,7 +31,7 @@ from util.filter import doFilter
 #属于centernet的，暂时放这
 class CtdetDetector():
     def __init__(self,database,opts):
-        print('\n正在创建模型...')
+        # print('\n正在创建模型...')
 
         self.database = database
 
@@ -151,7 +151,7 @@ def cut_and_detect(window,chosen_model='yolov5'):
     item_height=math.floor(img_size)
     the_shorter=min(width,height)
     window.the_shorter_num = int(the_shorter/img_size)
-    print('短边长度为： ', window.the_shorter_num)
+    # print('短边长度为： ', window.the_shorter_num)
 
     window.progress.setRange(0, window.the_shorter_num*window.the_shorter_num)
     window.progress.show()
@@ -290,7 +290,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
     item_height=math.floor(img_size)
     the_shorter=min(width,height)
     the_shorter_num = int(the_shorter/img_size)
-    print('短边长度为： ', the_shorter_num)
+    # print('短边长度为： ', the_shorter_num)
 
     list3 = []
     list6 = []
@@ -393,19 +393,23 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     avg = [0,0,0]
     num = [0,0,0]
+    std = [0,0,0]
     if len(list3) != 0:
         avg[0] = np.mean(list3)
         num[0] = len(list3)
+        std[0] = np.std(list3)
 
     if len(list6) != 0:
         avg[1] = np.mean(list6)
         num[1] = len(list6)
+        std[1] = np.std(list6)
 
     if len(list9) != 0:
         avg[2] = np.mean(list9)
         num[2] = len(list9)
+        std[2] = np.std(list9)
 
     database.db.commit()
     database.db.close()
-    return avg,num
+    return avg,num,std
 

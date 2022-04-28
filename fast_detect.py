@@ -14,7 +14,7 @@ def fast_detect():
     l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
              "3_1005256.jpg"]
 
-    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg',
+    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg','2_1004515.jpg',
              '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
              "3_1005250.jpg", "3_1005251.jpg", "3_1005253.jpg"]
 
@@ -26,7 +26,7 @@ def fast_detect():
     #          '1003989.jpg',  '1003998.jpg',
     #          "3_1005253.jpg"]
 
-    imgList = ['2_1004521.jpg']
+    # imgList = ['2_1004521.jpg']
 
     # imgList = glob.glob(r'big_img_in/tmp/black/*.jpg')
 
@@ -75,6 +75,7 @@ def fast_detect_cnt():
 
     neg_list_num, pos_list_num = [],[]
     neg_list_avg, pos_list_avg = [],[]
+    neg_list_std, pos_list_std = [],[]
 
 
 
@@ -82,9 +83,10 @@ def fast_detect_cnt():
         ele = listDir + ele
         if ele.split(".")[-1] == "jpg":
 
-            avg,num = cut_and_detect_mini(ele)
+            avg,num,std = cut_and_detect_mini(ele)
             neg_list_avg.append(avg)
             neg_list_num.append(num)
+            neg_list_std.append(std)
 
 
 
@@ -92,9 +94,46 @@ def fast_detect_cnt():
         ele = listDir + ele
         if ele.split(".")[-1] == "jpg":
 
-            avg,num = cut_and_detect_mini(ele)
+            avg,num,std = cut_and_detect_mini(ele)
             pos_list_avg.append(avg)
             pos_list_num.append(num)
+            pos_list_std.append(std)
+
+    import numpy as np
+    neg_list_std = np.array(neg_list_std)
+    pos_list_std = np.array(pos_list_std)
+
+#################################################################
+    print("下方输出std")
+    point3_neg = neg_list_std[:, 0]
+    point6_neg = neg_list_std[:, 1]
+    point9_neg = neg_list_std[:, 2]
+    point3_pos = pos_list_std[:, 0]
+    point6_pos = pos_list_std[:, 1]
+    point9_pos = pos_list_std[:, 2]
+    # print(point9_pos)
+
+    print("\n\n\n\n")
+    for ele in np.concatenate((point3_neg, point3_pos)):
+        print(ele)
+
+    print("###############################")
+
+    for ele in np.concatenate((point6_neg, point6_pos)):
+        print(ele)
+
+    print("###############################")
+
+    for ele in np.concatenate((point9_neg, point9_pos)):
+        print(ele)
+
+    print("###############################")
+   #########################################
+
+
+
+
+
 
 
     import numpy as np
