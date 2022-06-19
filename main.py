@@ -75,9 +75,9 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
 
         #倒数第二个
         self.set_5x5_button.clicked.connect(self.set_5x5_img)
-
-        # 打开WEB
-        self.set_7x7_button.clicked.connect(self.set_7x7_img)
+        #
+        # # 打开WEB
+        # self.set_7x7_button.clicked.connect(self.set_7x7_img)
 
     def set_7x7_img(self):
         import webbrowser as web

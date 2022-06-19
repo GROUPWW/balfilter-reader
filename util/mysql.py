@@ -111,7 +111,7 @@ if __name__=="__main__":
     for j in range(len(neg_list[0])):
         for i in range(len(neg_list)):
 
-            print(str(round(neg_list[i][j]*100,2))+"%")
+            print(str(round(neg_list[i][j]*100,2)),end=",")
         print("\n")
 
 
@@ -143,5 +143,5 @@ if __name__=="__main__":
     for j in range(len(pos_list[0])):
         for i in range(len(pos_list)):
 
-            print(str(round(pos_list[i][j]*100,2))+"%")
+            print(str(round(pos_list[i][j]*100,2)),end=",")
         print("\n")
