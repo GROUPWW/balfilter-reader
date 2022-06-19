@@ -90,6 +90,34 @@
             <!--            <version>5.1.49</version>-->
         </dependency>
 
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+
+
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <!-- 中文字体支持 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>font-asian</artifactId>
+            <version>7.1.13</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
@@ -100,5 +128,7 @@
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>

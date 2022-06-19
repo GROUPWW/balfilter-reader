@@ -1,41 +1,29 @@
 import sys
-sys.path.append('./yolov5')
-sys.path.append('./CenterNet/src')
+sys.path.append('C://Users/L/Desktop/BALFilter_Reader/yolov5')
+sys.path.append('C://Users/L/Desktop/BALFilter_Reader/CenterNet/src')
+sys.path.append('C://Users/L/Desktop/BALFilter_Reader')
 from cut_and_detect import cut_and_detect_mini
 
 
 import os
 import glob
+import argparse
 
-def fast_detect():
+def fast_detect(img):
 
-    listDir = "big_img_in/"
+    listDir = "C://Users/L/Desktop/BALFilter_Reader/upload/"
 
-    l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
-             "3_1005256.jpg"]
-
-    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg',
-             '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
-             "3_1005250.jpg", "3_1005251.jpg", "3_1005253.jpg"]
-
-    l_neg_trans = ['2_1004509_trans.jpg', '2_1004510_trans.jpg', '2_1004516_trans.jpg',
-             "3_1005256_trans.jpg"]
-
-    l_pos_trans = ['2_1004518_trans.jpg', '2_1004519_trans.jpg', '2_1004521_trans.jpg', '2_1004522_trans.jpg',
-             '1003989_trans.jpg', '1003993_trans.jpg', '1003994_trans.jpg', '1003995_trans.jpg', '1003997_trans.jpg', '1003998_trans.jpg',
-             "3_1005250_trans.jpg", "3_1005251_trans.jpg", "3_1005253_trans.jpg"]
-
-    # imgList = os.listdir(listDir)
-
-    imgList = l_neg + l_pos+     l_neg_trans + l_pos_trans
-
-
-    imgList = ["zjx1.jpg","zjx001.jpg"]
-    for ele in imgList:
-        print(ele)
-
-
-
+    # l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
+    #          "3_1005256.jpg"]
+    #
+    # l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg',
+    #          '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
+    #          "3_1005250.jpg", "3_1005251.jpg", "3_1005253.jpg"]
+    #
+    #
+    # # imgList = os.listdir(listDir)
+    #
+    # imgList = l_neg+l_pos
     # imgList = ['2_1004518.jpg',  '2_1004522.jpg',
     #          '1003989.jpg',  '1003998.jpg',
     #          "3_1005253.jpg"]
@@ -43,6 +31,8 @@ def fast_detect():
     # imgList = ['2_1004521.jpg']
 
     # imgList = glob.glob(r'big_img_in/tmp/black/*.jpg')
+
+    imgList = [img]
 
     import time
     timeList = []
@@ -69,7 +59,11 @@ def fast_detect():
     return res
 
 if __name__=="__main__":
-    fast_detect()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--img', type=str)
+    args = parser.parse_args()
+    img = args.img
+    fast_detect(img)
 
 def fast_detect_cnt():
 
@@ -97,10 +91,7 @@ def fast_detect_cnt():
         ele = listDir + ele
         if ele.split(".")[-1] == "jpg":
 
-            avg,num,std = cut_and_detect_mini(ele)
-            neg_list_avg.append(avg)
-            neg_list_num.append(num)
-            neg_list_std.append(std)
+            cut_and_detect_mini(ele)
 
 
 
@@ -108,10 +99,8 @@ def fast_detect_cnt():
         ele = listDir + ele
         if ele.split(".")[-1] == "jpg":
 
-            avg,num,std = cut_and_detect_mini(ele)
-            pos_list_avg.append(avg)
-            pos_list_num.append(num)
-            pos_list_std.append(std)
+            cut_and_detect_mini(ele)
+
 
     import numpy as np
     neg_list_std = np.array(neg_list_std)

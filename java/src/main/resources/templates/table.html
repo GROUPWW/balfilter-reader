@@ -1,0 +1,202 @@
+<head>
+    <title>BALFDetector</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2c2c2}
+        tr:nth-child(odd){background-color: #c2f2c2}
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!--    <div class="modal-footer no-margin-top">-->
+<!--        <ul class="pagination pull-right no-margin">-->
+
+<!--            &lt;!&ndash; 首页 &ndash;&gt;-->
+<!--            <li>-->
+<!--                <a th:href="'/result/'+ ${caseID} +'/' +'0'">首页</a>-->
+<!--            </li>-->
+
+<!--            &lt;!&ndash; 上一页 &ndash;&gt;-->
+<!--            <li>-->
+<!--                <a th:href="'/result/'+ ${caseID} +'/' + ${topSusId -1}" th:text="上一页"></a>-->
+<!--            </li>-->
+
+
+
+<!--            &lt;!&ndash; 下一页 &ndash;&gt;-->
+<!--            <li>-->
+<!--                <a th:href="'/result/'+ ${caseID} +'/' + ${topSusId +1}" th:text="下一页"></a>-->
+<!--            </li>-->
+
+<!--        </ul>-->
+<!--    </div>-->
+
+
+    <!--<div> 可定义文档中的分区或节（division/section）-->
+    <div class="container" style="width:100%;">
+
+
+
+        <div class="row">
+
+
+
+            <div class="col-md-6">
+                <!--<h2>{{data.name}}</h2>-->
+                <!--      {% include 'table.html' %}-->
+                <table class="table table-striped">
+
+                    <tbody>
+
+                    <tr>
+                        <td><b>病例编号</b></td>
+                        <td th:text="${caseID}">啊啊</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>图像块坐标</b></td>
+                        <td th:text="${blockInfo.getImgName()}">啊啊</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>图像块可疑度</b></td>
+                        <td th:text="${blockInfo.getConfidence()}">啊啊</td>
+                    </tr>
+
+                    <tr>
+                        <td><b>使用的模型</b></td>
+                        <td th:text="${blockInfo.getModel()}">啊啊</td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td><b>病例所有图像块的可疑度分布</b></td>
+                        <td></td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0.9<=S<sub>ts</sub><=1
+                        </td>
+                        <td th:text="${cntRatio.get(4)}">
+                            {{data["sts"][4]}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0.6<=S<sub>ts</sub>&lt;0.9
+                        </td>
+                        <td th:text="${cntRatio.get(3)}">
+                            {{data["sts"][3]}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0.3<=S<sub>ts</sub>&lt;0.6
+                        </td>
+                        <td th:text="${cntRatio.get(2)}">
+                            {{data["sts"][2]}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0&lt;S<sub>ts</sub>&lt;0.3
+                        </td>
+                        <td th:text="${cntRatio.get(1)}">
+                            {{data["sts"][1]}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            S<sub>ts</sub>=0
+                        </td>
+                        <td th:text="${cntRatio.get(0)}">
+                            {{data["sts"][0]}}
+                        </td>
+                    </tr>
+
+
+
+<!--                    <tr>-->
+<!--                        <td></td>-->
+<!--                        <td></td>-->
+<!--                    </tr>-->
+
+
+                    <tr>
+
+                        <form method="post" name="formName">
+                            <td>
+                                <b>是否接受该检测</b>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>是</b>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>否</b>
+                            </td>
+
+                        </form>
+
+                    </tr>
+
+
+
+                    <tr>
+                        <td><b>医生备注信息</b></td>
+                        <td></td>
+                    </tr>
+
+                    <tr th:each="message:${messageList}">
+                        <td th:text="${message[0]}"></td>
+                        <td th:text="${message[1]}+' '+${message[2]}"></td>
+                    </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+</body>
+
+</html>
+
+

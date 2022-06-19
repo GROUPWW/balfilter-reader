@@ -27,14 +27,14 @@ public class UserController {
      * 来登录页
      * @return
      */
-    @GetMapping(value = {"/","/login"})
+    @GetMapping(value = "/login")
     public String loginPage(){
         return "login";
     }
 
 
     @PostMapping("/login")
-    public String login(UserInfo userInfo, HttpSession session, Model model){ //RedirectAttributes
+    public String login(UserInfo userInfo, HttpSession session, Model model) throws Exception { //RedirectAttributes
 
         if(userService.login(userInfo) != null){
             //把登陆成功的用户保存起来
@@ -57,7 +57,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public String register(UserInfo userInfo, HttpSession session, Model model){ //RedirectAttributes
+    public String register(UserInfo userInfo, HttpSession session, Model model) throws Exception { //RedirectAttributes
         String msg = userService.addUser(userInfo);
         if(msg == null){
             return "register-success";

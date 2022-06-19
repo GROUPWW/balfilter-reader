@@ -17,7 +17,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver #引入pom后这个有效
 
 
-
+  servlet:
+    multipart: # # 修改文件上传的大小限制
+      max-request-size: 1024MB   # 运行请求传递文件大小最大为1024MB
+      max-file-size: 1024MB       # 运行服务器可以处理的最大文件大小1024MB
 
 
 # 配置mybatis规则、使用MyBatisPlus则此项配置无效
@@ -26,6 +29,10 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:  # 指定mybatis全局配置文件中的相关配置项
     map-underscore-to-camel-case: true
+
+file:
+  upload:
+    dir: C://Users/L/Desktop/BALFilter_Reader/upload
 
 #project:
 #  static:

@@ -7,16 +7,23 @@ import com.balf.boot.mapper.BlockMapper;
 import com.balf.boot.mapper.UserMapper;
 import com.balf.boot.service.BlockService;
 import com.balf.boot.service.UserService;
+import com.balf.boot.util.RSAUtil;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+//import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,13 +33,14 @@ public class UserServiceImpl implements UserService {
 
     String salt = "20211021"; //盐值
 
-    public String addUser(UserInfo userInfo){
+    public String addUser(UserInfo userInfo) throws Exception {
         if(userInfo.getUserName() == null || userInfo.getUserName().length() == 0) return "请输入用户名";
         if(userInfo.getPassword() == null || userInfo.getPassword().length() == 0) return "请输入密码";
         if(!userInfo.getEmail().matches("\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}")) return "请输入正确的邮箱";
         if(userInfo.getPhone() == null || userInfo.getPhone().length() != 11) return "请输入正确的手机号码";
         if(userMapper.cntUser(userInfo.getUserName())>0) return "该用户名已存在";
 
+        userInfo.setPassword(RSAUtil.decryptWithPrivate(userInfo.getPassword()));
         String md5Password = DigestUtils.md5DigestAsHex((userInfo.getPassword() + salt).getBytes()); //密码md5加盐
         userInfo.setPassword(md5Password);
 
@@ -40,7 +48,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public UserInfo login(UserInfo userInfo){
+    public UserInfo login(UserInfo userInfo) throws Exception {
+
+        String before = userInfo.getPassword();
+        userInfo.setPassword(RSAUtil.decryptWithPrivate(userInfo.getPassword()));
+        String after = userInfo.getPassword();
+
         String inputMd5Password = DigestUtils.md5DigestAsHex((userInfo.getPassword() + salt).getBytes());
         UserInfo databaseUserInfo = userMapper.selectOneUser(userInfo);
         // System.out.println(databaseUserInfo);
@@ -49,6 +62,7 @@ public class UserServiceImpl implements UserService {
         if(inputMd5Password.equals(trueMd5Password)) return databaseUserInfo;
         return null;
     }
+
 
 
 }

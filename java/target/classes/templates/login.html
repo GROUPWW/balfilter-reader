@@ -12,18 +12,21 @@
     <link href="static/style.css" rel="stylesheet">
     <link href="static/style-responsive.css" rel="stylesheet">
 
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="static/jsencrypt.js"></script>
+<!--    <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script>-->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-<!--    <script src="js/html5shiv.js"></script>-->
-<!--    <script src="js/respond.min.js"></script>-->
-    <![endif]-->
+<!--    &lt;!&ndash;[if lt IE 9]>-->
+<!--&lt;!&ndash;    <script src="js/html5shiv.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;    <script src="js/respond.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;    <![endif]&ndash;&gt;&ndash;&gt;-->
 </head>
 
 <body class="login-body">
 
 <div class="container">
 
-    <form class="form-signin" action="index.html" method="post" th:action="@{/login}">
+    <form class="form-signin"  method="post" th:action="@{/login}">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Sign In</h1>
 <!--            <img src="/static/login-logo.png" alt=""/>-->
@@ -33,11 +36,19 @@
         </div>
         <div class="login-wrap">
             <label style="color: red" th:text="${msg}"></label>
-            <input type="text" name="userName" class="form-control" placeholder="userName" autofocus>
-            <input type="password" name="password" class="form-control" placeholder="password">
-            <button class="btn btn-lg btn-login btn-block" type="submit">登录
-                <i class="fa fa-check"></i>
+            <input type="text" name="userName" class="form-control" placeholder="userName" autofocus id="username">
+            <input type="password" name="password" class="form-control" placeholder="password" id="password">
+            <button class="btn btn-lg btn-login btn-block" type="submit" onclick="secretLogin()">登录
+<!--                <i class="fa fa-check"></i>-->
             </button>
+
+<!--            <input class="btn btn-lg btn-login btn-block" type="button" onclick="secretLogin()" th:value="登录">-->
+
+
+
+
+
+
 
             <div class="registration">
                 Not a member yet?
@@ -62,6 +73,137 @@
 <script src="static/jquery.min.js"></script>
 <script src="static/bootstrap.min.js"></script>
 <!--<script src="js/modernizr.min.js"></script>-->
+
+
+<!--<form>-->
+<!--    用户账号：-->
+<!--    <input type="text" name="username" id="username">-->
+<!--    <br>-->
+<!--    用户密码：-->
+<!--    <input type="text" name="password" id="password">-->
+<!--    <br>-->
+<!--    <input type="button" onclick="logi()" th:value="提交">-->
+<!--</form>-->
+
+<script>
+
+    var pwd = document.getElementById('password');
+    var encrypted;
+    var encrypt = new JSEncrypt();
+    var resAjax;
+    function secretLogin() {
+
+
+
+
+
+        // alert("test")
+        // var username = $('#username').val();
+        // var passwordVal = $('#password').val();
+        // let uname = document.getElementById('username')
+
+
+        // var pwd_login = document.getElementById('password');
+
+
+        $.ajax({
+            type: "get",  //提交方式
+            url: "/getPublicKey",//访问路径
+            contentType: 'application/json;charset=utf-8',//返回json结果
+            async :false,
+            success: function (data) {
+
+
+                // function rsaEncrypt(msg){
+                //     var encrypt = new JSEncrypt();
+                //     encrypt.setPublicKey(data);
+                //     var encryptMsg = encrypt.encrypt(msg);
+                //     return encryptMsg;
+                // }
+
+                resAjax = data;
+
+                // console.log(data)
+                //
+                // encrypt.setPublicKey(JSON.stringify(data))
+
+                    // console.log("encryptPwd:"+encryptPwd)
+            // $.post("/login",{"username":username,"password":encryptPwd});
+                }
+        });
+        encrypt.setPublicKey(resAjax);
+        encrypted = encrypt.encrypt($("#password").val());
+
+        console.log(encrypted);
+        pwd.value = encrypted;
+        pwd.value = JSON.stringify(encrypted);
+        $("#password").val(encrypted);
+
+        console.log(pwd.value);
+
+        // console.log(pwd.value)
+        // pwd.value = JSON.stringify(pwd.value)
+        // console.log(pwd.value)
+        //
+        // pwd.value = encrypt.encrypt(pwd.value)
+        // console.log(encrypt.getPublicKey())
+        // console.log(JSON.stringify(pwd.value))
+
+
+
+        // var decrypt = new JSEncrypt();
+        // $.ajax({
+        //     type: "get",  //提交方式
+        //     url: "/getPrivateKey",//访问路径
+        //     contentType: 'application/json;charset=utf-8',//返回json结果
+        //     success: function (data) {
+        //         console.log(data)
+        //
+        //         decrypt.setPrivateKey(data)
+        //
+        //         // console.log("encryptPwd:"+encryptPwd)
+        //         // $.post("/login",{"username":username,"password":encryptPwd});
+        //     }
+        // });
+        //
+        //
+        //
+        // console.log(decrypt.getPrivateKey())
+        // console.log(decrypt.decrypt(pwd.value))
+
+
+        // $.ajax({
+        //     type: "get",  //提交方式
+        //     url: "/getPublicKey",//访问路径
+        //     contentType: 'application/json;charset=utf-8',//返回json结果
+        //     success: function (data) {
+        //         console.log(data)
+        //         encrypt.setPublicKey(data)
+        //         var encryptPwd = encrypt.encrypt(password)
+        //         console.log("encryptPwd:"+encryptPwd)
+
+
+
+
+                // $.ajax({
+                //     type: "post",  //提交方式
+                //     url: "/login",//访问路径
+                //     contentType: 'application/json;charset=utf-8',//返回json结果
+                //     data: JSON.stringify({"username":username,"password":encryptPwd}),
+                //     success: function (data) {
+                //         console.log(data)
+                //
+                //     }
+                // });
+
+        //
+        //     }
+        // });
+
+    }
+</script>
+
+
 
 </body>
 </html>

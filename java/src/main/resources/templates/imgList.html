@@ -1,0 +1,47 @@
+<head>
+    <title>BALFDetector</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
+
+    <script src="/static/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/static/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<tr>
+
+    Please select the case to view
+
+</tr>
+
+<tr th:each="aImg:${imgList}">
+
+    <div >
+
+
+
+                <a th:href=" '/result/'+ ${aImg} +'/0'" th:text="${aImg}"></a>
+
+
+
+    </div>
+
+</tr>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+

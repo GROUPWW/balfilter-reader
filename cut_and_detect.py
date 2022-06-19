@@ -28,10 +28,12 @@ from CenterNet.src.test import _nms,_topk,ctdet_decode,load_model
 from util.mysql import in_mysql
 from util.filter import doFilter
 
+from mysq_heatmap import createHeatmap
+
 #属于centernet的，暂时放这
 class CtdetDetector():
     def __init__(self,database,opts):
-        print('\n正在创建模型...')
+        # print('\n正在创建模型...')
 
         self.database = database
 
@@ -109,142 +111,6 @@ def plot_one_box_liuzheng(x, img_copy, label=None):
             cv2.putText(img_copy, label, (c1[0], c1[1] - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1)
 
 
-def cut_and_detect(window,chosen_model='yolov5'):
-
-    window.cut_and_detect_finish = 0
-    case_id = window.big_img_path.split('/')[-1].split('.')[0]
-    database = in_mysql(case_id)
-    out = './image_output/' + case_id + '/'
-
-    if os.path.exists(out):
-        shutil.rmtree(out)  # delete output folder
-    os.makedirs(out)  # make new output folder
-
-
-    if chosen_model=='yolov5':
-        yolov5_opt = {'weights': ['./yolov5/weights/infer.pt'], 'img_size': 256,
-                      'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
-                      'augment': False}
-        img_size = yolov5_opt['img_size']
-        loader = transforms.Compose([transforms.ToTensor()])
-
-        with torch.no_grad():
-            weights = yolov5_opt['weights']
-            device = select_device(yolov5_opt['device'])
-
-
-            half = device.type != 'cpu'  # half precision only supported on CUDA  #半精度浮点数（fp16，Half-precision floating-point）
-
-            # Load model
-            model = attempt_load(weights, map_location=device)  # load FP32 model
-            if half:
-                model.half()  # to FP16
-    else:
-        opts = all_opts()
-        img_size = opts.img_size
-        detector = CtdetDetector(database,opts)
-
-    # Run inference
-    image = Image.open(window.big_img_path)
-    width, height = image.size
-    item_width =math.floor(img_size)
-    item_height=math.floor(img_size)
-    the_shorter=min(width,height)
-    window.the_shorter_num = int(the_shorter/img_size)
-    print('短边长度为： ', window.the_shorter_num)
-
-    window.progress.setRange(0, window.the_shorter_num*window.the_shorter_num)
-    window.progress.show()
-
-    for i in range(0,window.the_shorter_num):
-        for j in range(0,window.the_shorter_num):
-            box = (j*item_width,i* item_height,(j+1)*item_width,(i+1)*item_height)
-            temp=image.crop(box)
-            # PIL竟然直接就是0-1之间,不用除以255
-
-            img_copy = np.array(temp).astype('uint8')
-            img_copy = cv2.cvtColor(np.array(img_copy), cv2.COLOR_RGB2BGR)
-            #img_copy=np.array(temp)[:, :, (2, 1, 0)]
-
-            max_det_conf = 0
-
-            doFilterRes = doFilter(img_copy)
-            if doFilterRes !=1 :
-                database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
-
-            else:
-
-
-                if chosen_model == 'yolov5':
-                    img = loader(temp)
-
-                    # img = img[[2, 1, 0]].unsqueeze(0)
-                    if img.ndimension() == 3:
-                        img = img.unsqueeze(0)
-
-                    # 不行，这里报错，换保存吧
-                    # img = np.float32(img)
-                    # cv2.imshow("hello", img)
-                    # cv2.waitKey()
-                    # print(img)
-
-                    img = img.to(device)
-                    img = img.half() if half else img.float()  # uint8 to fp16/32
-                    # img /= 255.0  # 0 - 255 to 0.0 - 1.0
-
-
-
-
-                    # Inference
-                    pred = model(img, augment=yolov5_opt['augment'])[0]
-
-
-                    # Apply NMS
-                    pred = non_max_suppression(pred, yolov5_opt['conf_thres'], yolov5_opt['iou_thres'], classes=yolov5_opt['classes'], agnostic=yolov5_opt['agnostic_nms'])
-
-
-
-
-                    # Process detections
-
-                    for det in pred:  # detections per image
-
-                        if det is not None and len(det):
-                            # Write results
-                            for *xyxy, conf, cls in reversed(det):
-                                label = round(float(conf),3)
-                                max_det_conf = max(max_det_conf, label)
-                                plot_one_box_liuzheng(xyxy, img_copy, label=label)
-
-                    #print(max_det_conf)
-
-                    database.write_in_database(str(i) + "x" + str(j), str(max_det_conf), 'yolov5', 1)
-
-                else:
-                    detector.run(img_copy, out, str(i) + "x" + str(j), window)
-            window.pic_name_dic[str(i) + "x" + str(j) + '.jpg'] = str(max_det_conf)
-            cv2.imwrite(out + str(i)+"x"+str(j) + ".jpg", img_copy)
-
-
-
-
-
-            QApplication.processEvents()
-
-            # 放在中间就能正常只点一次关闭退出了
-            if not window.run_cut_and_detect_label:
-                return
-
-            window.progress.setValue(i*window.the_shorter_num+j+1)
-
-    window.cut_and_detect_finish = 1
-    database.db.commit()
-    database.db.close()
-    return out
-
-
-    print('Results saved to %s' % Path(out))
-    print('Done. (%.3fs)' % (time.time() - t0))
 
 
 
@@ -253,7 +119,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     case_id = big_img_path.split('/')[-1].split('.')[0]
     database = in_mysql(case_id)
-    out = './image_output/' + case_id + '/'
+    out = 'C://Users/L/Desktop/BALFilter_Reader/image_output/' + case_id + '/'
 
     if os.path.exists(out):
         shutil.rmtree(out)  # delete output folder
@@ -261,7 +127,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
 
     if chosen_model=='yolov5':
-        yolov5_opt = {'weights': ['./yolov5/weights/infer.pt'], 'img_size': 256,
+        yolov5_opt = {'weights': ['C://Users/L/Desktop/BALFilter_Reader/yolov5/weights/infer.pt'], 'img_size': 256,
                       'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
                       'augment': False}
         img_size = yolov5_opt['img_size']
@@ -290,11 +156,8 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
     item_height=math.floor(img_size)
     the_shorter=min(width,height)
     the_shorter_num = int(the_shorter/img_size)
-    print('短边长度为： ', the_shorter_num)
+    # print('短边长度为： ', the_shorter_num)
 
-    list3 = []
-    list6 = []
-    list9 = []
 
     import time
     timeList = []
@@ -312,7 +175,8 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
             doFilterRes = doFilter(img_copy)
             if doFilterRes !=1 :
-                database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
+                # database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
+                pass
 
             else:
 
@@ -320,7 +184,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
                 if chosen_model == 'yolov5':
 
-                    t0 = time.time()
+                    # t0 = time.time()
 
                     img = loader(temp)
 
@@ -347,65 +211,40 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                     # Apply NMS
                     pred = non_max_suppression(pred, yolov5_opt['conf_thres'], yolov5_opt['iou_thres'], classes=yolov5_opt['classes'], agnostic=yolov5_opt['agnostic_nms'])
 
-                    psTime = time.time() - t0
-                    timeList.append(psTime)
+                    # psTime = time.time() - t0
+                    # timeList.append(psTime)
 
 
                     # Process detections
-                    max_det_conf = 0
+
                     for det in pred:  # detections per image
 
                         if det is not None and len(det):
                             # Write results
                             for *xyxy, conf, cls in reversed(det):
                                 label = round(float(conf),3)
-                                max_det_conf = max(max_det_conf, label)
                                 # print("啊")
 
-                                if label>=0.3:
-                                    list3.append(label)
-                                if label>= 0.6:
-                                    list6.append(label)
-                                if label>= 0.9:
-                                    list9.append(label)
                                 plot_one_box_liuzheng(xyxy, img_copy, label=label)
 
 
-                    database.write_in_database(str(i)+"x"+str(j), str(max_det_conf), 'yolov5',1)
+                                database.write_in_database(str(i)+"x"+str(j), str(label), 'yolov5',1)
 
             cv2.imwrite(out + str(i) + "x" + str(j) + ".jpg", img_copy)
 
 
-            QApplication.processEvents()
+    # timeList = timeList[1:]
+    # print("##################################")
+    # for ele in timeList:
+    #     print(ele)
+    #
+    #
+    # print("###################################")
 
-
-    timeList = timeList[1:]
-    print("##################################")
-    for ele in timeList:
-        print(ele)
-
-
-    print("###################################")
-
-    print(np.mean(timeList))
-    print(np.std(timeList))
-
-
-    avg = [0,0,0]
-    num = [0,0,0]
-    if len(list3) != 0:
-        avg[0] = np.mean(list3)
-        num[0] = len(list3)
-
-    if len(list6) != 0:
-        avg[1] = np.mean(list6)
-        num[1] = len(list6)
-
-    if len(list9) != 0:
-        avg[2] = np.mean(list9)
-        num[2] = len(list9)
 
     database.db.commit()
     database.db.close()
-    return avg,num
+    createHeatmap(case_id+".jpg")
+
+
 

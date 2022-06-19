@@ -14,7 +14,7 @@ public interface UserService {
 //
 //    public Integer setOneAccepted(String imgName, Integer isAccepted,String caseID);
 
-    public String addUser(UserInfo userInfo);
+    public String addUser(UserInfo userInfo) throws Exception;
 
-    public UserInfo login(UserInfo userInfo);
+    public UserInfo login(UserInfo userInfo) throws Exception;
 }

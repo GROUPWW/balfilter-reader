@@ -175,7 +175,7 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
         suffix = ['jpg', 'jpeg', 'bmp', 'png']
         if any(fileName.endswith(ext) for ext in suffix):
             self.big_img_path = fileName
-            print('打开大视场图片:', fileName)
+            print('Open Image:', fileName)
         self.choose_big_img_path()
         self.run_cut_and_detect()
 
@@ -218,7 +218,7 @@ class MainWindow(QtWidgets.QMainWindow, ui_main_window.Ui_MainWindow):
 
     def change_img_save_path_listener(self):
         directory = QtWidgets.QFileDialog.getExistingDirectory(self.centralwidget, 'Please select a save path')
-        print('打开文件夹:', directory)
+        # print('打开文件夹:', directory)
         if directory != '':
             self.save_dir = directory
 

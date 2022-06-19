@@ -42,6 +42,20 @@ def cntNum(imgName):
 
     return up[0]
 
+def cntSum(imgName):
+    db = pymysql.connect("localhost", "root", "123456", "balf")
+    cursor = db.cursor()
+    databaseName = "database_" + imgName
+    sql = "with t1 as (select SUM(CONFIDENCE) from %s where CONFIDENCE >=0.3),t3 as (select SUM(CONFIDENCE)  from %s where CONFIDENCE>=0.6),t4 as (select SUM(CONFIDENCE)  from %s where CONFIDENCE>=0.9) select * from t1,t3,t4"%(databaseName,databaseName,databaseName)
+    # print(sql)
+    cursor.execute(sql)
+    up = cursor.fetchall()
+    # # print(up[0])
+    # print(up[0])
+
+    return up[0]
+    # print(result)
+
 from sklearn.metrics import confusion_matrix,f1_score,auc,roc_curve
 import matplotlib.pyplot as plt
 def cnt(TP,TN,FP,FN,l,t,m=0):
@@ -99,7 +113,12 @@ if __name__=="__main__":
     import numpy as np
     # l = os.listdir("../big_img_in")
     l_neg = [ '2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
-             "3_1005256.jpg"]
+             "3_1005256.jpg"]\
+            + \
+            ['2_1004509_trans.jpg', '2_1004510_trans.jpg', '2_1004516_trans.jpg',
+             "3_1005256_trans.jpg"]
+
+    l_neg = ["2_1004509.jpg"]
 
     # l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg','2_1004522.jpg','2_1004515.jpg',
     #          '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
@@ -107,8 +126,19 @@ if __name__=="__main__":
 
     l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg','2_1004522.jpg',
              '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
-             "3_1005250.jpg","3_1005251.jpg","3_1005253.jpg"]
+             "3_1005250.jpg","3_1005251.jpg","3_1005253.jpg"]\
+            + \
+            ['2_1004518_trans.jpg', '2_1004519_trans.jpg', '2_1004521_trans.jpg', '2_1004522_trans.jpg',
+             '1003989_trans.jpg', '1003993_trans.jpg', '1003994_trans.jpg', '1003995_trans.jpg', '1003997_trans.jpg',
+             '1003998_trans.jpg',
+             "3_1005250_trans.jpg", "3_1005251_trans.jpg", "3_1005253_trans.jpg"]\
+            + \
+            ["50_15.jpg", "50_52.jpg", "50_53.jpg", "50_71.jpg", "50_77.jpg", "50_80.jpg", "50_81.jpg", "50_83.jpg",
+             "50_85.jpg", "50_88.jpg", "50_90.jpg","zjx1.jpg","zjx001.jpg"]
 
+    l_pos = ["zjx1.jpg","zjx001.jpg"]
+    for ele in l_pos:
+        print(ele)
 
 
     def resList(f):
@@ -190,12 +220,12 @@ if __name__=="__main__":
         #
         #
         # print("################################")
-
-        m_zhongzhi_n = [zhongzhi(neg_list[:,0]),zhongzhi(neg_list[:,1]),zhongzhi(neg_list[:,2])]
-        m_zhongzhi_p = [zhongzhi(pos_list[:,0]), zhongzhi(pos_list[:,1]), zhongzhi(pos_list[:,2])]
-
-
-        m_zhongzhi = [(m_zhongzhi_n[i]+m_zhongzhi_p[i])/2 for i in range(3)]
+        #
+        # m_zhongzhi_n = [zhongzhi(neg_list[:,0]),zhongzhi(neg_list[:,1]),zhongzhi(neg_list[:,2])]
+        # m_zhongzhi_p = [zhongzhi(pos_list[:,0]), zhongzhi(pos_list[:,1]), zhongzhi(pos_list[:,2])]
+        #
+        #
+        # m_zhongzhi = [(m_zhongzhi_n[i]+m_zhongzhi_p[i])/2 for i in range(3)]
         # print(m_zhongzhi_n )
         # print()
         # print(m_zhongzhi_p)
@@ -231,68 +261,68 @@ if __name__=="__main__":
 
 
 
-        m_zhongzhi3,m_zhongzhi6,m_zhongzhi9 = m_zhongzhi[:]
-
-
-        p = point3_pos
-        n = point3_neg
-
-        TP,TN,FP,FN = 0,0,0,0
-        for ele in p:
-            if ele >= m_zhongzhi3:
-                TP += 1
-            else:
-
-                FN += 1
-
-        for ele in n:
-            if ele >= m_zhongzhi3:
-                FP += 1
-            else:
-                TN += 1
-
-        cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi3)
-
-
-
-        p = point6_pos
-        n = point6_neg
-
-        TP,TN,FP,FN = 0,0,0,0
-        for ele in p:
-            if ele >= m_zhongzhi6:
-                TP += 1
-            else:
-                FN += 1
-
-        for ele in n:
-            if ele >= m_zhongzhi6:
-                FP += 1
-            else:
-                TN += 1
-
-        cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi6)
-
-
-
-        p = point9_pos
-        n = point9_neg
-
-        TP,TN,FP,FN = 0,0,0,0
-        for i in range(len(p)):
-            if p[i] >= m_zhongzhi9:
-                TP += 1
-            else:
-                # print(i)
-                FN += 1
-
-        for ele in n:
-            if ele >= m_zhongzhi9:
-                FP += 1
-            else:
-                TN += 1
-
-        cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi9)
+        # m_zhongzhi3,m_zhongzhi6,m_zhongzhi9 = m_zhongzhi[:]
+        #
+        #
+        # p = point3_pos
+        # n = point3_neg
+        #
+        # TP,TN,FP,FN = 0,0,0,0
+        # for ele in p:
+        #     if ele >= m_zhongzhi3:
+        #         TP += 1
+        #     else:
+        #
+        #         FN += 1
+        #
+        # for ele in n:
+        #     if ele >= m_zhongzhi3:
+        #         FP += 1
+        #     else:
+        #         TN += 1
+        #
+        # cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi3)
+        #
+        #
+        #
+        # p = point6_pos
+        # n = point6_neg
+        #
+        # TP,TN,FP,FN = 0,0,0,0
+        # for ele in p:
+        #     if ele >= m_zhongzhi6:
+        #         TP += 1
+        #     else:
+        #         FN += 1
+        #
+        # for ele in n:
+        #     if ele >= m_zhongzhi6:
+        #         FP += 1
+        #     else:
+        #         TN += 1
+        #
+        # cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi6)
+        #
+        #
+        #
+        # p = point9_pos
+        # n = point9_neg
+        #
+        # TP,TN,FP,FN = 0,0,0,0
+        # for i in range(len(p)):
+        #     if p[i] >= m_zhongzhi9:
+        #         TP += 1
+        #     else:
+        #         # print(i)
+        #         FN += 1
+        #
+        # for ele in n:
+        #     if ele >= m_zhongzhi9:
+        #         FP += 1
+        #     else:
+        #         TN += 1
+        #
+        # cnt(TP,TN,FP,FN,np.concatenate((n,p)),[0]*len(n)+[1]*len(p),m=m_zhongzhi9)
 
 
     def compComplexAll(neg_list_num, pos_list_num, neg_list_avg, pos_list_avg, neg_list, pos_list):
@@ -306,12 +336,14 @@ if __name__=="__main__":
     neg_list_num,pos_list_num = inputAFunC(cntNum)
     neg_list_avg,pos_list_avg = inputAFunC(cntAvg)
 
-    # print(neg_list_ratio,pos_list_ratio,sep="\n")
+    # # print(neg_list_ratio,pos_list_ratio,sep="\n")
+    # # print(neg_list_num)
+    # # print(neg_list_avg)
+    # neg_list = neg_list_num*neg_list_avg
+    # pos_list = pos_list_num*pos_list_avg
+    # # print(neg_list,pos_list,sep="\n")
 
-    neg_list = neg_list_num*neg_list_avg
-    pos_list = pos_list_num*pos_list_avg
-    # print(neg_list,pos_list,sep="\n")
-
+    neg_list,pos_list = inputAFunC(cntSum)
 
 
 

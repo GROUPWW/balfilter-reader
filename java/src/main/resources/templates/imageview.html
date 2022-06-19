@@ -13,28 +13,7 @@
 
 <body>
 
-<!--    <div class="modal-footer no-margin-top">-->
-<!--        <ul class="pagination pull-right no-margin">-->
 
-<!--            &lt;!&ndash; 首页 &ndash;&gt;-->
-<!--            <li>-->
-<!--                <a th:href="'/result/'+ ${caseID} +'/' +'0'">首页</a>-->
-<!--            </li>-->
-
-<!--            &lt;!&ndash; 上一页 &ndash;&gt;-->
-<!--            <li>-->
-<!--                <a th:href="'/result/'+ ${caseID} +'/' + ${topSusId -1}" th:text="上一页"></a>-->
-<!--            </li>-->
-
-
-
-<!--            &lt;!&ndash; 下一页 &ndash;&gt;-->
-<!--            <li>-->
-<!--                <a th:href="'/result/'+ ${caseID} +'/' + ${topSusId +1}" th:text="下一页"></a>-->
-<!--            </li>-->
-
-<!--        </ul>-->
-<!--    </div>-->
 
 
     <!--<div> 可定义文档中的分区或节（division/section）-->
@@ -67,16 +46,7 @@
 
             <!--    col-md-6 就是当这个内容在电脑上显示，就占6格，刚好是电脑屏幕的1/2。-->
             <div class="col-md-6">
-<!--                <img th:src="@{'/favicon.ico'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/ssss/ssss/1.png'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'~/test/99.png'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/88.png'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/1003997/11x11.jpg'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/2.png'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/../2.png'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/favicon1.ico'}" class="img-responsive center-block" alt="">-->
-<!--                <img th:src="@{'/3.png'}" class="img-responsive center-block" alt="">-->
-<!--                <a th:text="'/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'"></a>-->
+
                 <img th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}" class="img-responsive center-block" alt="">
 
                 <div class="row">
@@ -215,96 +185,102 @@
 
                     <tbody>
 
+
                     <tr>
-                        <td><b>病例编号</b></td>
+                        <td>
+                            <b>Results for the case</b>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>Case ID</td>
                         <td th:text="${caseID}">啊啊</td>
                     </tr>
 
                     <tr>
-                        <td><b>图像块坐标</b></td>
+                        <td>
+                            Diagnosis of BALFiter Reader
+                        </td>
+
+                        <td>
+                            暂时空缺，缺乏新的划分标准
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Score of tumor suspiciousness(<sub>ts</sub>)
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            0.9<=S<sub>ts</sub>
+                        </td>
+                        <td th:text="${show369.get(2)}">
+
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0.6<=S<sub>ts</sub>
+                        </td>
+                        <td th:text="${show369.get(1)}">
+                            //空缺，格式Ave.:0.929 & Num:29
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            0.3<=S<sub>ts</sub>
+                        </td>
+                        <td th:text="${show369.get(0)}">
+                            //空缺，格式Ave.:0.929 & Num:29
+                        </td>
+                    </tr>
+
+                    <tr></tr>
+
+
+                    <tr>
+                        <td>
+                            <b>Results for currently displayed image block</b>
+                        </td>
+
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <td>
+                            Score of tumor suspiciousness(<sub>ts</sub>)
+                        </td>
+
+                        <td th:text="${blockInfo.getConfidence()}">啊啊</td>
+
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <td>Location</td>
                         <td th:text="${blockInfo.getImgName()}">啊啊</td>
                     </tr>
 
                     <tr>
-                        <td><b>图像块可疑度</b></td>
-                        <td th:text="${blockInfo.getConfidence()}">啊啊</td>
-                    </tr>
-
-                    <tr>
-                        <td><b>使用的模型</b></td>
-                        <td th:text="${blockInfo.getModel()}">啊啊</td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td><b>病例所有图像块的可疑度分布</b></td>
-                        <td></td>
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            0.9<=S<sub>ts</sub><=1
-                        </td>
-                        <td th:text="${cntRatio.get(4)}">
-                            {{data["sts"][4]}}
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            0.6<=S<sub>ts</sub>&lt;0.9
-                        </td>
-                        <td th:text="${cntRatio.get(3)}">
-                            {{data["sts"][3]}}
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            0.3<=S<sub>ts</sub>&lt;0.6
-                        </td>
-                        <td th:text="${cntRatio.get(2)}">
-                            {{data["sts"][2]}}
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            0&lt;S<sub>ts</sub>&lt;0.3
-                        </td>
-                        <td th:text="${cntRatio.get(1)}">
-                            {{data["sts"][1]}}
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            S<sub>ts</sub>=0
-                        </td>
-                        <td th:text="${cntRatio.get(0)}">
-                            {{data["sts"][0]}}
-                        </td>
-                    </tr>
-
-
-
-<!--                    <tr>-->
-<!--                        <td></td>-->
-<!--                        <td></td>-->
-<!--                    </tr>-->
-
-
-                    <tr>
-
                         <form th:action=" '/result/'+ ${caseID} +'/' + ${topSusId}" method="post" name="formName">
                             <td>
-                                <b>是否接受该检测</b>
+                                Using current image block for dataset expansion?
                                 &nbsp;&nbsp;
                                 <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>是</b>
                                 &nbsp;&nbsp;
@@ -317,96 +293,29 @@
 
                     </tr>
 
-                    <tr th:each="message:${messageList}">
-                        <td th:text="${message[0]}"></td>
-                        <td th:text="${message[1]}+' '+${message[2]}"></td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <form th:action=" '/toPDF/'+ ${caseID} +'/' + ${topSusId}" method="get">-->
+<!--                            <td>-->
+<!--                                <input type="submit" value="导出PDF">-->
+<!--                            </td>-->
+<!--                        </form>-->
+<!--                    </tr>-->
 
                     <tr>
-                        <form th:action=" '/result/'+ ${caseID} +'/' + ${topSusId}" method="post" name="formName">
-                            <td>
-                                <b>增加备注：</b>
-                                <input type="text" name="addMessage" style="width:70%"><b></b>
-                            </td>
-                            <td>
-                                <input type="submit">
-                            <td>
-                        </form>
+                        <td>
+                            <h1>Heatmap</h1>
+                        </td>
+
                     </tr>
+
 
                     </tbody>
                 </table>
 
+                <img th:src="@{'/static/res_'+ ${caseID}+'.jpg'}" class="img-responsive center-block" alt="" style="height: 768px">
             </div>
 
         </div>
-
-
-
-
-<!--        <li>数组循环：-->
-<!--            注意不要用数字开头-->
-<!--            <div th:each="arrayS:${t3x3List}">-->
-<!--                <div th:text="${arrayS}"></div>-->
-<!--            </div>-->
-<!--        </li>-->
-
-
-<!--        <ul th:each="info:${t3x3List}" style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"> <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"> <img th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}" class="img-responsive center-block" alt=""> </li> </ul>-->
-
-<!--        <ul th:each="info:${t3x3List}"-->
-<!--            style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;">-->
-<!--            <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"><img-->
-<!--                    th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}"-->
-<!--                    className="img-responsive center-block" alt=""></li>-->
-<!--        </ul>-->
-
-<!--        <ul th:each="info:${t3x3List}"-->
-<!--            style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;">-->
-<!--            <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"><img-->
-<!--                    src="/static/1003997/22x22.jpg"-->
-<!--                    className="img-responsive center-block" alt=""></li>-->
-<!--        </ul>-->
-
-<!--        <ul-->
-<!--            style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;">-->
-<!--            <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"><img-->
-<!--                    th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}"-->
-<!--                    className="img-responsive center-block" alt=""></li>-->
-<!--        </ul>-->
-
-<!--                <ul-->
-<!--                    style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;">-->
-<!--                    <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"><img-->
-<!--                            src="/static/1003997/22x22.jpg"-->
-<!--                            className="img-responsive center-block" alt="999"></li>-->
-<!--                </ul>-->
-
-<!--        <img-->
-<!--                src="/static/1003997/1.jpg"-->
-<!--                className="img-responsive center-block" alt="88888">-->
-
-<!--                <ul th:inline="text"-->
-<!--                    style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;">-->
-<!--                    <li style="margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;"><img-->
-<!--                            src="/static/[[caseID]]/[[blockInfo.imgName]].jpg"-->
-<!--                            className="img-responsive center-block" alt=""></li>-->
-<!--                </ul>-->
-
-<!--&lt;!&ndash;        <a th:href="'/result/'+ ${caseID} +'/' + ${topSusId +1}" th:text="下一页"></a>&ndash;&gt;-->
-<!--        <a href="'/result/'[[caseID]] /[[topSusId +1]]" th:text="下一页"></a>-->
-<!--        <a href="'/result/'[[caseID]] /[[topSusId +1]]" th:text="/static/[[caseID]]/[[blockInfo.imgName]].jpg"></a>-->
-
-<!--        <a th:inline="text" href="[[${topSusId +1}]]" text="22222">999</a>-->
-
-
-<!--        "<img\n" +-->
-<!--        "                    th:src=\"@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}\"\n" +-->
-<!--        "                    className=\"img-responsive center-block\" alt=\"[[${topSusId +1}]]\">" +-->
-
-
-
-
 
     </div>
 

@@ -3,6 +3,7 @@ package com.balf.boot.service;
 
 import com.balf.boot.bean.BlockInfo;
 
+import java.io.File;
 import java.util.List;
 
 public interface BlockService {
@@ -16,4 +17,10 @@ public interface BlockService {
     public Integer addMessage(BlockInfo blockInfo, String addMessage,String caseID,String userInfo);
 
     public List cntRatio(String caseID);
+
+    public List imgList();
+
+    public File toPDF(String html);
+
+    public List show369(String caseID);
 }

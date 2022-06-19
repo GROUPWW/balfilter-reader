@@ -7,10 +7,13 @@
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" href="#" type="image/png">
 
-    <title>Login</title>
+    <title>reg</title>
 
     <link href="static/style.css" rel="stylesheet">
     <link href="static/style-responsive.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="static/jsencrypt.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -23,9 +26,9 @@
 
 <div class="container">
 
-    <form class="form-signin" action="index.html" method="post" th:action="@{/register}">
+    <form class="form-signin" method="post" th:action="@{/register}">
         <div class="form-signin-heading text-center">
-            <h1 class="sign-title">Sign In</h1>
+            <h1 class="sign-title">Register</h1>
 <!--            <img src="/static/login-logo.png" alt=""/>-->
 <!--            <img src="/static/login-logo.png" alt=""/>-->
 <!--            <img th:src="@{'/static/login-logo.png'}" class="img-responsive center-block" alt="">-->
@@ -34,11 +37,11 @@
         <div class="login-wrap">
             <label style="color: red" th:text="${msg}"></label>
             <input type="text" name="userName" class="form-control" placeholder="userName" autofocus>
-            <input type="password" name="password" class="form-control" placeholder="password">
+            <input type="password" name="password" class="form-control" placeholder="password" id="password">
             <input type="email" name="email" class="form-control" placeholder="email">
             <input type="phone" name="phone" class="form-control" placeholder="phone">
-            <button class="btn btn-lg btn-login btn-block" type="submit">注册
-                <i class="fa fa-check"></i>
+            <button class="btn btn-lg btn-login btn-block" type="submit" onclick="secretReg()">注册
+<!--                <i class="fa fa-check"></i>-->
             </button>
 
 <!--            <div class="registration">-->
@@ -64,6 +67,46 @@
 <script src="static/jquery.min.js"></script>
 <script src="static/bootstrap.min.js"></script>
 <!--<script src="js/modernizr.min.js"></script>-->
+
+
+<script>
+
+            var pwd = document.getElementById('password');
+            var encrypted;
+            var encrypt = new JSEncrypt();
+            var resAjax;
+
+            function secretReg() {
+
+
+
+
+
+            $.ajax({
+                type: "get",  //提交方式
+                url: "/getPublicKey",//访问路径
+                contentType: 'application/json;charset=utf-8',//返回json结果
+                async :false,
+                success: function (data) {
+
+
+
+                    resAjax = data;
+
+                }
+            });
+            encrypt.setPublicKey(resAjax);
+            encrypted = encrypt.encrypt($("#password").val());
+
+            console.log(encrypted);
+            pwd.value = encrypted;
+            pwd.value = JSON.stringify(encrypted);
+            $("#password").val(encrypted);
+
+            console.log(pwd.value);
+            }
+
+</script>
 
 </body>
 </html>
