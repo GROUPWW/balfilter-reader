@@ -46,10 +46,10 @@ public class MainController {
 
         Process process = Runtime.getRuntime().exec("python C://Users/L/Desktop/BALFilter_Reader/detect_upload.py --img " + originalFilename);
 //
-        String ls_1;
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        while ( (ls_1=bufferedReader.readLine()) != null)
-            System.out.println(ls_1);
+//        String ls_1;
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        while ( (ls_1=bufferedReader.readLine()) != null)
+//            System.out.println(ls_1);
 
         return "upload-success";
     }
