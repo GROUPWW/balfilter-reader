@@ -8,7 +8,7 @@ import pymysql
 
 
 def cntRatio(imgName):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
     sql = "select IMG_NAME  from %s where CONFIDENCE>0 and CONFIDENCE<0.3"%(databaseName)

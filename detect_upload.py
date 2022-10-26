@@ -1,7 +1,7 @@
 import sys
-sys.path.append('C://Users/L/Desktop/BALFilter_Reader/yolov5')
-sys.path.append('C://Users/L/Desktop/BALFilter_Reader/CenterNet/src')
-sys.path.append('C://Users/L/Desktop/BALFilter_Reader')
+sys.path.append('C://Users/Ning/BALF/yolov5')
+sys.path.append('C://Users/Ning/BALF/CenterNet/src')
+sys.path.append('C://Users/Ning/BALF/')
 from cut_and_detect import cut_and_detect_mini
 
 
@@ -11,7 +11,7 @@ import argparse
 
 def fast_detect(img):
 
-    listDir = "C://Users/L/Desktop/BALFilter_Reader/upload/"
+    listDir = "C://Users/Ning/BALF/upload/"
 
     # l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
     #          "3_1005256.jpg"]

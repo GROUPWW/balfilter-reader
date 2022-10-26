@@ -4,22 +4,25 @@ Image.MAX_IMAGE_PIXELS = None
 #直接转int可能会越界，所以使用取整，舍去右下部分边缘
 import math
 import numpy as np
-import argparse
+# import argparse
 import os
 import shutil
-import time
-from pathlib import Path
+# import time
+# from pathlib import Path
 import cv2
 import torch
 from torchvision import transforms
 
+import sys
+sys.path.append('./yolov5')
 #yolov5
 from models.experimental import attempt_load
 from utils.general import  non_max_suppression
 from utils.torch_utils import select_device
 
-from PyQt5.QtWidgets import QApplication
+# from PyQt5.QtWidgets import QApplication
 
+sys.path.append('./CenterNet/src')
 #centernet
 from msra_resnet import get_pose_net
 from opts_and_utils_for_pyqt import _gather_feat, _transpose_and_gather_feat,all_opts
@@ -119,7 +122,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     case_id = big_img_path.split('/')[-1].split('.')[0]
     database = in_mysql(case_id)
-    out = 'C://Users/L/Desktop/BALFilter_Reader/image_output/' + case_id + '/'
+    out = 'C://Users/Ning/BALF/image_output/' + case_id + '/'
 
     if os.path.exists(out):
         shutil.rmtree(out)  # delete output folder
@@ -127,7 +130,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
 
     if chosen_model=='yolov5':
-        yolov5_opt = {'weights': ['C://Users/L/Desktop/BALFilter_Reader/yolov5/weights/infer.pt'], 'img_size': 256,
+        yolov5_opt = {'weights': ['C://Users/Ning/BALF/yolov5/weights/infer.pt'], 'img_size': 256,
                       'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
                       'augment': False}
         img_size = yolov5_opt['img_size']
@@ -174,6 +177,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
             #img_copy=np.array(temp)[:, :, (2, 1, 0)]
 
             doFilterRes = doFilter(img_copy)
+            #TODO(wny)
             if doFilterRes !=1 :
                 # database.write_in_database(str(i) + "x" + str(j), "0", 'yolov5', doFilterRes)
                 pass

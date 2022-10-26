@@ -5,34 +5,43 @@ from cut_and_detect import cut_and_detect_mini
 
 
 import os
-import glob
+# import glob
+from pathlib import Path
 
 def fast_detect():
 
     listDir = "big_img_in/"
+    imgList = []
 
-    l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
-             "3_1005256.jpg"]
+    for root, ds, fs in os.walk(listDir):
+        for f in fs:
+            print(root, f)
+            fullname = os.path.join(root + '/', f)
+            if Path(fullname).suffix == '.jpg':
+                imgList.append(fullname)            
 
-    l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg','2_1004515.jpg',
-             '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
-             "3_1005250.jpg", "3_1005251.jpg", "3_1005253.jpg"]
+    # l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
+    #          "3_1005256.jpg"]
 
-    l_neg_trans = ['2_1004509_trans.jpg', '2_1004510_trans.jpg', '2_1004516_trans.jpg',
-             "3_1005256_trans.jpg"]
+    # l_pos = ['2_1004518.jpg', '2_1004519.jpg', '2_1004521.jpg', '2_1004522.jpg','2_1004515.jpg',
+    #          '1003989.jpg', '1003993.jpg', '1003994.jpg', '1003995.jpg', '1003997.jpg', '1003998.jpg',
+    #          "3_1005250.jpg", "3_1005251.jpg", "3_1005253.jpg"]
 
-    l_pos_trans = ['2_1004518_trans.jpg', '2_1004519_trans.jpg', '2_1004521_trans.jpg', '2_1004522_trans.jpg',
-             '1003989_trans.jpg', '1003993_trans.jpg', '1003994_trans.jpg', '1003995_trans.jpg', '1003997_trans.jpg', '1003998_trans.jpg',
-             "3_1005250_trans.jpg", "3_1005251_trans.jpg", "3_1005253_trans.jpg"]
+    # l_neg_trans = ['2_1004509_trans.jpg', '2_1004510_trans.jpg', '2_1004516_trans.jpg',
+    #          "3_1005256_trans.jpg"]
 
-    # imgList = os.listdir(listDir)
+    # l_pos_trans = ['2_1004518_trans.jpg', '2_1004519_trans.jpg', '2_1004521_trans.jpg', '2_1004522_trans.jpg',
+    #          '1003989_trans.jpg', '1003993_trans.jpg', '1003994_trans.jpg', '1003995_trans.jpg', '1003997_trans.jpg', '1003998_trans.jpg',
+    #          "3_1005250_trans.jpg", "3_1005251_trans.jpg", "3_1005253_trans.jpg"]
 
-    imgList = l_neg + l_pos+     l_neg_trans + l_pos_trans
+    # # imgList = os.listdir(listDir)
+
+    # imgList = l_neg + l_pos+     l_neg_trans + l_pos_trans
 
 
-    imgList = ["zjx1.jpg","zjx001.jpg"]
-    for ele in imgList:
-        print(ele)
+    # imgList = ["zjx1.jpg","zjx001.jpg"]
+    # for ele in imgList:
+    #     print(ele)
 
 
 
@@ -51,13 +60,14 @@ def fast_detect():
 
 
     for ele in imgList :
-        ele = listDir + ele
-        if ele.split(".")[-1] == "jpg":
-            t0 = time.time()
-            cut_and_detect_mini(ele)
-            psTime = time.time() - t0
-            print(psTime)
-            timeList.append(psTime)
+        # ele = listDir + ele
+        # if ele.split(".")[-1] == "jpg":
+        print('detecting', ele)
+        t0 = time.time()
+        cut_and_detect_mini(ele)
+        psTime = time.time() - t0
+        print(psTime)
+        timeList.append(psTime)
 
 
 

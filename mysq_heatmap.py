@@ -6,7 +6,7 @@ import cv2
 
 
 def cntRatio(imgName):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
     # sql = "select count(*) from %s"%(databaseName)
@@ -15,7 +15,7 @@ def cntRatio(imgName):
     # up = cursor.fetchall()
     # print(up[0])
 
-    up = len(os.listdir("C://Users/L/Desktop/BALFilter_Reader/image_output/"+imgName))
+    up = len(os.listdir("./image_output/"+imgName))
 
     import math
     length = math.sqrt(up)
@@ -71,7 +71,7 @@ def createHeatmap(imgName):
             tmpRes = cv2.resize(tmpRes, (tmpRes.shape[0] * 16, tmpRes[0].shape[0] * 16),
                                 interpolation=cv2.INTER_NEAREST)
             
-            cv2.imwrite("C://Users/L/Desktop/BALFilter_Reader/image_output/res_" + ele, tmpRes)
+            cv2.imwrite("./image_output/res_" + ele, tmpRes)
 
 
 if __name__=="__main__":
@@ -89,4 +89,3 @@ if __name__=="__main__":
 
 
 
-    createHeatmap("013.jpg")

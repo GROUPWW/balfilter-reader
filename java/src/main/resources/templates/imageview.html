@@ -200,7 +200,7 @@
 
                     <tr>
                         <td>
-                            Diagnosis conclusion
+                            Diagnosis of BALFiter Reader
                         </td>
 
                         <td>
@@ -211,14 +211,14 @@
 
                     <tr>
                         <td>
-                            Score of tumor suspiciousness (T<sub>ts</sub>)
+                            Score of tumor suspiciousness(<sub>ts</sub>)
                         </td>
 
                     </tr>
 
                     <tr>
                         <td>
-                            S<sub>ts</sub>>=0.9
+                            0.9<=S<sub>ts</sub>
                         </td>
                         <td th:text="${show369.get(2)}">
 
@@ -228,20 +228,20 @@
 
                     <tr>
                         <td>
-                            S<sub>ts</sub>>=0.6
+                            0.6<=S<sub>ts</sub>
                         </td>
                         <td th:text="${show369.get(1)}">
-
+                            //空缺，格式Ave.:0.929 & Num:29
                         </td>
                     </tr>
 
 
                     <tr>
                         <td>
-                            S<sub>ts</sub>>=0.3
+                            0.3<=S<sub>ts</sub>
                         </td>
                         <td th:text="${show369.get(0)}">
-
+                            //空缺，格式Ave.:0.929 & Num:29
                         </td>
                     </tr>
 
@@ -250,7 +250,7 @@
 
                     <tr>
                         <td>
-                            <b>Results for the currently displayed image block</b>
+                            <b>Results for currently displayed image block</b>
                         </td>
 
                     </tr>
@@ -274,17 +274,17 @@
 
                     <tr>
                         <td>Location</td>
-                        <td th:text="${'X:'+blockInfo.getImgName().split('x')[0]+' Y:'+blockInfo.getImgName().split('x')[1]}">啊啊</td>
+                        <td th:text="${blockInfo.getImgName()}">啊啊</td>
                     </tr>
 
                     <tr>
                         <form th:action=" '/result/'+ ${caseID} +'/' + ${topSusId}" method="post" name="formName">
                             <td>
-                                Collect this image block for dataset expansion?
+                                Using current image block for dataset expansion?
                                 &nbsp;&nbsp;
-                                <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>Yes</b>
+                                <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>是</b>
                                 &nbsp;&nbsp;
-                                <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>No</b>
+                                <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>否</b>
                             </td>
                             <td>
                                 <input type="submit">

@@ -4,7 +4,7 @@ import pymysql
 
 
 def cntAvg(imgName):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
     sql = "with t1 as (select AVG(CONFIDENCE) from %s where CONFIDENCE >=0.3),t3 as (select AVG(CONFIDENCE)  from %s where CONFIDENCE>=0.6),t4 as (select AVG(CONFIDENCE)  from %s where CONFIDENCE>=0.9) select * from t1,t3,t4"%(databaseName,databaseName,databaseName)
@@ -20,7 +20,7 @@ def cntAvg(imgName):
 
 
 def cntRatio(imgName):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
     sql = "with t2 as (select count(*)  from %s where CONFIDENCE>=0.3),t3 as (select count(*)  from %s where CONFIDENCE>=0.6),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from  t2,t3,t4"%(databaseName,databaseName,databaseName)

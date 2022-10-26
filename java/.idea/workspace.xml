@@ -4,13 +4,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0feb699c-cb9d-472a-8695-9c8359f5cbe9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0feb699c-cb9d-472a-8695-9c8359f5cbe9" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/../docs/20220411图像块推理耗时【秒】（排除了第一个异常的时间）.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cut_and_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/../cut_and_detect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../detect_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/../detect_upload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../fast_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/../fast_detect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7de5e10-8277-4700-b639-43845132a611.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d7de5e10-8277-4700-b639-43845132a611.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/balf/boot/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balf/boot/service/impl/BlockServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balf/boot/service/impl/BlockServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-local.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-local.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-local.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application-local.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/Boot05Web01Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/Boot05Web01Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/bean/BlockInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/bean/BlockInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/bean/UserInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/bean/UserInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/config/AdminWebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/config/AdminWebConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/BlockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/BlockController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/RSAController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/RSAController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/interceptor/LoginInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/interceptor/LoginInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/mapper/BlockMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/mapper/BlockMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/mapper/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/service/BlockService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/service/BlockService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/service/impl/BlockServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/service/impl/BlockServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/balf/boot/util/RSAUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/balf/boot/util/RSAUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysq_heatmap.py" beforeDir="false" afterPath="$PROJECT_DIR$/../mysq_heatmap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/find_img.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/find_img.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysq_focals.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysq_focals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysq_lyp.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysq_lyp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysq_lyp_mean.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysq_lyp_mean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysq_lyp_stdev.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysq_lyp_stdev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysql.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysql.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysql_cntACC_18_归一化求和那个.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysql_cntACC_18_归一化求和那个.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysql_cntACC_total_18.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysql_cntACC_total_18.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../util/mysql_cnt_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../util/mysql_cnt_app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,22 +88,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DatabaseDriversLRU" value="mysql" />
-    <property name="RequestMappingsPanelOrder0" value="0" />
-    <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Ning/BALF/java&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;93f725a07423fe1c889f448b33d21f46&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\L\Desktop\BALFilter_Reader\java\src\main\resources\templates" />
@@ -85,12 +118,14 @@
       <recent name="com.balf.boot.bean" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.Boot05Web01Application (1)">
-    <configuration name="create_user.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
-      <script-file value="$PROJECT_DIR$/src/main/resources/create_user.sql" />
-      <script-mode>FILE</script-mode>
-      <method v="2" />
-    </configuration>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Boot05Web01Application (2)">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -110,17 +145,6 @@
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -170,26 +194,6 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Boot05Web01Application (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="boot-05-web-01" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.balf.boot.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.balf.boot.Boot05Web01Application" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Boot05Web01Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
-      <module name="boot-05-web-01" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.boot.Boot05Web01Application" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -220,11 +224,27 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
+    <configuration name="create_user.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/src/main/resources/create_user.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+    <configuration name="Boot05Web01Application (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="java" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.balf.boot.Boot05Web01Application" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.balf.boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.Boot05Web01Application (1)" />
-        <item itemvalue="Database Script.create_user.sql" />
-        <item itemvalue="Spring Boot.Boot05Web01Application" />
+        <item itemvalue="Spring Boot.Boot05Web01Application (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -250,10 +270,9 @@
       <workItem from="1652851122038" duration="3294000" />
       <workItem from="1652877293264" duration="31315000" />
       <workItem from="1653635214653" duration="3836000" />
-      <workItem from="1656346302573" duration="1749000" />
-      <workItem from="1656520937082" duration="2338000" />
-      <workItem from="1656852477516" duration="872000" />
-      <workItem from="1658050500918" duration="4390000" />
+      <workItem from="1656752917547" duration="6895000" />
+      <workItem from="1658250494262" duration="648000" />
+      <workItem from="1658573981112" duration="1346000" />
     </task>
     <servers />
   </component>

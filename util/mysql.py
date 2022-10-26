@@ -4,7 +4,7 @@ class in_mysql():
     def __init__(self,case_id_and_model):
         self.case_id_and_model = case_id_and_model
         # print(type(case_id_and_model))
-        self.db  = pymysql.connect("localhost", "root", "123456", "balf")
+        self.db  = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
         self.cursor = self.db.cursor()
         self.sql = "DROP TABLE IF EXISTS DATABASE_%s" % (self.case_id_and_model)
         self.cursor.execute(self.sql)
@@ -20,7 +20,7 @@ class in_mysql():
 
 
 def out_mysql(case_id_and_model):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor(cursor = pymysql.cursors.DictCursor) #变成字典形式的输出
     sql = "SELECT CONFIDENCE '图像块可疑度',IMG_NAME 'nxn' ,MODEL '使用的目标检测模型' FROM DATABASE_%s ORDER BY CONFIDENCE DESC" % (case_id_and_model)
     cursor.execute(sql)
@@ -35,7 +35,7 @@ def out_mysql(case_id_and_model):
 
 
 def cntRatio(imgName):
-    db = pymysql.connect("localhost", "root", "123456", "balf")
+    db = pymysql.connect(host="localhost", user="root", password="123456", db="balf")
     cursor = db.cursor()
     databaseName = "database_" + imgName
     sql = "with t2 as (select count(*)  from %s where CONFIDENCE>=0.3),t3 as (select count(*)  from %s where CONFIDENCE>=0.6),t4 as (select count(*)  from %s where CONFIDENCE>=0.9) select * from  t2,t3,t4"%(databaseName,databaseName,databaseName)
