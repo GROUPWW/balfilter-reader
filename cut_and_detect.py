@@ -13,6 +13,8 @@ import cv2
 import torch
 from torchvision import transforms
 
+import config
+
 import sys
 sys.path.append('./yolov5')
 #yolov5
@@ -122,7 +124,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     case_id = big_img_path.split('/')[-1].split('.')[0]
     database = in_mysql(case_id)
-    out = 'C://Users/Ning/BALF/image_output/' + case_id + '/'
+    out = config.ROOT_PATH + '/image_output/' + case_id + '/'
 
     if os.path.exists(out):
         shutil.rmtree(out)  # delete output folder
@@ -130,7 +132,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
 
     if chosen_model=='yolov5':
-        yolov5_opt = {'weights': ['C://Users/Ning/BALF/yolov5/weights/infer.pt'], 'img_size': 256,
+        yolov5_opt = {'weights': [config.ROOT_PATH + '/yolov5/weights/infer.pt'], 'img_size': 256,
                       'conf_thres': 0.01, 'iou_thres': 0.5, 'device': '', 'classes': None, 'agnostic_nms': False,
                       'augment': False}
         img_size = yolov5_opt['img_size']

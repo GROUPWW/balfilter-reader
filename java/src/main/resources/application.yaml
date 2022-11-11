@@ -8,7 +8,7 @@ spring:
     static-path-pattern: /static/**
 
   resources:
-    static-locations: classpath:/static , file:C://Users/Ning/BALF/image_output
+    static-locations: classpath:/static , file:E://wangningyu/BALF/image_output
 
   datasource:
     url: jdbc:mysql://localhost:3306/balf?serverTimezone=UTC
@@ -32,7 +32,7 @@ mybatis:
 
 file:
   upload:
-    dir: C://Users/Ning/BALF/upload
+    dir: E://wangningy/BALF/upload
 
 #project:
 #  static:
@@ -49,7 +49,6 @@ file:
 #    context-path:
 
 
-
 #spring:
 #  profiles:
 #    include: [data-dev]
@@ -59,4 +58,6 @@ file:
 #      #访问静态资源规则，可配置多个以','或'，'隔离
 #      - pathPatterns: /static/**,/chengyi/**
 #        #静态资源文件位置，可配置多个以','或'，'隔离
+server:
+  port: 80
 #        resourceLocations: classpath:/templates/static/,file:${case.outPath},classpath:/templates/chengyi/,file:${case.chengyi}

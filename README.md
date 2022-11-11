@@ -2,15 +2,27 @@
 
 cuda:
 
-https://developer.nvidia.com/cuda-10.1-download-archive-base?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exelocal
+v11.8: https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local
 
 torch:
 ```
-conda install python=3.7
-conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch
+conda install pytorch torchvision torchaudio cudatoolkit=11.6 -c pytorch -c conda-forge
 ```
 
 others:
 ```
 pip install opencv-python matplotlib pyyaml scipy pymysql sklearn
+```
+
+# Train
+
+```
+cd yolov5
+python .\train.py --batch-size=2
+```
+
+# Infer
+
+```
+
 ```

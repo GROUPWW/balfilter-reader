@@ -1,7 +1,9 @@
 import sys
-sys.path.append('C://Users/Ning/BALF/yolov5')
-sys.path.append('C://Users/Ning/BALF/CenterNet/src')
-sys.path.append('C://Users/Ning/BALF/')
+
+import config
+sys.path.append(config.ROOT_PATH + '/yolov5')
+sys.path.append(config.ROOT_PATH + '/CenterNet/src')
+sys.path.append(config.ROOT_PATH + '/')
 from cut_and_detect import cut_and_detect_mini
 
 
@@ -11,7 +13,7 @@ import argparse
 
 def fast_detect(img):
 
-    listDir = "C://Users/Ning/BALF/upload/"
+    listDir = config.ROOT_PATH + "/upload/"
 
     # l_neg = ['2_1004509.jpg', '2_1004510.jpg', '2_1004516.jpg',
     #          "3_1005256.jpg"]
