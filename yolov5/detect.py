@@ -39,6 +39,7 @@ def detect(save_img=False):
     # Initialize
     set_logging()
     device = select_device(opt.device)
+    print('device={}'.format(device))
     if os.path.exists(out):
         shutil.rmtree(out)  # delete output folder
     os.makedirs(out)  # make new output folder

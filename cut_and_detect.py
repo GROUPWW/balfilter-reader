@@ -12,6 +12,7 @@ import shutil
 import cv2
 import torch
 from torchvision import transforms
+import gc
 
 import config
 
@@ -141,7 +142,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
         with torch.no_grad():
             weights = yolov5_opt['weights']
             device = select_device(yolov5_opt['device'])
-
+            print('device={}'.format(device))
 
             half = device.type != 'cpu'  # half precision only supported on CUDA  #半精度浮点数（fp16，Half-precision floating-point）
 
@@ -149,6 +150,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
             model = attempt_load(weights, map_location=device)  # load FP32 model
             if half:
                 model.half()  # to FP16
+                print('model half')
     else:
         opts = all_opts()
         img_size = opts.img_size
@@ -166,7 +168,6 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
     import time
     timeList = []
-
 
     for i in range(0,the_shorter_num):
         for j in range(0,the_shorter_num):
@@ -193,6 +194,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                     # t0 = time.time()
 
                     img = loader(temp)
+                    print('img {} {}'.format(i, j))
 
                     # img = img[[2, 1, 0]].unsqueeze(0)
                     if img.ndimension() == 3:
@@ -224,7 +226,6 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                     # Process detections
 
                     for det in pred:  # detections per image
-
                         if det is not None and len(det):
                             # Write results
                             for *xyxy, conf, cls in reversed(det):
@@ -237,7 +238,10 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                                 database.write_in_database(str(i)+"x"+str(j), str(label), 'yolov5',1)
 
             cv2.imwrite(out + str(i) + "x" + str(j) + ".jpg", img_copy)
-
+            # torch.cuda.empty_cache()
+            # gc.collect()
+            # print(torch.cuda.memory_stats())
+            # print(torch.cuda.memory_summary())
 
     # timeList = timeList[1:]
     # print("##################################")

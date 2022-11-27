@@ -10,47 +10,48 @@ def fast_detect():
     listDir = "big_img_in/"
 
     imgList = [
-        '001.jpg',
-        '002.jpg',
-        '003.jpg',
-        '004.jpg',
-        '005.jpg',
-        '006.jpg',
-        '007.jpg',
-        '008.jpg',
-        '009.jpg',
-        '010.jpg',
-        '011.jpg',
-        '012.jpg',
-        '013.jpg',
-        '014.jpg',
-        '015.jpg',
-        '016.jpg',
-        '017.jpg',
-        '018.jpg',
-        '019.jpg',
-        '020.jpg',
-        '021.jpg',
-        '022.jpg',
-        '023.jpg',
-        '024.jpg',
-        '025.jpg',
-        '026.jpg',
-        '027.jpg',
-        '028.jpg',
-        '029.jpg',
-        '030.jpg',
-        '031.jpg',
-        '032.jpg',
-        '033.jpg',
-        '034.jpg',
-        '035.jpg',
-        '036.jpg',
-        '037.jpg',
-        '038.jpg',
-        '039.jpg',
-        '040.jpg',
-        '041.jpg'
+        # '001.jpg',
+        # '002.jpg',
+        # '003.jpg',
+        # '004.jpg',
+        # '005.jpg',
+        # '006.jpg',
+        # '007.jpg',
+        # '008.jpg',
+        # '009.jpg',
+        # '010.jpg',
+        # '011.jpg',
+        # '012.jpg',
+        # '013.jpg',
+        # '014.jpg',
+        # '015.jpg',
+        # '016.jpg',
+
+        # '017.jpg',
+        # '018.jpg',
+        # '019.jpg',
+        # '020.jpg',
+        # '021.jpg',
+        # '022.jpg', #oom
+        # '023.jpg',
+        # '024.jpg',
+        # '025.jpg', #oom
+        # '026.jpg',
+        # '027.jpg', #oom
+        # '028.jpg', #oom
+        # '029.jpg',
+        # '030.jpg', #no pic
+        # '031.jpg',
+        # '032.jpg', #no pic
+        # '033.jpg', #oom
+        # '034.jpg',
+        # '035.jpg',
+        # '036.jpg',
+        # '037.jpg', #oom
+        # '038.jpg',
+        # '039.jpg', #oom
+        # '040.jpg',
+        # '041.jpg'
     ]
 
     # imgList = []
@@ -60,6 +61,9 @@ def fast_detect():
     #         fullname = os.path.join(root + '/', f)
     #         if Path(fullname).suffix == '.jpg':
     #             imgList.append(fullname)
+
+    import gc
+    import torch
 
     timeList = []
     for ele in imgList:
@@ -73,6 +77,8 @@ def fast_detect():
         psTime = time.time() - t0
         print('infer time=', psTime)
         timeList.append(psTime)
+        torch.cuda.empty_cache()
+        gc.collect()
 
     print('all infer time=', timeList)
     print('mean infer time=', np.mean(timeList))
