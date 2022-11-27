@@ -15,4 +15,9 @@
         where img_name = #{imgName}
     </update>
 
+    <update id="setOnePositive">
+        update database_${caseID} set is_positive = #{isPositive}
+        where img_name = #{imgName}
+    </update>
+
 </mapper>

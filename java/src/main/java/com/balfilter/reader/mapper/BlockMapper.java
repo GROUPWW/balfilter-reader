@@ -16,6 +16,8 @@ public interface BlockMapper {
 
     public Integer setOneAccepted(String imgName, Integer isAccepted,String caseID);
 
+    public Integer setOnePositive(String imgName, Integer isPositive,String caseID);
+
     @Update("update database_${caseID} set comment = #{newMessageJson} where img_name = #{blockInfo.imgName}")
     public Integer addMessage(BlockInfo blockInfo,String newMessageJson,String caseID);
 

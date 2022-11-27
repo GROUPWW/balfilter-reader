@@ -4,15 +4,12 @@ Image.MAX_IMAGE_PIXELS = None
 #直接转int可能会越界，所以使用取整，舍去右下部分边缘
 import math
 import numpy as np
-# import argparse
 import os
 import shutil
-# import time
-# from pathlib import Path
 import cv2
 import torch
 from torchvision import transforms
-import gc
+import getopt
 
 import config
 
@@ -257,4 +254,18 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
     createHeatmap(case_id+".jpg")
 
 
+if __name__ == "__main__":
+    inputfile = ''
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"hi:",["input-file="])
+    except getopt.GetoptError:
+        print('cut_and_detect.py -i <inputfile>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('cut_and_detect.py -i <inputfile>')
+            sys.exit()
+        elif opt in ("-i", "--input-file"):
+            inputfile = arg
 
+    cut_and_detect_mini(inputfile)

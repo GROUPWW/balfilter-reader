@@ -1,0 +1,9 @@
+.img-adaptive {
+    width: 100%;
+    height: auto;
+}
+
+.thumbnail {
+    width: 256px;
+    height: auto;
+}

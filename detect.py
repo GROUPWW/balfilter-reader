@@ -1,9 +1,6 @@
 import numpy as np
 import time
-from pathlib import Path
 import os
-from cut_and_detect import cut_and_detect_mini
-import sys
 
 def fast_detect():
 
@@ -26,32 +23,32 @@ def fast_detect():
         # '014.jpg',
         # '015.jpg',
         # '016.jpg',
-
         # '017.jpg',
-        # '018.jpg',
-        # '019.jpg',
-        # '020.jpg',
-        # '021.jpg',
+
+        '018.jpg',
+        '019.jpg',
+        '020.jpg',
+        '021.jpg',
         # '022.jpg', #oom
-        # '023.jpg',
-        # '024.jpg',
+        '023.jpg',
+        '024.jpg',
         # '025.jpg', #oom
-        # '026.jpg',
+        '026.jpg',
         # '027.jpg', #oom
         # '028.jpg', #oom
-        # '029.jpg',
+        '029.jpg',
         # '030.jpg', #no pic
-        # '031.jpg',
+        '031.jpg',
         # '032.jpg', #no pic
         # '033.jpg', #oom
-        # '034.jpg',
-        # '035.jpg',
-        # '036.jpg',
+        '034.jpg',
+        '035.jpg',
+        '036.jpg',
         # '037.jpg', #oom
-        # '038.jpg',
+        '038.jpg',
         # '039.jpg', #oom
-        # '040.jpg',
-        # '041.jpg'
+        '040.jpg',
+        '041.jpg'
     ]
 
     # imgList = []
@@ -62,9 +59,6 @@ def fast_detect():
     #         if Path(fullname).suffix == '.jpg':
     #             imgList.append(fullname)
 
-    import gc
-    import torch
-
     timeList = []
     for ele in imgList:
         ele = listDir + ele
@@ -73,12 +67,10 @@ def fast_detect():
             continue
         print('detecting', ele)
         t0 = time.time()
-        cut_and_detect_mini(ele)
+        os.system('python cut_and_detect.py --input-file=' + ele)
         psTime = time.time() - t0
         print('infer time=', psTime)
         timeList.append(psTime)
-        torch.cuda.empty_cache()
-        gc.collect()
 
     print('all infer time=', timeList)
     print('mean infer time=', np.mean(timeList))

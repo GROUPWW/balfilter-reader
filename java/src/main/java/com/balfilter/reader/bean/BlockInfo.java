@@ -19,4 +19,6 @@ public class BlockInfo implements Serializable {
     private String comment;
 
     private Integer isAccepted;
+
+    private Integer isPositive;
 }

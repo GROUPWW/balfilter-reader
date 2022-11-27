@@ -8,13 +8,13 @@ class in_mysql():
         self.cursor = self.db.cursor()
         self.sql = "DROP TABLE IF EXISTS DATABASE_%s" % (self.case_id_and_model)
         self.cursor.execute(self.sql)
-        self.sql = "CREATE TABLE DATABASE_%s (`id` INT PRIMARY KEY AUTO_INCREMENT,IMG_NAME  CHAR(20) NOT NULL,CONFIDENCE FLOAT,MODEL CHAR(20),IS_VALID INT,IS_ACCEPTED INT,COMMENT  VARCHAR (5000))" % (case_id_and_model)
+        self.sql = "CREATE TABLE DATABASE_%s (`id` INT PRIMARY KEY AUTO_INCREMENT,IMG_NAME  CHAR(20) NOT NULL,CONFIDENCE FLOAT,MODEL CHAR(20),IS_VALID INT,IS_ACCEPTED INT,IS_POSITIVE INT,COMMENT  VARCHAR (5000))" % (case_id_and_model)
         self.cursor.execute(self.sql)
         print('Database ',case_id_and_model,' created successfully')
 
 
     def write_in_database(self,nxn_img_name,conf,used_model,isValid):
-        self.sql =  "INSERT INTO DATABASE_%s(IMG_NAME,CONFIDENCE,MODEL,IS_VALID,IS_ACCEPTED) VALUES ('%s', %s,'%s','%d',0)" %(self.case_id_and_model,nxn_img_name,conf,used_model,isValid)
+        self.sql =  "INSERT INTO DATABASE_%s(IMG_NAME,CONFIDENCE,MODEL,IS_VALID,IS_ACCEPTED,IS_POSITIVE) VALUES ('%s', %s,'%s','%d',0,-1)" %(self.case_id_and_model,nxn_img_name,conf,used_model,isValid)
         self.cursor.execute(self.sql)
 
 

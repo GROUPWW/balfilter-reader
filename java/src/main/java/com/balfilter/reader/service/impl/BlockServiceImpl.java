@@ -35,6 +35,11 @@ public class BlockServiceImpl implements BlockService {
     }
 
 
+    public Integer setOnePositive(String imgName, Integer isPositive,String caseID){
+        return blockMapper.setOnePositive(imgName, isPositive,caseID);
+    }
+
+
     public Integer addMessage(BlockInfo blockInfo, String addMessage,String caseID,String userInfo){
         String oldMessageJson = blockInfo.getComment();
         List<ArrayList> oldMessageList = JSON.parseArray(oldMessageJson, ArrayList.class);
@@ -134,10 +139,11 @@ public class BlockServiceImpl implements BlockService {
         List<Map> avg = blockMapper.cntAvg(caseID);
         List<Map> num = blockMapper.cntNum(caseID);
         List res = new ArrayList();
-        res.add("Ave.:" + String.format("%.3f",avg.get(0).get("t1")) + " & Num:" + num.get(0).get("t1"));
-        res.add("Ave.:" + String.format("%.3f",avg.get(0).get("t3")) + " & Num:" + num.get(0).get("t3"));
-        res.add("Ave.:" + String.format("%.3f",avg.get(0).get("t4")) + " & Num:" + num.get(0).get("t4"));
-
+        if (avg.size() > 0 && num.size() > 0 && avg.get(0) != null && num.get(0) != null) {
+            res.add("Ave.:" + String.format("%.3f", avg.get(0).get("t1")) + " & Num:" + num.get(0).get("t1"));
+            res.add("Ave.:" + String.format("%.3f", avg.get(0).get("t3")) + " & Num:" + num.get(0).get("t3"));
+            res.add("Ave.:" + String.format("%.3f", avg.get(0).get("t4")) + " & Num:" + num.get(0).get("t4"));
+        }
         return res;
     }
 

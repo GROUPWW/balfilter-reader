@@ -61,10 +61,15 @@ public class BlockController {
     }
 
     @PostMapping("/result/{caseID}/{topSusId}")
-    public String post(HttpServletRequest request,@PathVariable("topSusId") Integer topSusId,@PathVariable("caseID") String caseID,Integer isAccepted,String addMessage){
+    public String post(HttpServletRequest request,@PathVariable("topSusId") Integer topSusId,@PathVariable("caseID") String caseID,Integer isAccepted, Integer isPositive, String addMessage){
         BlockInfo blockInfo = blockService.getOneBlockByConfidenceDesc(topSusId, caseID);
 
-        if(isAccepted != null) blockService.setOneAccepted(blockInfo.getImgName(), isAccepted,caseID);
+        if(isAccepted != null) {
+            blockService.setOneAccepted(blockInfo.getImgName(), isAccepted,caseID);
+        }
+        if(isPositive != null) {
+            blockService.setOnePositive(blockInfo.getImgName(), isPositive,caseID);
+        }
         if(addMessage != null){
             HttpSession session = request.getSession();
             UserInfo userInfo = (UserInfo)session.getAttribute("loginUser");

@@ -2,6 +2,7 @@
     <title>BALFilter Reader</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/my-style.css">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
@@ -11,7 +12,7 @@
     <script src="/static/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="show3x3();">
 
 
 
@@ -35,6 +36,7 @@
             <!--    </form>-->
 
             <ul class="nav navbar-nav">
+                <li><a th:href=" '/imgList/'"><button type="Go" class="btn btn-default">Image List</button></a></li>
                 <li><a th:href=" '/result/'+ ${caseID} +'/0'"><button type="Go" class="btn btn-default">Back to the first image block</button></a></li>
                 <li><a th:href=" '/result/'+ ${caseID} +'/' + ${topSusId -1}"><button type="Go" class="btn btn-default">Previous</button></a> </li>
                 <li><a th:href=" '/result/'+ ${caseID} +'/' + ${topSusId +1}"><button type="Go" class="btn btn-default">Next</button></a> </li>
@@ -47,32 +49,58 @@
             <!--    col-md-6 就是当这个内容在电脑上显示，就占6格，刚好是电脑屏幕的1/2。-->
             <div class="col-md-6">
 
-                <img th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}" class="img-responsive center-block" alt="">
+<!--                <img th:src="@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}" class="img-responsive center-block" alt="">-->
 
                 <div class="row">
                     <script type="text/javascript" th:inline="javascript">
+                        function show1x1(){
+                            var h = document.getElementById("nxn");
+                            var msg =
+                                "<ul style=\"margin:0;padding:0;\">\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:100%;height:100%;\">\n" +
+                                "       <img src='/static/" + [[${caseID}]] +"/" + [[${blockInfo.imgName}]]+".jpg' class='img-responsive center-block img-adaptive' alt=''>\n" +
+                                "   </li>\n" +
+                                "</ul>"
+
+                            // alert(msg);
+                            h.style.height='768px';
+                            h.style.width='768px';
+                            h.innerHTML = msg;
+
+                            // "<ul th:each=\"info:${3x3List}\" style=\"margin:0;padding:0;\">\n" +
+                            // // "{% for ele in data['3x3_list'] %}\n" +
+                            // "<li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">" +
+                            // // "<a th:href=\"@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}\" style=\"display:block;\" /></a>" +
+                            // // "<a th:href=\"'/result/'+ ${caseID} +'/' + ${topSusId +1}\" th:text=\"下一页\"></a>" +
+                            // "<img th:src=\"@{'/static/'+ ${caseID} +'/' + ${blockInfo.imgName}+'.jpg'}\" className=\"img-responsive center-block\" alt=\"\">" +
+                            // "</li>\n" +
+                            // "</ul>";
+                            // 元素呈现为块级元素。
+                            h.style.display="block";
+                        }
+
                         function show3x3(){
                             var h = document.getElementById("nxn");
                             var msg =
                                 "<ul style=\"margin:0;padding:0;\">\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(0)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(1)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(2)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(3)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(4)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(5)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(6)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(7)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(8)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(0)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(1)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(2)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(3)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(4)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(5)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(6)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(7)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:33%;height:33%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t3x3List.get(8)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
                                 "</ul>"
 
                             // alert(msg);
@@ -94,60 +122,60 @@
 
                         function show5x5(){
                             var h = document.getElementById("nxn");
-                            h.style.height='1280px';
-                            h.style.width='1280px';
+                            h.style.height='768px';
+                            h.style.width='768px';
                             h.innerHTML =
                                 "<ul style=\"margin:0;padding:0;\">\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(0)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(1)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(2)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(3)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(4)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(5)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(6)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(7)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(8)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(9)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(10)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(11)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(12)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(13)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(14)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(15)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(16)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(17)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(18)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(19)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(20)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(21)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(22)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(23)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
-                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:256px;height:256px;\">\n" +
-                                "       <img src=\"/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(24)}]] +".jpg\" className=\"img-responsive center-block\" alt=\"\"> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(0)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(1)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(2)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(3)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(4)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(5)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(6)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(7)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(8)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(9)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(10)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(11)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(12)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(13)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(14)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(15)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(16)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(17)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(18)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(19)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(20)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(21)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(22)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(23)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
+                                "   <li style=\"margin:0;padding:0;list-style-type:none;float:left;width:20%;height:20%;\">\n" +
+                                "       <img src='/static/" +[[${caseID}]]+"/" +[[${t5x5List.get(24)}]] +".jpg' class='img-responsive center-block img-adaptive' alt=''> </li>\n" +
                                 "</ul>"
                             h.style.display="block";
                         }
@@ -159,17 +187,18 @@
                         //在这里,虽然说定义的变量s和h的意义是一样的,但是不能提取出来,这涉及到了文件的加载,如果提出出来的话,在定义这个变量时是我们还没有这个id属性,是加载不到的,如果一定要提取出来的话,就必须把整个JavaScript的代码放到放到body的最后面
                     </script>
 
-                    <br><br><br>
+<!--                    <br><br><br>-->
                     <!--    display:none;和visibility: hidden;都可以隐藏元素。区别是display:none彻底不显示元素，元素不占空间，跟完全没有一样。-->
                     <!--    visibility: hidden只是把元素隐藏不显示，但还是占有原来的位置空间的。-->
                     <!--    onClick当按钮被点击时执行Javascript代码-->
                     <!--      "button"多数情况下，用于通过JS启动脚本-->
+                    <input type="button" value="Zoom out (1.0x)" onClick="show1x1()">
                     <input type="button" value="Zoom out (0.3x)" onClick="show3x3()">
                     <input type="button" value="Zoom out (0.2x)" onClick="show5x5()">
                     <input type="button" value="Hide surrounding image blocks" onClick="hide()">
                     <!--    <img src="001.jpg" id="s" style="display:none">-->
 
-                    <div style="display:none" id="nxn">
+                    <div style="" id="nxn">
                     </div>
                     <!--    <img src="{{ url_for('static', filename='images/'+data.nxn+'.jpg') }}" class="img-responsive center-block" alt="">-->
                 </div>
@@ -285,6 +314,24 @@
                                 <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>是</b>
                                 &nbsp;&nbsp;
                                 <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>否</b>
+                            </td>
+                            <td>
+                                <input type="submit">
+                            <td>
+                        </form>
+
+                    </tr>
+
+                    <tr>
+                        <form th:action=" '/result/'+ ${caseID} +'/' + ${topSusId}" method="post" name="formName">
+                            <td>
+                                Manual diagnose result?
+                                &nbsp;&nbsp;
+                                <input type="radio" name="isPositive" value=1 th:attr ="checked=${blockInfo.getIsPositive() == 1?true:false}"><b>Positive</b>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="isPositive" value=-1 th:attr ="checked=${blockInfo.getIsPositive() == -1?true:false}"><b>Not Sure</b>
+                                &nbsp;&nbsp;
+                                <input type="radio" name="isPositive" value=0 th:attr ="checked=${blockInfo.getIsPositive() == 0?true:false}"><b>Negative</b>
                             </td>
                             <td>
                                 <input type="submit">

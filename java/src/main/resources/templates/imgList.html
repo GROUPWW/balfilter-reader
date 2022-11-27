@@ -2,6 +2,7 @@
     <title>BALFilter Reader</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/my-style.css">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
@@ -21,12 +22,12 @@
 
 <tr th:each="aImg:${imgList}">
 
-    <div >
+    <div>
 
 
 
-                <a th:href=" '/result/'+ ${aImg} +'/0'" th:text="${aImg}"></a>
-
+                <a th:href=" '/result/'+ ${aImg} +'/0'" th:text="${aImg}" style="display: block; text-align: center;"></a>
+                <img th:src="@{'/static/res_'+ ${aImg} + '.jpg'}" alt="" class='img-responsive center-block thumbnail' />
 
 
     </div>
