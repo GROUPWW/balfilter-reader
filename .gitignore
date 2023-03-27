@@ -12,6 +12,7 @@ __pycache__
 *.tif
 *.pt
 *.pth
+*.cache
 
 java/target
 docs/

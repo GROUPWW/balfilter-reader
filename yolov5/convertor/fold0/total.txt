@@ -1,0 +1,13 @@
+2017
+train: 89:151/240 1:1.7
+val: 27:33/60 1:1.2
+
+2023.3
+train: 93:147/240 1:1.58
+val: 23:37/60 1:1.6
+
+pos(val->train) 8x65 81x54 91x79 96x54
+neg(train->val) 0x9 21x92 82x12 83x90
+
+
+final 0.9533 "E:\wangningyu\BALF\yolov5\runs\exp31\weights\last-0.9533-0.6107-299.pt"

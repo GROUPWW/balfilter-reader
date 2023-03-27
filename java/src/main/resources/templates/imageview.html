@@ -219,7 +219,7 @@
                         <td>
                             <b>Results for the case</b>
                         </td>
-
+                        <td/>
                     </tr>
 
                     <tr>
@@ -233,7 +233,7 @@
                         </td>
 
                         <td>
-                            暂时空缺，缺乏新的划分标准
+
                         </td>
 
                     </tr>
@@ -242,7 +242,7 @@
                         <td>
                             Score of tumor suspiciousness(<sub>ts</sub>)
                         </td>
-
+                        <td/>
                     </tr>
 
                     <tr>
@@ -274,13 +274,11 @@
                         </td>
                     </tr>
 
-                    <tr></tr>
-
-
                     <tr>
                         <td>
                             <b>Results for currently displayed image block</b>
                         </td>
+                        <td/>
 
                     </tr>
 
@@ -311,13 +309,13 @@
                             <td>
                                 Using current image block for dataset expansion?
                                 &nbsp;&nbsp;
-                                <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>是</b>
+                                <input type="radio" name="isAccepted" value=1 th:attr ="checked=${blockInfo.getIsAccepted() == 1?true:false}"><b>Yes</b>
                                 &nbsp;&nbsp;
-                                <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>否</b>
+                                <input type="radio" name="isAccepted" value=0 th:attr ="checked=${blockInfo.getIsAccepted() == 0?true:false}"><b>No</b>
                             </td>
                             <td>
-                                <input type="submit">
-                            <td>
+                                <input type="submit" value="Submit">
+                            </td>
                         </form>
 
                     </tr>
@@ -334,8 +332,8 @@
                                 <input type="radio" name="isPositive" value=0 th:attr ="checked=${blockInfo.getIsPositive() == 0?true:false}"><b>Negative</b>
                             </td>
                             <td>
-                                <input type="submit">
-                            <td>
+                                <input type="submit" value="Submit">
+                            </td>
                         </form>
 
                     </tr>
@@ -350,16 +348,15 @@
 
                     <tr>
                         <td>
-                            <h1>Heatmap</h1>
+                            <b>Heatmap</b>
                         </td>
-
+                        <td/>
                     </tr>
-
 
                     </tbody>
                 </table>
 
-                <img th:src="@{'/static/res_'+ ${caseID}+'.jpg'}" class="img-responsive center-block" alt="" style="height: 768px">
+                <img th:src="@{'/static/res_'+ ${caseID}+'.jpg'}" class="img-responsive" alt="" style="height: 256px">
             </div>
 
         </div>

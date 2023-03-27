@@ -18,7 +18,7 @@ pip install opencv-python matplotlib pyyaml scipy pymysql sklearn
 
 ```
 cd yolov5
-python .\train.py --batch-size=2
+python .\train.py --batch-size=2 --data=data/cancer_cell.yaml
 ```
 
 # Infer

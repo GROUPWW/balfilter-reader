@@ -40,6 +40,7 @@ def fast_detect():
         # '030.jpg', #no pic
         '031.jpg',
         # '032.jpg', #no pic
+
         # '033.jpg', #oom
         '034.jpg',
         '035.jpg',
