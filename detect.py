@@ -29,27 +29,27 @@ def fast_detect():
         '019.jpg',
         '020.jpg',
         '021.jpg',
-        # '022.jpg', #oom
+        '022.jpg', #oom
         '023.jpg',
         '024.jpg',
-        # '025.jpg', #oom
+        '025.jpg', #oom
         '026.jpg',
-        # '027.jpg', #oom
-        # '028.jpg', #oom
+        '027.jpg', #oom
+        '028.jpg', #oom
         '029.jpg',
         # '030.jpg', #no pic
         '031.jpg',
         # '032.jpg', #no pic
 
         # '033.jpg', #oom
-        '034.jpg',
-        '035.jpg',
-        '036.jpg',
+        # '034.jpg',
+        # '035.jpg',
+        # '036.jpg',
         # '037.jpg', #oom
-        '038.jpg',
+        # '038.jpg',
         # '039.jpg', #oom
-        '040.jpg',
-        '041.jpg'
+        # '040.jpg',
+        # '041.jpg'
     ]
 
     # imgList = []

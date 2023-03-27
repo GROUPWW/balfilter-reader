@@ -4,7 +4,10 @@ import pymysql
 import numpy as np
 from sklearn.metrics import confusion_matrix, f1_score, auc, roc_curve
 import matplotlib.pyplot as plt
+import pathlib
+import pandas as pd
 
+auc_dir = './auc'
 
 def cntAvg(imgName):
     db = pymysql.connect(host="localhost", user="root",
@@ -42,6 +45,7 @@ def cntSum(imgName):
 LINE_WIDTH = 0.25
 
 def draw_auc(tag, l, t):
+    pathlib.Path(auc_dir).mkdir(parents=True, exist_ok=True) 
     params = {
         'axes.labelsize': 6,
         'axes.titlesize': 6,
@@ -85,7 +89,7 @@ def draw_auc(tag, l, t):
 
     # plt.show()
     # exit()
-    out_pic = './auc/' + tag + '.tiff'
+    out_pic = auc_dir + '/' + tag + '.tiff'
     print('saving to', out_pic)
     plt.savefig(out_pic, dpi=1200)
     plt.close()
@@ -97,8 +101,8 @@ def draw_auc(tag, l, t):
 def print_val_and_draw_auc(tag, point_neg, point_pos):
     print(tag, '###############')
     point_all = np.concatenate((point_neg, point_pos))
-    for ele in point_all:
-        print(ele)
+    # for ele in point_all:
+    #     print(ele)
     return draw_auc(tag, point_all, [0]*len(point_neg)+[1]*len(point_pos))
 
 
@@ -117,6 +121,9 @@ def compComplex(tag, neg_list, pos_list):
     print('cut-off', result[:, 1])
     print('tpr    ', result[:, 2])
     print('fpr    ', result[:, 3])
+    data = pd.DataFrame(result.T, index=['roc', 'cut-off', 'tpr', 'fpr'], columns=['0.3', '0.6', '0.9'])
+    with pd.ExcelWriter(auc_dir + '/data.xlsx', mode='a') as writer:
+        data.to_excel(writer, tag, float_format='%.3f')
 
 
 def run_f_on_pics(tag, f, neg_pics, pos_pics):
@@ -126,7 +133,7 @@ def run_f_on_pics(tag, f, neg_pics, pos_pics):
             fname = ele.split(".")[0]
             fname = fname.split("/")[-1]
             tmpRes = f(fname)
-            # print(tmpRes)
+            print(fname, tmpRes)
             neg_list.append(tmpRes)
 
     pos_list = []
@@ -135,7 +142,7 @@ def run_f_on_pics(tag, f, neg_pics, pos_pics):
             fname = ele.split(".")[0]
             fname = fname.split("/")[-1]
             tmpRes = f(fname)
-            # print(tmpRes)
+            print(fname, tmpRes)
             pos_list.append(tmpRes)
 
     compComplex(tag, np.array(neg_list), np.array(pos_list))

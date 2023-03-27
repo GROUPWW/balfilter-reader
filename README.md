@@ -11,7 +11,7 @@ conda install pytorch torchvision torchaudio cudatoolkit=11.6 -c pytorch -c cond
 
 others:
 ```
-pip install opencv-python matplotlib pyyaml scipy pymysql sklearn
+pip install opencv-python matplotlib pyyaml scipy pymysql sklearn openpyxl
 ```
 
 # Train
@@ -24,5 +24,8 @@ python .\train.py --batch-size=2 --data=data/cancer_cell.yaml
 # Infer
 
 ```
-
+mv yolov5/weights/infer.pt yolov5/weights/infer.pt.old
+mv yolov5/runs/exp31/weights/last-0.9533-0.6107-299.pt yolov5/weights/infer.pt
+python ./detect.py
+python ./util/mysql_cnt.py
 ```

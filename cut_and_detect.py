@@ -160,7 +160,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
     item_height=math.floor(img_size)
     the_shorter=min(width,height)
     the_shorter_num = int(the_shorter/img_size)
-    # print('短边长度为： ', the_shorter_num)
+    print('短边长度为： ', the_shorter_num)
 
 
     import time
@@ -191,7 +191,7 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
                     # t0 = time.time()
 
                     img = loader(temp)
-                    print('img {} {}'.format(i, j))
+                    # print('img {} {}'.format(i, j))
 
                     # img = img[[2, 1, 0]].unsqueeze(0)
                     if img.ndimension() == 3:
@@ -210,7 +210,8 @@ def cut_and_detect_mini(big_img_path,chosen_model='yolov5'):
 
 
                     # Inference
-                    pred = model(img, augment=yolov5_opt['augment'])[0]
+                    with torch.no_grad():
+                        pred = model(img, augment=yolov5_opt['augment'])[0]
 
 
                     # Apply NMS
