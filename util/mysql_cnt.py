@@ -85,7 +85,9 @@ def draw_auc(tag, l, t):
 
     # plt.show()
     # exit()
-    plt.savefig('C:/Users/Ning/BALF/auc/' + tag + '.tiff', dpi=1200)
+    out_pic = './auc/' + tag + '.tiff'
+    print('saving to', out_pic)
+    plt.savefig(out_pic, dpi=1200)
     plt.close()
 
     # print('roc=%0.1f threshold=%0.1f tpr=%0.1f fpr=%0.1f' % (area, thresholds[best_i], tpr[best_i], fpr[best_i]))
