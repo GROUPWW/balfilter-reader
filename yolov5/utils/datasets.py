@@ -1,5 +1,3 @@
-# create_dataloader里写增强
-
 import glob
 import math
 import os
@@ -57,19 +55,14 @@ def create_dataloader(path, imgsz, batch_size, stride, opt, hyp=None, augment=Fa
                                       hyp=hyp,  # augmentation hyperparameters
                                       rect=rect,  # rectangular training
                                       cache_images=cache,
-                                      single_cls=opt.single_cls if opt!= None else True,
+                                      single_cls=opt.single_cls,
                                       stride=int(stride),
                                       pad=pad,
                                       rank=rank)
 
-    # 啊 #查看调用
-
     batch_size = min(batch_size, len(dataset))
     nw = min([os.cpu_count() // world_size, batch_size if batch_size > 1 else 0, workers])  # number of workers
     sampler = torch.utils.data.distributed.DistributedSampler(dataset) if rank != -1 else None
-
-    print('batch_size={}, nw={}'.format(batch_size, nw))
-
     dataloader = InfiniteDataLoader(dataset,
                                     batch_size=batch_size,
                                     num_workers=nw,
@@ -365,8 +358,6 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.hyp = hyp
         self.image_weights = image_weights
         self.rect = False if image_weights else rect
-
-
         self.mosaic = self.augment and not self.rect  # load 4 images at a time into a mosaic (only during training)
         self.mosaic_border = [-img_size // 2, -img_size // 2]
         self.stride = stride
@@ -525,22 +516,11 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
             index = self.indices[index]
 
         hyp = self.hyp
-
         mosaic = self.mosaic and random.random() < hyp['mosaic']
-
         if mosaic:
             # Load mosaic
             img, labels = load_mosaic(self, index)
             shapes = None
-
-
-            # import cv2
-            # print(labels)
-            # for label in labels:
-            #     print(label)
-            #     cv2.rectangle(img, (int(label[1]),int(label[2])), (int(label[3]),int(label[4])), (0, 0, 255))
-            # cv2.imwrite(str(random.random())+".png",img)
-            # 啊
 
             # MixUp https://arxiv.org/pdf/1710.09412.pdf
             if random.random() < hyp['mixup']:
@@ -568,8 +548,6 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
                 labels[:, 2] = ratio[1] * h * (x[:, 2] - x[:, 4] / 2) + pad[1]  # pad height
                 labels[:, 3] = ratio[0] * w * (x[:, 1] + x[:, 3] / 2) + pad[0]
                 labels[:, 4] = ratio[1] * h * (x[:, 2] + x[:, 4] / 2) + pad[1]
-
-
 
         if self.augment:
             # Augment imagespace
@@ -614,8 +592,6 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         # Convert
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
         img = np.ascontiguousarray(img)
-
-        # print(labels_out) #应该是0和类别号
 
         return torch.from_numpy(img), labels_out, self.img_files[index], shapes
 

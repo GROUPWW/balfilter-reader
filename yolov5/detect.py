@@ -14,21 +14,8 @@ from models.experimental import attempt_load
 from utils.datasets import LoadStreams, LoadImages
 from utils.general import (
     check_img_size, non_max_suppression, apply_classifier, scale_coords,
-    xyxy2xywh, strip_optimizer, set_logging)
+    xyxy2xywh, plot_one_box, strip_optimizer, set_logging)
 from utils.torch_utils import select_device, load_classifier, time_synchronized
-
-
-#plot_one_box_liuzheng(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
-def plot_one_box_liuzheng(x, img, color=None, label=None, line_thickness=None):
-    # Plots one bounding box on image img
-    c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
-    cv2.rectangle(img, c1, c2,  (0,0,255), 2)
-    if label:
-        cv2.putText(img, label, (c1[0], c1[1] - 2), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1)
-
-
-
-
 
 
 def detect(save_img=False):
@@ -39,7 +26,6 @@ def detect(save_img=False):
     # Initialize
     set_logging()
     device = select_device(opt.device)
-    print('device={}'.format(device))
     if os.path.exists(out):
         shutil.rmtree(out)  # delete output folder
     os.makedirs(out)  # make new output folder
@@ -77,13 +63,9 @@ def detect(save_img=False):
     img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
     _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
     for path, img, im0s, vid_cap in dataset:
-        img = torch.from_numpy(img)
-        img = img.to(device)
+        img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
-
-        # print(img)
-
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
 
@@ -99,14 +81,8 @@ def detect(save_img=False):
         if classify:
             pred = apply_classifier(pred, modelc, img, im0s)
 
-        max_det_conf = 0  # ~~~~~~~
-
         # Process detections
         for i, det in enumerate(pred):  # detections per image
-
-
-
-
             if webcam:  # batch_size >= 1
                 p, s, im0 = path[i], '%g: ' % i, im0s[i].copy()
             else:
@@ -115,7 +91,6 @@ def detect(save_img=False):
             save_path = str(Path(out) / Path(p).name)
             txt_path = str(Path(out) / Path(p).stem) + ('_%g' % dataset.frame if dataset.mode == 'video' else '')
             s += '%gx%g ' % img.shape[2:]  # print string
-
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             if det is not None and len(det):
                 # Rescale boxes from img_size to im0 size
@@ -134,40 +109,34 @@ def detect(save_img=False):
                             f.write(('%g ' * 5 + '\n') % (cls, *xywh))  # label format
 
                     if save_img or view_img:  # Add bbox to image
-                        #label = '%s %.2f' % (names[int(cls)], conf)
-                        #改为不显示类名
-
-                        label = float(conf)
-                        max_det_conf = max(max_det_conf, label)
-
-                        #plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
-
-                        plot_one_box_liuzheng(xyxy, im0, label=str(label), color=colors[int(cls)], line_thickness=3)
+                        label = '%s %.2f' % (names[int(cls)], conf)
+                        plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
 
             # Print time (inference + NMS)
             print('%sDone. (%.3fs)' % (s, t2 - t1))
 
-            # # Stream results
-            # if view_img:
-            #     cv2.imshow(p, im0)
-            #     if cv2.waitKey(1) == ord('q'):  # q to quit
-            #         raise StopIteration
+            # Stream results
+            if view_img:
+                cv2.imshow(p, im0)
+                if cv2.waitKey(1) == ord('q'):  # q to quit
+                    raise StopIteration
 
             # Save results (image with detections)
             if save_img:
-                cv2.imwrite("./inference/output/" + str(round(max_det_conf,3)) + "-" +  path.split("\\")[-1] + ".png", im0)
-                # else:
-                #     if vid_path != save_path:  # new video
-                #         vid_path = save_path
-                #         if isinstance(vid_writer, cv2.VideoWriter):
-                #             vid_writer.release()  # release previous video writer
-                #
-                #         fourcc = 'mp4v'  # output video codec
-                #         fps = vid_cap.get(cv2.CAP_PROP_FPS)
-                #         w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                #         h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-                #         vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*fourcc), fps, (w, h))
-                #     vid_writer.write(im0)
+                if dataset.mode == 'images':
+                    cv2.imwrite(save_path, im0)
+                else:
+                    if vid_path != save_path:  # new video
+                        vid_path = save_path
+                        if isinstance(vid_writer, cv2.VideoWriter):
+                            vid_writer.release()  # release previous video writer
+
+                        fourcc = 'mp4v'  # output video codec
+                        fps = vid_cap.get(cv2.CAP_PROP_FPS)
+                        w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                        h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                        vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*fourcc), fps, (w, h))
+                    vid_writer.write(im0)
 
     if save_txt or save_img:
         print('Results saved to %s' % Path(out))
@@ -179,11 +148,11 @@ def detect(save_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='weights/infer.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='yolov5s.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='inference/images', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--output', type=str, default='inference/output', help='output folder')  # output folder
-    parser.add_argument('--img-size', type=int, default=256, help='inference size (pixels)')
-    parser.add_argument('--conf-thres', type=float, default=0.3, help='object confidence threshold')
+    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
+    parser.add_argument('--conf-thres', type=float, default=0.4, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.5, help='IOU threshold for NMS')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='display results')

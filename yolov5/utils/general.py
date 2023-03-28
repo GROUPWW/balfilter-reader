@@ -25,7 +25,6 @@ from tqdm import tqdm
 from utils.google_utils import gsutil_getsize
 from utils.torch_utils import init_seeds as init_torch_seeds
 from utils.torch_utils import is_parallel
-# from mmcv.ops import soft_nms, nms
 
 # Set printoptions
 torch.set_printoptions(linewidth=320, precision=5, profile='long')
@@ -510,14 +509,11 @@ def compute_loss(p, targets, model):  # predictions, targets, model
             # Objectness
             tobj[b, a, gj, gi] = (1.0 - model.gr) + model.gr * giou.detach().clamp(0).type(tobj.dtype)  # giou ratio
 
-
-
             # Classification
             if model.nc > 1:  # cls loss (only if multiple classes)
                 t = torch.full_like(ps[:, 5:], cn, device=device)  # targets
                 t[range(n), tcls[i]] = cp
                 lcls += BCEcls(ps[:, 5:], t)  # BCE
-
 
             # Append targets to text file
             # with open('targets.txt', 'a') as file:
@@ -592,308 +588,13 @@ def build_targets(p, targets, model):
     return tcls, tbox, indices, anch
 
 
-def intersect(box_a, box_b):
-
-    n = box_a.size(0)
-    A = box_a.size(1)
-    B = box_b.size(1)
-    max_xy = torch.min(box_a[:, :, 2:].unsqueeze(2).expand(n, A, B, 2),
-                       box_b[:, :, 2:].unsqueeze(1).expand(n, A, B, 2))
-    min_xy = torch.max(box_a[:, :, :2].unsqueeze(2).expand(n, A, B, 2),
-                       box_b[:, :, :2].unsqueeze(1).expand(n, A, B, 2))
-    inter = torch.clamp((max_xy - min_xy), min=0)
-    return inter[:, :, :, 0] * inter[:, :, :, 1]
-
-
-def jaccard(box_a, box_b, iscrowd:bool=False):
-    use_batch = True
-    if box_a.dim() == 2:
-        use_batch = False
-        box_a = box_a[None, ...]
-        box_b = box_b[None, ...]
-
-    inter = intersect(box_a, box_b)
-    area_a = ((box_a[:, :, 2]-box_a[:, :, 0]) *
-              (box_a[:, :, 3]-box_a[:, :, 1])).unsqueeze(2).expand_as(inter)  # [A,B]
-    area_b = ((box_b[:, :, 2]-box_b[:, :, 0]) *
-              (box_b[:, :, 3]-box_b[:, :, 1])).unsqueeze(1).expand_as(inter)  # [A,B]
-    union = area_a + area_b - inter
-    out = inter / area_a if iscrowd else inter / (union + 0.0000001)
-
-    return out if use_batch else out.squeeze(0)
-
-# For batch mode Cluster-Weighted NMS
-def non_max_suppression_1(prediction, conf_thres=0.1, iou_thres=0.6, max_box=1500, merge=False, classes=None, agnostic=False):
-    """Performs Non-Maximum Suppression (NMS) on inference results
-    Returns:
-         detections with shape: nx6 (x1, y1, x2, y2, conf, cls)
-    """
-
-    nc = prediction[0].shape[1] - 5  # number of classes
-    xc = prediction[..., 4] > conf_thres  # candidates
-
-    # Settings
-    min_wh, max_wh = 2, 4096  # (pixels) minimum and maximum box width and height
-    max_det = 300  # maximum number of detections per image
-    time_limit = 10.0  # seconds to quit after
-    redundant = True  # require redundant detections
-    multi_label = nc > 1  # multiple labels per box (adds 0.5ms/img)
-
-    t = time.time()
-    output = [None] * prediction.shape[0]
-    pred1 = (prediction < -1).float()[:,:max_box,:6]    # pred1.size()=[batch, max_box, 6] denotes boxes without offset by class
-    pred2 = pred1[:,:,:4]+0   # pred2 denotes boxes with offset by class
-    batch_size = prediction.shape[0]
-    for xi, x in enumerate(prediction):  # image index, image inference
-        # Apply constraints
-        # x[((x[..., 2:4] < min_wh) | (x[..., 2:4] > max_wh)).any(1), 4] = 0  # width-height
-        x = x[xc[xi]]  # confidence
-
-        # If none remain process next image
-        if not x.shape[0]:
-            continue
-
-        # Compute conf
-        x[:, 5:] *= x[:, 4:5]  # conf = obj_conf * cls_conf
-
-        # Box (center x, center y, width, height) to (x1, y1, x2, y2)
-        box = xywh2xyxy(x[:, :4])
-
-        # Detections matrix nx6 (xyxy, conf, cls)
-        if multi_label:
-            i, j = (x[:, 5:] > conf_thres).nonzero(as_tuple=False).T
-            x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
-        else:  # best class only
-            conf, j = x[:, 5:].max(1, keepdim=True)
-            x = torch.cat((box, conf, j.float()), 1)[conf.view(-1) > conf_thres]
-
-        # Filter by class
-        if classes:
-            x = x[(x[:, 5:6] == torch.tensor(classes, device=x.device)).any(1)]
-
-        # Apply finite constraint
-        # if not torch.isfinite(x).all():
-        #     x = x[torch.isfinite(x).all(1)]
-
-        # If none remain process next image
-        n = x.shape[0]  # number of boxes
-        if not n:
-            continue
-
-        # Sort by confidence
-        x = x[x[:, 4].argsort(descending=True)]
-        c = x[:, 5] * 0 if agnostic else x[:, 5]  # classes
-
-        boxes = (x[:, :4].clone() + c.view(-1, 1) * max_wh)[:max_box]  # boxes (offset by class), scores
-        pred2[xi,:] = torch.cat((boxes, pred2[xi,:]), 0)[:max_box]        # If less than max_box, padding 0.
-        pred1[xi,:] = torch.cat((x[:max_box], pred1[xi,:]), 0)[:max_box]
-
-    # Batch mode Cluster-Weighted NMS
-
-    iou = jaccard(pred2, pred2).triu_(diagonal=1)    # switch to 'jaccard_diou' function for using Cluster-DIoU-NMS
-    B = iou
-    for i in range(200):
-        A=B
-        maxA=A.max(dim=1)[0]
-        E = (maxA<iou_thres).float().unsqueeze(2).expand_as(A)
-        B=iou.mul(E)
-        if A.equal(B)==True:
-            break
-    keep = (maxA <= iou_thres)
-    weights = (B*(B>0.8) + torch.eye(max_box).cuda().expand(batch_size,max_box,max_box)) * (pred1[:,:,4].reshape((batch_size,1,max_box)))
-    pred1[:,:, :4]=torch.matmul(weights,pred1[:,:,:4]) / weights.sum(2, keepdim=True)   # weighted coordinates
-
-    for jj in range(batch_size):
-        output[jj] = pred1[jj][keep[jj]]
-
-    return output
-
-
-
-def soft_nms_pytorch(dets, scores, Nt=0.5, method=0, sigma=0.5, thresh=0.001, sna_thresh=0.8):
-    """
-    Build a pytorch implement of Soft NMS algorithm.
-    # Augments
-        dets:        boxes coordinate tensor (format:[y1, x1, y2, x2])
-        scores:  box score tensors
-        sigma:       variance of Gaussian function
-        thresh:      score thresh
-    # Return
-        the index of the selected boxes
-    """
-    EPSILON = thresh
-
-    # Indexes concatenate boxes with the last column
-    N = dets.shape[0]
-    sorted_scores, indices = torch.sort(scores.clone(), descending=True)
-    sorted_dets = dets[indices, :].clone()
-
-    for i in range(N):
-        pos = i + 1
-        tscore = sorted_scores[i]
-        if tscore < EPSILON or i == N - 1:
-            continue
-
-        # IoU calculate
-        ovr = box_iou(sorted_dets[i, :].view(1, 4), sorted_dets[pos:, :])
-        ovr = ovr.view(ovr.shape[1])
-
-        # Three methods: 1.linear 2.gaussian 3.original NMS
-        if method == 1:  # linear
-            weight = torch.ones_like(ovr)
-            weight[ovr > Nt] = weight[ovr > Nt] - ovr[ovr > Nt]
-        elif method == 2:  # gaussian
-            weight = np.exp(-(ovr * ovr) / sigma)
-        else:  # original NMS
-            weight = torch.ones_like(ovr)
-            weight[ovr > Nt] = 0.0
-
-        if sna_thresh > Nt:
-            sna_mask = (ovr >= sna_thresh)
-            sna_r_mask = (ovr < sna_thresh)
-            auxProposalNumber = float(np.count_nonzero(sna_mask.cpu()))
-            # auxProposalNumber = torch.count_nonzero(sna_mask).float()
-            if auxProposalNumber > 0.0:
-                sna_scores = sorted_scores[pos:].clone()
-                sna_scores[sna_r_mask] = 0.0
-                sna_max_pos = torch.argmax(sna_scores, axis=0)
-                auxMaxConf = sna_scores[sna_max_pos]
-                sorted_scores[i] = sorted_scores[i] + (1.0 - sorted_scores[i]) * (auxProposalNumber / (auxProposalNumber + 1.0)) * auxMaxConf
-                #if auxMaxConf > 0.0:
-                    #auxMaxPos = sorted_dets[pos+sna_max_pos, :].clone()
-                    #sorted_dets[i, :] = (tscore * sorted_dets[i, :] + auxMaxConf * auxMaxPos) / (tscore + auxMaxConf)
-                    #sorted_dets[i, :] = 1.0 * sorted_dets[i, :]
-
-
-        sorted_scores[pos:] = weight * sorted_scores[pos:]
-
-    # select the boxes and keep the corresponding indices
-    keep_mask = sorted_scores > thresh
-    keep = indices[keep_mask]
-
-    return keep, sorted_scores[keep_mask].clone(), sorted_dets[keep_mask, :].clone()
-
-# soft-NMS，装不上mmcv,用cpu这个可以啦！！！！！！！
-def non_max_suppression_soft(prediction, conf_thres=0.25, iou_thres=0.45, classes=None, agnostic=False, multi_label=False,
-                        labels=(), max_det=300,merge=False):
-    """Runs Non-Maximum Suppression (NMS) on inference results
-    Returns:
-         list of detections, on (n,6) tensor per image [xyxy, conf, cls]
-    """
-    print("soft-NMS")
-    nc = prediction.shape[2] - 5  # number of classes
-    xc = prediction[..., 4] > conf_thres  # candidates
-
-    # Checks
-    assert 0 <= conf_thres <= 1, f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
-    assert 0 <= iou_thres <= 1, f'Invalid IoU {iou_thres}, valid values are between 0.0 and 1.0'
-
-    # Settings
-    min_wh, max_wh = 2, 4096  # (pixels) minimum and maximum box width and height
-    max_nms = 30000  # maximum number of boxes into torchvision.ops.nms()
-    time_limit = 10.0  # seconds to quit after
-    redundant = True  # require redundant detections
-    multi_label &= nc > 1  # multiple labels per box (adds 0.5ms/img)
-    merge = False  # use merge-NMS
-
-    t = time.time()
-    output = [torch.zeros((0, 6), device=prediction.device)] * prediction.shape[0]
-    for xi, x in enumerate(prediction):  # image index, image inference
-        # Apply constraints
-        # x[((x[..., 2:4] < min_wh) | (x[..., 2:4] > max_wh)).any(1), 4] = 0  # width-height
-        x = x[xc[xi]]  # confidence
-
-        # Cat apriori labels if autolabelling
-        if labels and len(labels[xi]):
-            l = labels[xi]
-            v = torch.zeros((len(l), nc + 5), device=x.device)
-            v[:, :4] = l[:, 1:5]  # box
-            v[:, 4] = 1.0  # conf
-            v[range(len(l)), l[:, 0].long() + 5] = 1.0  # cls
-            x = torch.cat((x, v), 0)
-
-        # If none remain process next image
-        if not x.shape[0]:
-            continue
-
-        # Compute conf
-        x[:, 5:] *= x[:, 4:5]  # conf = obj_conf * cls_conf
-
-        # Box (center x, center y, width, height) to (x1, y1, x2, y2)
-        box = xywh2xyxy(x[:, :4])
-
-        # Detections matrix nx6 (xyxy, conf, cls)
-        if multi_label:
-            i, j = (x[:, 5:] > conf_thres).nonzero(as_tuple=False).T
-            x = torch.cat((box[i], x[i, j + 5, None], j[:, None].float()), 1)
-        else:  # best class only
-            conf, j = x[:, 5:].max(1, keepdim=True)
-            x = torch.cat((box, conf, j.float()), 1)[conf.view(-1) > conf_thres]
-
-        # Filter by class
-        if classes is not None:
-            x = x[(x[:, 5:6] == torch.tensor(classes, device=x.device)).any(1)]
-
-        # Apply finite constraint
-        # if not torch.isfinite(x).all():
-        #     x = x[torch.isfinite(x).all(1)]
-
-        # Check shape
-        n = x.shape[0]  # number of boxes
-        if not n:  # no boxes
-            continue
-        elif n > max_nms:  # excess boxes
-            x = x[x[:, 4].argsort(descending=True)[:max_nms]]  # sort by confidence
-
-        # Batched NMS
-        c = x[:, 5:6] * (0 if agnostic else max_wh)  # classes
-        boxes, scores = x[:, :4] + c, x[:, 4]  # boxes (offset by class), scores
-        #dets, i = nms(boxes.contiguous(), scores.contiguous(), iou_threshold=iou_thres, offset=0, score_threshold=0.001)
-
-
-        # dets, i = soft_nms(boxes.contiguous(), scores.contiguous(), iou_threshold=iou_thres,
-        #                    sigma=0.5, min_score=0.001, method='linear', offset=0, sna_thresh=0.8)
-        # x[i, 4] = dets[:, 4]
-
-
-        # x[i, :4] = dets[:, :4]
-
-
-
-        i, updated_scores, updated_dets = soft_nms_pytorch(boxes, scores, Nt=iou_thres, sna_thresh=1.1)
-        x[i, 4] = updated_scores
-        x[i, :4] = updated_dets
-
-
-        #i = torchvision.ops.nms(boxes, scores, iou_thres)  # NMS
-
-
-        if i.shape[0] > max_det:  # limit detections
-            i = i[:max_det]
-        if merge and (1 < n < 3E3):  # Merge NMS (boxes merged using weighted mean)
-            # update boxes as boxes(i,4) = weights(i,n) * boxes(n,4)
-            iou = box_iou(boxes[i], boxes) > iou_thres  # iou matrix
-            weights = iou * scores[None]  # box weights
-            x[i, :4] = torch.mm(weights, x[:, :4]).float() / weights.sum(1, keepdim=True)  # merged boxes
-            if redundant:
-                i = i[iou.sum(1) > 1]  # require redundancy
-
-        output[xi] = x[i]
-        if (time.time() - t) > time_limit:
-            print(f'WARNING: NMS time limit {time_limit}s exceeded')
-            break  # time limit exceeded
-
-    return output
-
-
-#原版NMS
 def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.6, merge=False, classes=None, agnostic=False):
     """Performs Non-Maximum Suppression (NMS) on inference results
 
     Returns:
          detections with shape: nx6 (x1, y1, x2, y2, conf, cls)
     """
-    # print("原版NMS")
+
     nc = prediction[0].shape[1] - 5  # number of classes
     xc = prediction[..., 4] > conf_thres  # candidates
 
@@ -1372,8 +1073,7 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
                 cls = names[cls] if names else cls
                 if gt or conf[j] > 0.3:  # 0.3 conf thresh
                     label = '%s' % cls if gt else '%s %.1f' % (cls, conf[j])
-                    # plot_one_box(box, mosaic, label=label, color=color, line_thickness=tl)
-                    plot_one_box(box, mosaic, label=label, color=(0,255,255))
+                    plot_one_box(box, mosaic, label=label, color=color, line_thickness=tl)
 
         # Draw image filename labels
         if paths is not None:

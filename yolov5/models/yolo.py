@@ -4,9 +4,6 @@ import math
 from copy import deepcopy
 from pathlib import Path
 
-import cv2
-import numpy as np
-
 import torch
 import torch.nn as nn
 
@@ -95,24 +92,16 @@ class Model(nn.Module):
         self.info()
         print('')
 
-
-
-
     def forward(self, x, augment=False, profile=False):
         if augment:
-            print("该测试或验证使用了TTA")
             img_size = x.shape[-2:]  # height, width
-            s = [1, 0.9, 1.1]  # scales
-            # f = [None, 3, None]  # flips (2-ud, 3-lr)
-            f = [None, 3, 2]
+            s = [1, 0.83, 0.67]  # scales
+            f = [None, 3, None]  # flips (2-ud, 3-lr)
             y = []  # outputs
             for si, fi in zip(s, f):
                 xi = scale_img(x.flip(fi) if fi else x, si)
                 yi = self.forward_once(xi)[0]  # forward
-
-
-                cv2.imwrite('img%g.jpg' % si, (255 * xi[0].cpu().numpy().transpose((1, 2, 0))[:, :, ::-1]).astype(np.int))  # save
-
+                # cv2.imwrite('img%g.jpg' % s, 255 * xi[0].numpy().transpose((1, 2, 0))[:, :, ::-1])  # save
                 yi[..., :4] /= si  # de-scale
                 if fi == 2:
                     yi[..., 1] = img_size[0] - yi[..., 1]  # de-flip ud
@@ -121,7 +110,6 @@ class Model(nn.Module):
                 y.append(yi)
             return torch.cat(y, 1), None  # augmented inference, train
         else:
-            # print("该测试或验证没用TTA")
             return self.forward_once(x, profile)  # single-scale inference, train
 
     def forward_once(self, x, profile=False):
@@ -154,9 +142,8 @@ class Model(nn.Module):
         m = self.model[-1]  # Detect() module
         for mi, s in zip(m.m, m.stride):  # from
             b = mi.bias.view(m.na, -1)  # conv.bias(255) to (3,85)
-            with torch.no_grad():
-                b[:, 4] += math.log(8 / (640 / s) ** 2)  # obj (8 objects per 640 image)
-                b[:, 5:] += math.log(0.6 / (m.nc - 0.99)) if cf is None else torch.log(cf / cf.sum())  # cls
+            b[:, 4] += math.log(8 / (640 / s) ** 2)  # obj (8 objects per 640 image)
+            b[:, 5:] += math.log(0.6 / (m.nc - 0.99)) if cf is None else torch.log(cf / cf.sum())  # cls
             mi.bias = torch.nn.Parameter(b.view(-1), requires_grad=True)
 
     def _print_biases(self):
