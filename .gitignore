@@ -17,3 +17,4 @@ __pycache__
 java/target
 docs/
 */.idea
+auc/

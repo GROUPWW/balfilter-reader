@@ -1,0 +1,4 @@
+c4cb78570cfca23d7e0a5aa7b4ee7e8c6b8d998c
+
+loss相关在general.py
+test不要直接用test.py-用train里跑0epoch-统计方式不一样
